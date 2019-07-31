@@ -6,7 +6,7 @@
     </div>
     
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <h2>Pages</h2>
             <ul class="object-list">
                 <?php foreach ( $pages as $page ){ ?>
@@ -17,7 +17,19 @@
             </ul>
         </div>
         
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <h2>Steps</h2>
+            <ul class="object-list">
+                <?php foreach ( $steps as $step ){ ?>
+                <li>
+                    <a href="/manage/step/<?php echo $step->idsteps; ?>"><?php echo $step->title; ?></a>
+                </li>
+                <?php  } ?>
+            </ul>
+            <div><a href="/manage/step/new">Add new step</a></div>
+        </div>
+        
+        <div class="col-md-4">
             <h2>Slides</h2>
             <ul class="object-list">
                 <?php foreach ( $slides as $slide ){ ?>

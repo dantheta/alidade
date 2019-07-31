@@ -21,10 +21,12 @@
         public function index() {
             $Pages = new Page;
             $SlideList = new Slidelist;
+            $Step = new Step;
             
             $this->set('title', 'Manage contents of the TSA');
             $this->set('pages', $Pages->findAll());
             $this->set('slides', $SlideList->getList());
+            $this->set('steps', $Step->findAll());
         }
         
         
@@ -61,6 +63,39 @@
             
         }
         
+        /* Manage steps */
+        public function step($step) {
+            $this->set('id', $step);
+            $css = array('/components/summernote/dist/summernote.css');
+           $js = array('/components/summernote/dist/summernote.js'); // hacked version
+            $this->set('js', $js);
+            $this->set('css', $css);
+            
+            $Step = new Step;
+            
+            if (isset($_POST) && !empty($_POST)) {
+                if ($step == "new") {
+                    unset($_POST['files']);
+                    $_POST['position'] = $Step->getNextPosition();
+                    $update = $Step->create($_POST);
+                    header("Location: /manage/step/" . $update);
+                } else {
+                    $stepobj = $Step->findOne($step);
+                    $update = $Step->update($_POST, $stepobj->idstep);
+                }
+            }
+            
+            if ($step == 'new') {
+                $stepobj = new stdClass();
+                $stepobj->idstep = 'new';
+                $stepobj->title = '';
+                $stepobj->description = '';
+            } else {
+                $stepobj = $Step->findOne($step);
+            }
+            $this->set('step', $stepobj);
+            
+        }
         
         
         /** edit slide contents **/
