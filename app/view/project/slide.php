@@ -1,10 +1,21 @@
 <?php
+/*
     $origin = !isset($original) ? null : $original[0];
     $slideListMenu = $slideMenu;
     reset($slideListMenu);
     while(key($slideListMenu) != $currentSlide ) { next($slideListMenu); }
     $backSlide = prev($slideListMenu);
     $backKey = key($slideListMenu);
+*/
+
+    $origin = !isset($original) ? null : $original[0];
+    $slideListMenu = $slideMenu;
+    $keys = array_keys($slideMenu);
+    $flipped_keys = array_flip(array_keys($slideMenu));
+    $values = array_values($slideMenu);
+    $backSlide = $values[$flipped_keys[$currentSlide] - 1];
+    $backKey = $keys[$flipped_keys[$currentSlide] - 1];
+
 
 ?>
 <div class="container-fluid slide-<?php echo $currentSlide; ?> step-<?php echo substr($currentSlide, 0, 1); ?> " id="slide-page" >
