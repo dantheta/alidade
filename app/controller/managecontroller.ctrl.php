@@ -26,7 +26,7 @@
             $this->set('title', 'Manage contents of the TSA');
             $this->set('pages', $Pages->findAll());
             $this->set('slides', $SlideList->getList());
-            $this->set('steps', $Step->findAll());
+            $this->set('steps', $Step->findAll("position"));
         }
         
         
@@ -116,6 +116,19 @@
             $slide = $SlideList->getSlide($step, $position);
             
             $this->set('slide', $slide);
+        }
+
+        public function stepup($step) {
+            $Step = new Step;
+            $stepobj = $Step->findOne($step);
+            $Step->swapPosition($stepobj, -1);
+            header("Location: /manage/index");
+        }
+        public function stepdown($step) {
+            $Step = new Step;
+            $stepobj = $Step->findOne($step);
+            $Step->swapPosition($stepobj, 1);
+            header("Location: /manage/index");
         }
         
         

@@ -23,6 +23,10 @@
                 <?php foreach ( $steps as $step ){ ?>
                 <li>
                     <a href="/manage/step/<?php echo $step->idsteps; ?>"><?php echo $step->title; ?></a>
+                    <span class="movelinks">
+                        <a href="/manage/stepup/<?php echo $step->idsteps ?>">[Move Up]</a>
+                        <a href="/manage/stepdown/<?php echo $step->idsteps ?>">[Move Down]</a>
+                    </span>
                 </li>
                 <?php  } ?>
             </ul>

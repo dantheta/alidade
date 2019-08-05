@@ -75,8 +75,11 @@
             
         }
         
-        public function findAll(){
+        public function findAll($_order=null){
             $sql = 'SELECT * FROM ' . $this->table;
+            if ($_order) {
+                $sql .= " order by `$_order`";
+            }
             $stmt = $this->database->prepare($sql);
             $q = $stmt->execute();
             
