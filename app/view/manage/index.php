@@ -4,6 +4,12 @@
             <h1>Manage Content</h1>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="/manage/import" class="btn btn-default">Import Content</a>
+            <a href="/manage/import" class="btn btn-default">Export Content</a>
+        </div>
+    </div>
     
     <div class="row">
         <div class="col-md-4">
