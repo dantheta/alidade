@@ -231,7 +231,13 @@ if(( isset($_GET['config-check']) && $_GET['config-check'] == 1) || isset($_POST
                 /*!40000 ALTER TABLE `slide_list` ENABLE KEYS */;
                 UNLOCK TABLES;
                 
-                CREATE OR REPLACE VIEW `view_slide_index` AS (select concat_ws('.',`slide_list`.`step`,`slide_list`.`position`) AS `slide_index`,`slide_list`.`step` AS `step`,`slide_list`.`title` AS `title` from `slide_list` order by `slide_list`.`step`,`slide_list`.`position`);
+                CREATE OR REPLACE VIEW `view_slide_index` AS (
+                    select concat_ws('.',`steps`.`position`,`slide_list`.`position`) AS `slide_index`,
+                        `slide_list`.`position` AS `step`,
+                        `slide_list`.`title` AS `title` 
+                    from `slide_list`
+                    inner join steps on step = idsteps
+                    order by `slide_list`.`step`,`slide_list`.`position`);
             ";
             
             $dns = DBTYPE . ':dbname=' . DBNAME . ';host=' . DBHOST . ';charset=utf8';
