@@ -136,5 +136,55 @@
         public function user($user){
             
         }
+        
+        /* import export feature */
+        
+        public function import() {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if ($_FILES['file0']['error'] == 0) {
+                    $data = yaml_parse_file($_FILES['file0']['tmp_name']);
+                    
+                    $SlideList = new SlideList;
+                    $SlideList->deleteAll();
+                    $Step = new Step;
+                    $Step->deleteAll();
+                    
+                    $result = "<ul>\n";
+                    
+                    foreach($data['steps'] as $step) {
+                        $slides = $step['_slides'];
+                        unset($step['_slides']);
+                        $Step->create($step);
+                        $result .= "<li>Created step {$step[name]}</li>\n";
+                        foreach($slides as $slide) {
+                            $SlideList->create($slide);
+                            $result .= "<li>Created slide {$slide[title]}</li>\n";
+                        }
+                    }
+                    $result .= "</ul>";
+                    $this->set('result', $result);
+                } else {
+                    $this->set('result', 'Upload failed');
+                }
+            }
+        }
+        
+        public function export() {
+            $SlideList = new SlideList;
+            $Step = new Step;
+            $out = array();
+            $steps = array();
+            foreach($Step->findAll('position') as $step) {
+                $step->_slides = array();
+                foreach($SlideList->find(array(step => $step->idsteps)) as $slide) {
+                    $step->_slides[] = (array)$slide;
+                }
+                $steps[] = (array)$step;
+            }
+            $out['steps'] = $steps;
+            $out['created'] = date('Y-m-d H:m:s');
+            
+            $this->set('yaml', yaml_emit($out));
+        }
     }
     

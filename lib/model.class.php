@@ -199,6 +199,12 @@
             }
         }
         
+        public function deleteAll() {
+            $sql = 'DELETE FROM  `' . $this->table .'`';
+            $stmt = $this->database->prepare($sql);
+            $stmt->execute();
+        }
+        
         public function howMany($params = null){
             if(empty($params)){
                 return count(self::findAll());
