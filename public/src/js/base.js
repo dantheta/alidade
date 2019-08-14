@@ -428,5 +428,9 @@ $(document).ready(function(){
         }
     });
 
+    $('#manage-slide-list * .expander-link').click(function(){
+        $(this).closest('h3').next().removeClass('hidden').show();
+        return false;
+    });
 
 });
