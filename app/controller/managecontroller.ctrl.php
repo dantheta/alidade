@@ -172,6 +172,7 @@
         public function export() {
             $SlideList = new SlideList;
             $Step = new Step;
+            $Page = new Page;
             $out = array();
             $steps = array();
             foreach($Step->findAll('position') as $step) {
@@ -182,6 +183,11 @@
                 $steps[] = (array)$step;
             }
             $out['steps'] = $steps;
+            $pages = array();
+            foreach($Page->findAll('idpages') as $page) {
+                $pages[] = (array)$page;
+            }
+            $out['pages'] = $pages;
             $out['created'] = date('Y-m-d H:m:s');
             
             $this->set('yaml', yaml_emit($out));

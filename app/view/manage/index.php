@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-12">
             <a href="/manage/import" class="btn btn-default">Import Content</a>
-            <a href="/manage/import" class="btn btn-default">Export Content</a>
+            <a href="/manage/export" class="btn btn-default">Export Content</a>
         </div>
     </div>
     
