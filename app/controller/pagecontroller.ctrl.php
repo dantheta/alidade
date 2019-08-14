@@ -31,7 +31,6 @@
             $url = 'homepage';
             $page = $this->Page->find(array('url' => $url));
             $js = array(
-                '//cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.5/jquery.fullpage.min.js'
             );
             $css = array(
