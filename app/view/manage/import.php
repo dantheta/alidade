@@ -11,7 +11,13 @@ Select file to import:
 
 </form>
 <?php } else { ?>
-    Upload result: <?php echo $result ?>
-    
+    Upload result: 
+    <?php if ($result) { ?>
+        <ul>
+        <?php foreach ($result as $line) { ?>
+            <li><?php echo $line; ?></li>
+        <?php } ?>
+        </ul>
+    <?php } ?>
     <a href="/manage/index">Back to index</a>
 <?php } ?>

@@ -151,23 +151,22 @@
                     $Page = new Page;
                     $Page->deleteAll();
                     
-                    $result = "<ul>\n";
+                    $result = array();
                     
                     foreach($data['steps'] as $step) {
                         $slides = $step['_slides'];
                         unset($step['_slides']);
                         $Step->create($step);
-                        $result .= "<li>Created step {$step[title]}</li>\n";
+                        $result[] "Created step {$step[title]}";
                         foreach($slides as $slide) {
                             $SlideList->create($slide);
-                            $result .= "<li>Created slide {$slide[title]}</li>\n";
+                            $result[] = "Created slide {$slide[title]}";
                         }
                     }
                     foreach($data['pages'] as $page) {
                         $Page->create($page);
-                        $result .= "<li>Created page {$page[title]}</li>\n";
+                        $result[] = "Created page {$page[title]}";
                     }
-                    $result .= "</ul>";
                     $this->set('result', $result);
                 } else {
                     $this->set('result', 'Upload failed');
