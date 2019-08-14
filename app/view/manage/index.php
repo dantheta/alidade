@@ -39,16 +39,25 @@
             <div><a href="/manage/step/new">Add new step</a></div>
         </div>
         
-        <div class="col-md-4">
+        <div class="col-md-4" id="manage-slide-list">
             <h2>Slides</h2>
-            <ul class="object-list">
-                <?php foreach ( $slides as $slide ){ ?>
+            <?php $last = null; ?>
+            
+            <?php foreach ( $slides as $slide ){ ?>
+                <?php if ($slide->step != $last) { ?>
+                    <?php if ($last != null) { ?>
+            </ul>
+                    <?php } ?>
+            <h3>Step <?php echo $slide->step ?> <small>[<a class="expander-link" href="#">Expand</a>]</small>  </h3>
+            <ul class="object-list hidden">
+                <?php $last = $slide->step; } ?>
                 <li>
                     <?php echo $slide->step . '.' . $slide->position; ?> <a href="/manage/slide/<?php echo $slide->step; ?>/<?php echo $slide->position; ?>"><?php echo $slide->title; ?></a>
                 </li>
-                <?php  } ?>
+            <?php  } ?>
             </ul>
         </div>
         
     </div>
 </div>
+
