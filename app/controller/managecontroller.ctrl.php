@@ -148,6 +148,8 @@
                     $SlideList->deleteAll();
                     $Step = new Step;
                     $Step->deleteAll();
+                    $Page = new Page;
+                    $Page->deleteAll();
                     
                     $result = "<ul>\n";
                     
@@ -155,11 +157,15 @@
                         $slides = $step['_slides'];
                         unset($step['_slides']);
                         $Step->create($step);
-                        $result .= "<li>Created step {$step[name]}</li>\n";
+                        $result .= "<li>Created step {$step[title]}</li>\n";
                         foreach($slides as $slide) {
                             $SlideList->create($slide);
                             $result .= "<li>Created slide {$slide[title]}</li>\n";
                         }
+                    }
+                    foreach($data['pages'] as $page) {
+                        $Page->create($page);
+                        $result .= "<li>Created page {$page[title]}</li>\n";
                     }
                     $result .= "</ul>";
                     $this->set('result', $result);
