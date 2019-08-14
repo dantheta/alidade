@@ -157,7 +157,7 @@
                         $slides = $step['_slides'];
                         unset($step['_slides']);
                         $Step->create($step);
-                        $result[] "Created step {$step[title]}";
+                        $result[] = "Created step {$step[title]}";
                         foreach($slides as $slide) {
                             $SlideList->create($slide);
                             $result[] = "Created slide {$slide[title]}";
