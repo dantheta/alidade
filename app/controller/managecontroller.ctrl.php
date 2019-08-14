@@ -100,11 +100,13 @@
         
         /** edit slide contents **/
         public function slide($step, $position){
+            $Step = new Step();
             $this->set('mdEditor', true);
             $css = array('/components/summernote/dist/summernote.css');
-           $js = array('/components/summernote/dist/summernote.js'); // hacked version
+            $js = array('/components/summernote/dist/summernote.js'); // hacked version
             $this->set('js', $js);
             $this->set('css', $css);
+            $this->set('steps', $Step->findAll('idsteps'));
             
             if(isset($_POST) && !empty($_POST)) {
                 $slide = $SlideList->getSlide($step, $position);

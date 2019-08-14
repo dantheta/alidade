@@ -5,11 +5,17 @@
             <h1>Edit "<?php echo $slide->title; ?>"</h1>
 
             <form class="/manage/slide/<?php echo $slide->step . '/' . $slide->position; ?>" method="post" id="slide-form">
-                <input id="step" name="step" type="hidden" value="<?php echo $slide->step; ?>">
                 <input id="position" name="position" type="hidden" value="<?php echo $slide->position; ?>">
         
                 <div class="form-group">
                     <input type="text" id="title" name="title" class="form-control" value="<?php echo $slide->title; ?>">
+                </div>
+                <div class="form-group">
+                    Step: <select name="step">
+                    <?php foreach($steps as $step) { ?>
+                        <option value="<?php echo $step->idsteps ?>" <?php echo ($slide->step == $step->idsteps ? "selected" : "") ?> ><?php echo $step->position . '. ' . $step->title ?></option>
+                    <?php } ?>
+                    </select>
                 </div>
                 <div class="form-group">
                     <div class="textarea form-control" name="description" id="description"><?php echo $slide->description; ?></div>
