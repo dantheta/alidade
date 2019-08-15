@@ -230,6 +230,10 @@
                     $update = $SlideList->update(
                             array('title' => $title, 'description' => $description, 'step' => $step, 'position' => $position),
                             $slide->idslide_list );
+                    if ($step != $slide->step) {
+                        // move following slides to fill position
+                        $SlideList->shiftPosition($slide->step, $slide->position);
+                    }
                     if($update){
                         $response['code'] = 'success';
                         $response['icon'] = 'tick';

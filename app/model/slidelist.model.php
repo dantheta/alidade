@@ -72,6 +72,21 @@
             }
         }
         
+        public function shiftPosition($step, $after) {
+            $sql = 'update `' . $this->table . '` set position = position - 1 where step = :step and position > :position';
+            $stmt = $this->database->prepare($sql);
+            
+            $stmt->bindParam(':step', $step, PDO::PARAM_INT);
+            $stmt->bindParam(':position', $after, PDO::PARAM_INT);
+            
+            $q = $stmt->execute();
+            if(!$q){
+                new Error(601, 'Could not execute query. (slidelist.model.php, 62)');
+                return false;
+            }            
+            
+        }
+        
         public function getIndex(){
             $sql = 'SELECT * FROM `view_slide_index`';
             $stmt = $this->database->prepare($sql);

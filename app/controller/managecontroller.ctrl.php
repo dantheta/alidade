@@ -111,6 +111,8 @@
             if(isset($_POST) && !empty($_POST)) {
                 $slide = $SlideList->getSlide($step, $position);
                 
+                //TODO: load by id, change position if needed
+                
                 $update = $SlideList->update($_POST, $slide->idslide_list);    
             }
             
