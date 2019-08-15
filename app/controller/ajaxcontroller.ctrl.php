@@ -217,14 +217,19 @@
                     $step = $_POST['step'];
                     $position = $_POST['position'];
 
-                    $slide = $SlideList->find(array('step' => $step, 'position' => $position));
-                    $slide = $slide[0];
+                    $slide = $SlideList->findOne($_POST['id']);
 
                     $title = $_POST['title'];
                     $description = $_POST['description'];
 
+                    if ($step != $slide->step) {
+                        // get last position if step is changing
+                        $position = $SlideList->getNextPosition($step);
+                    }
 
-                    $update = $SlideList->update(array('title' => $title, 'description' => $description), $slide->idslide_list );
+                    $update = $SlideList->update(
+                            array('title' => $title, 'description' => $description, 'step' => $step, 'position' => $position),
+                            $slide->idslide_list );
                     if($update){
                         $response['code'] = 'success';
                         $response['icon'] = 'tick';

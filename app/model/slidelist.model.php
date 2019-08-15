@@ -50,6 +50,28 @@
             }        
         }
         
+        public function getNextPosition($step) {
+            // get next available position for this step
+            $sql = 'SELECT max(position) from `' . $this->table . '` where step = :step';
+            $stmt = $this->database->prepare($sql);
+            
+            $stmt->bindParam(':step', $step, PDO::PARAM_INT);
+            
+            $q = $stmt->execute();
+            if(!$q){
+                new Error(601, 'Could not execute query. (slidelist.model.php, 62)');
+                return false;
+            }
+            else {
+                $ret = $stmt->fetchColumn(0);
+                if (is_null($ret)) {
+                    return 1;
+                } else {
+                    return $ret + 1;
+                }
+            }
+        }
+        
         public function getIndex(){
             $sql = 'SELECT * FROM `view_slide_index`';
             $stmt = $this->database->prepare($sql);
