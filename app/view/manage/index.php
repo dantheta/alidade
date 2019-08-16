@@ -27,8 +27,8 @@
                 <li>
                     <a href="/manage/step/<?php echo $step->idsteps; ?>"><?php echo $step->title; ?></a>
                     <span class="movelinks">
-                        <a href="/manage/stepup/<?php echo $step->idsteps ?>">[Move Up]</a>
-                        <a href="/manage/stepdown/<?php echo $step->idsteps ?>">[Move Down]</a>
+                        [<a href="/manage/stepup/<?php echo $step->idsteps ?>">Up</a>]
+                        [<a href="/manage/stepdown/<?php echo $step->idsteps ?>">Down</a>]
                     </span>
                 </li>
                 <?php  } ?>
@@ -50,6 +50,10 @@
                 <?php $last = $slide->step; } ?>
                 <li>
                     <?php echo $slide->step . '.' . $slide->position; ?> <a href="/manage/slide/<?php echo $slide->step; ?>/<?php echo $slide->position; ?>"><?php echo $slide->title; ?></a>
+                    <span class="movelinks">
+                    [<a href="/manage/slideup/<?php echo $slide->idslide_list ?>">Up</a>]
+                    [<a href="/manage/slidedown/<?php echo $slide->idslide_list ?>">Down</a>]
+                    </span>
                 </li>
             <?php  } ?>
             </ul>

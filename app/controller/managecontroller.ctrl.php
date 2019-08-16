@@ -134,6 +134,19 @@
             $Step->swapPosition($stepobj, 1);
             header("Location: /manage/index");
         }
+        public function slideup($slide) {
+            $SlideList = new SlideList;
+            $slideobj = $SlideList->findOne($slide);
+            $SlideList->swapPosition($slideobj, -1);
+            header("Location: /manage/index");
+        }
+        public function slidedown($slide) {
+            $SlideList = new SlideList;
+            $slideobj = $SlideList->findOne($slide);
+            error_log("Loaded: {$slideobj->idslide_list} {$slideobj->step}");
+            $SlideList->swapPosition($slideobj, 1);
+            header("Location: /manage/index");
+        }
         
         
         /** manage user profiles **/

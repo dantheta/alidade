@@ -87,6 +87,26 @@
             
         }
         
+        public function getByPosition($step, $pos) {
+            $matches = $this->find(array('step' => $step, 'position' => $pos));
+            if (count($matches) == 0) {
+                error_log("Not found: $step, $pos");
+                return null;
+            }
+            return $matches[0];
+        }
+
+        public function swapPosition($slide, $adj) {
+            error_log("Swapping: {$slide->step} {$adj}");
+            $other = $this->getByPosition($slide->step, $slide->position +$adj);
+            $opos = $other->position;
+            $other->position = $slide->position;
+            $this->update((array)$other, $other->idslide_list);
+
+            $slide->position = $slide->position + $adj;
+            $this->update((array)$slide, $slide->idslide_list);
+        }
+        
         public function getIndex(){
             $sql = 'SELECT * FROM `view_slide_index`';
             $stmt = $this->database->prepare($sql);
