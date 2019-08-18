@@ -1,3 +1,15 @@
+<?php function swaplink($base, $id, $dir) { ?>
+    <div class="swap <?php echo $dir; ?>">
+    <a href="<?php echo $base . $dir . '/' . $id; ?>">
+    <?php if ($dir == "up") { ?>
+        <span class="glyphicon glyphicon-arrow-up"></span> Move up
+    <?php } elseif ($dir == "down") { ?>
+        <span class="glyphicon glyphicon-arrow-down"></span> Move down
+    <?php } ?>
+    </a>
+    </div>
+<?php } ?>
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -27,8 +39,8 @@
                 <li>
                     <a href="/manage/step/<?php echo $step->idsteps; ?>"><?php echo $step->title; ?></a>
                     <span class="movelinks">
-                        [<a href="/manage/stepup/<?php echo $step->idsteps ?>">Up</a>]
-                        [<a href="/manage/stepdown/<?php echo $step->idsteps ?>">Down</a>]
+                        <?php swaplink('/manage/step', $step->idsteps, 'up') ?>
+                        <?php swaplink('/manage/step', $step->idsteps, 'down') ?>
                     </span>
                 </li>
                 <?php  } ?>
@@ -36,7 +48,7 @@
             <div><a href="/manage/step/new">Add new step</a></div>
         </div>
         
-        <div class="col-md-5" id="manage-slide-list">
+        <div class="col-md-7" id="manage-slide-list">
             <h2>Slides</h2>
             <?php $last = null; ?>
             
@@ -51,8 +63,8 @@
                 <li>
                     <?php echo $slide->step . '.' . $slide->position; ?> <a href="/manage/slide/<?php echo $slide->step; ?>/<?php echo $slide->position; ?>"><?php echo $slide->title; ?></a>
                     <span class="movelinks">
-                    [<a href="/manage/slideup/<?php echo $slide->idslide_list ?>">Up</a>]
-                    [<a href="/manage/slidedown/<?php echo $slide->idslide_list ?>">Down</a>]
+                        <?php swaplink('/manage/slide', $slide->idslide_list, 'up') ?>
+                        <?php swaplink('/manage/slide', $slide->idslide_list, 'down') ?>
                     </span>
                 </li>
             <?php  } ?>
