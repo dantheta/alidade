@@ -61,7 +61,7 @@
             <ul class="object-list hidden">
                 <?php $last = $slide->step; } ?>
                 <li>
-                    <?php echo $slide->step . '.' . $slide->position; ?> <a href="/manage/slide/<?php echo $slide->step; ?>/<?php echo $slide->position; ?>"><?php echo $slide->title; ?></a>
+                    <?php echo $slide->step . '.' . $slide->position; ?> <a href="/manage/slide/<?php echo $slide->idslide_list; ?>"><?php echo $slide->title; ?></a>
                     <span class="movelinks">
                         <?php swaplink('/manage/slide', $slide->idslide_list, 'up') ?>
                         <?php swaplink('/manage/slide', $slide->idslide_list, 'down') ?>
@@ -69,6 +69,8 @@
                 </li>
             <?php  } ?>
             </ul>
+                        <div><a href="/manage/slide/new">Add new slide</a></div>
+
         </div>
         
     </div>

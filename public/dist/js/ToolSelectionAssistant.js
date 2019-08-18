@@ -380,7 +380,11 @@ $(document).ready(function(){
                 '/ajax/save_slide',
                 data,
                 function(response){
-                    theForm.prepend('<div class="alert alert-' + response.code + '"><i class="fa fa-' + response.icon + '"></i> ' + response.message + '</div>');
+                    if (response.created) {
+                        window.location.href='/manage/slide/' + response.created;
+                    } else {
+                        theForm.prepend('<div class="alert alert-' + response.code + '"><i class="fa fa-' + response.icon + '"></i> ' + response.message + '</div>');
+                    }
                 },
                 'json'
         );

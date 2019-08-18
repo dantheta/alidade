@@ -217,27 +217,43 @@
                     $step = $_POST['step'];
                     $position = $_POST['position'];
 
-                    $slide = $SlideList->findOne($_POST['id']);
+                    if ($_POST['id'] != 'new') {
+                        $slide = $SlideList->findOne($_POST['id']);
+                    }
 
                     $title = $_POST['title'];
                     $description = $_POST['description'];
 
-                    if ($step != $slide->step) {
+                    if ($_POST['id'] == "new" || $step != $slide->step ) {
                         // get last position if step is changing
                         $position = $SlideList->getNextPosition($step);
                     }
-
-                    $update = $SlideList->update(
-                            array('title' => $title, 'description' => $description, 'step' => $step, 'position' => $position),
-                            $slide->idslide_list );
-                    if ($step != $slide->step) {
-                        // move following slides to fill position
-                        $SlideList->shiftPosition($slide->step, $slide->position);
+                    if ($_POST['id'] != 'new') {
+                        $update = $SlideList->update(
+                                array('title' => $title, 'description' => $description, 'step' => $step, 'position' => $position),
+                                $slide->idslide_list );
+                        if ($step != $slide->step) {
+                            // move following slides to fill position
+                            $SlideList->shiftPosition($slide->step, $slide->position);
+                        }
+                        $created = false;
+                    } else {
+                        $update = $SlideList->create(
+                                array('title' => $title, 
+                                      'description' => $description, 
+                                      'step' => $step, 
+                                      'position' => $position,
+                                      'slide_type' => 2,
+                                      )
+                                );
+                        
+                        $created = $update;
                     }
                     if($update){
                         $response['code'] = 'success';
                         $response['icon'] = 'tick';
                         $response['message'] = '<strong>Awww yeah!</strong> The slide has been correctly updated.';
+                        $response['created'] = $created;
                     }
                     else {
                         $response['code'] = 'danger';

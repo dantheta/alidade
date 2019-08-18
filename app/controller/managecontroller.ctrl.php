@@ -99,7 +99,7 @@
         
         
         /** edit slide contents **/
-        public function slide($step, $position){
+        public function slide($id){
             $Step = new Step();
             $this->set('mdEditor', true);
             $css = array('/components/summernote/dist/summernote.css');
@@ -108,16 +108,30 @@
             $this->set('css', $css);
             $this->set('steps', $Step->findAll('idsteps'));
             
-            if(isset($_POST) && !empty($_POST)) {
-                $slide = $SlideList->getSlide($step, $position);
-                
-                //TODO: load by id, change position if needed
-                
-                $update = $SlideList->update($_POST, $slide->idslide_list);    
-            }
-            
             $SlideList = new Slidelist;
-            $slide = $SlideList->getSlide($step, $position);
+            if(isset($_POST) && !empty($_POST)) {
+                if ($id == "new") {
+                    $update = $SlideList->create($_POST);
+                    header("Location: /manage/slide/" . $update);
+                    exit;
+                } else {
+                    $slide = $SlideList->findOne($id);
+                    
+                    //TODO: load by id, change position if needed
+                    
+                    $update = $SlideList->update($_POST, $slide->idslide_list);    
+                }
+            }
+
+            if ($id == "new") {
+                $slide = new stdClass();
+                $slide->idslide_list = 'new';
+                $slide->title = '';
+                $slide->step = '';
+                $slide->description = '';
+            } else {
+                $slide = $SlideList->findOne($id);
+            }
             
             $this->set('slide', $slide);
         }
