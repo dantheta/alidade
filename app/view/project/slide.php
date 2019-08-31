@@ -181,7 +181,7 @@ if ($prevAnswer) {
 
 <?php } ?>
 
-<?php if($currentSlide == '1.0'){ ?>
+<?php if($currentSlide == '1.0' && false){ ?>
   <div class="modal fade welcome" tabindex="-1" role="dialog" aria-labelledby="welcome">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
