@@ -230,7 +230,11 @@
                     }
                     if ($_POST['id'] != 'new') {
                         $update = $SlideList->update(
-                                array('title' => $title, 'description' => $description, 'step' => $step, 'position' => $position),
+                                array('title' => $title,
+                                      'description' => $description,
+                                      'step' => $step,
+                                      'position' => $position,
+                                      'slide_type' => $_POST['slide_type']),
                                 $slide->idslide_list );
                         if ($step != $slide->step) {
                             // move following slides to fill position
