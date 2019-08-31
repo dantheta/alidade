@@ -19,6 +19,14 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    Slide type: <select id="slide_type" name="slide_type">
+                        <option value="1" <?php echo ($slide->slide_type == 1 ? "selected" : "" ?>>Informative</option>
+                        <option value="2" <?php echo ($slide->slide_type == 2 ? "selected" : "" ?>>Interactive</option>
+                        <option value="3" <?php echo ($slide->slide_type == 3 ? "selected" : "" ?>>Branching</option>
+                        <option value="4" <?php echo ($slide->slide_type == 4 ? "selected" : "" ?>>Recap</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <div class="textarea form-control" name="description" id="description"><?php echo $slide->description; ?></div>
                     <?php /* <textarea rows="25" name="description" id="description" class="form-control" data-provide="markdown" data-iconlibrary="fa"><?php echo $slide->description; ?></textarea> */ ?>
                 </div>
