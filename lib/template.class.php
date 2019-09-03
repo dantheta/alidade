@@ -38,8 +38,6 @@
 
         /** Display Template **/
         function render() {
-
-
             extract($this->variables);
             if(!in_array($this->_action, $this->exclude) && $this->_controller !== 'rss'){
                 /* Include Base Head @ view/head.php */

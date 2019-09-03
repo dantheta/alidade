@@ -69,9 +69,11 @@
                 $step_no    = (int)$position[0];
                 $slide_no   = (int)$position[1];
 
+                $Step = new Step;
                 $Slide = new Slide;
                 $Slidelist = new Slidelist;
 
+                $step = $Step->getByPosition($step_no);
                 $slidelist = $Slidelist->getList();
 
                 $slideIndex = array();
@@ -94,10 +96,11 @@
                 }
 
 
-                $slide = $Slidelist->find(array(
-                                            'position'  =>  $slide_no,
-                                            'step'      =>  $step_no
-                                            ));
+                $slide = $Slidelist->getSlide(            
+                                            $step->idsteps,
+                                            $slide_no
+                                            );
+
 
                 $nextSlide = $slideIndex['fullIndex'][array_search($cur, $slideIndex['fullIndex'], true) + 1];
                 $prevSlide = $slideIndex['fullIndex'][array_search($cur, $slideIndex['fullIndex'], true) - 1];
@@ -106,9 +109,10 @@
                 $this->set('nextSlide', $nextSlide);
                 $this->set('prevSlide', $prevSlide);
                 $this->set('currentSlide', $cur);
+                error_log($slide->idslide_list);
 
-                $this->set('slide', $slide[0]);
-                $this->set('contents', $slide[0]->description);
+                $this->set('slide', $slide);
+                $this->set('contents', $slide->description);
 
                 //check if we have a hash for a project
                 if($_GET['p']){

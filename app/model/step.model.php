@@ -10,7 +10,11 @@
             
             $stmt->execute();
             
-            return $stmt->fetchColumn();
+            $ret = $stmt->fetchColumn();
+            if (is_null($ret)) {
+                return 0;
+            }
+            return $ret;
         }
 
         public function getByPosition($pos) {

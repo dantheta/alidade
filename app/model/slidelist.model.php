@@ -7,7 +7,12 @@
         
         public function getList(){
             
-            $sql = 'SELECT *, CONCAT_WS(".", `step`, `position`) AS `indexer` FROM `' . $this->table . '` ORDER BY `step` ASC, `position` ASC';
+            $sql = "SELECT `{$this->table}`.*, 
+                    CONCAT_WS('.', `steps`.`position`, `slide_list`.`position`) AS `indexer`,
+                    steps.position as step
+                FROM `{$this->table}`
+                INNER JOIN steps on idsteps = step
+                ORDER BY `steps`.`position` ASC, `position` ASC";
             $stmt = $this->database->prepare($sql);
             
             $stmt->execute();
