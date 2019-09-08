@@ -41,6 +41,7 @@
                         <input type="hidden" name="next_slide"  value="<?php echo $nextSlide; ?>">
                         <input type="hidden" name="current_project" value="<?php echo $_SESSION['project']; ?>">
                         <input type="hidden" id="extra-holder" value="<?php echo $origin->extra; ?>">
+                        <input type="hidden" name="extra" value="<?php echo(!empty($extra) ? $extra : ''); ?>" id="extra13">
 
                         <?php
 
@@ -76,6 +77,8 @@
                                 echo $text;
                                 break;
                               case 2:
+                                $text = injectChoiceButtons($text);
+                                $text = injectChoicePanels($text);
                                 echo injectAnswerField($text, 'answer', $origin);
                                 break;
                               case 3:

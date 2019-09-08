@@ -267,6 +267,34 @@
         return array('content' => $string, 'boxes' => $boxes);
     }
 
+    function injectChoiceButtons($string) {
+        preg_match_all('/\[--choicebutton\|(?<name>\w+)\|(?<title>[\s\w]+)--]/', $string, $matches);
+        $titles = $matches['title'];
+        $names = $matches['name'];
+        foreach($names as $name) {
+            $title = array_shift($titles);
+            $string = str_replace("[--choicebutton|{$name}|{$title}--]",
+                                  "<a href=\"#\" class=\"btn btn-alidade btn-lg picker\" data-target=\"#{$name}\">{$title}</a>",
+                                  $string);
+        }
+        return $string;            
+    }
+
+    function injectChoicePanels($string) {
+        preg_match_all('/\[--choicepanel\|(?<name>\w+)--](.*?)\[--endchoicepanel--]/', $string, $matches);
+        $fullMatches = $matches[0];
+        $names = $matches['name'];
+        $contents = $matches[2];
+        foreach($fullMatches as $match) {
+            $name = array_shift($names);
+            $content = array_shift($contents);
+            
+            $string = str_replace($match, "<div class=\"row hide picks\" id=\"{$name}\">{$content}</div>", $string);
+        }
+        
+        return $string;
+    }
+
     /** title printing, parsing position **/
     function printTitle($slide, $slideTitle){
         $cur = explode('.', $slide);
