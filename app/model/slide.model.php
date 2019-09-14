@@ -25,11 +25,10 @@
             }
         }
 
-        public function findSlide($p, $step, $slide){
+        public function findSlide($p, $idslide_list){
 
             $sql = 'SELECT * FROM `' . $this->table . '` AS `s`
                     WHERE `s`.`project` = :p
-                    AND `s`.`step` = :step
                     AND `s`.`slide` = :slide
                     ORDER BY `s`.`step` ASC, `s`.`slide` ASC';
 
@@ -37,8 +36,7 @@
             $stmt = $this->database->prepare($sql);
 
             $stmt->bindParam(':p', $p, PDO::PARAM_INT);
-            $stmt->bindParam(':step', $step, PDO::PARAM_INT);
-            $stmt->bindParam(':slide', $slide, PDO::PARAM_INT);
+            $stmt->bindParam(':slide', $idslide_list, PDO::PARAM_INT);
             $q = $stmt->execute();
 
             if(!$q){

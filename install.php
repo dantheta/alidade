@@ -186,7 +186,6 @@ if(( isset($_GET['config-check']) && $_GET['config-check'] == 1) || isset($_POST
                 CREATE TABLE `slides` (
                   `idslides` int(11) NOT NULL AUTO_INCREMENT,
                   `project` int(11) NOT NULL,
-                  `step` int(11) NOT NULL,
                   `slide` int(11) NOT NULL,
                   `extra` text,
                   `answer` text,
@@ -196,11 +195,9 @@ if(( isset($_GET['config-check']) && $_GET['config-check'] == 1) || isset($_POST
                   `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                   PRIMARY KEY (`idslides`),
                   KEY `idxSlideProject` (`project`),
-                  KEY `idxSlideStep` (`step`),
                   KEY `idxSlideSlideList` (`slide`),
                   CONSTRAINT `fkSlideProject` FOREIGN KEY (`project`) REFERENCES `projects` (`idprojects`) ON DELETE CASCADE ON UPDATE NO ACTION,
                   CONSTRAINT `fkSlideSlidelist` FOREIGN KEY (`slide`) REFERENCES `slide_list` (`idslide_list`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-                  CONSTRAINT `fkSlideStep` FOREIGN KEY (`step`) REFERENCES `steps` (`idsteps`) ON DELETE NO ACTION ON UPDATE NO ACTION
                 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
                 
                 CREATE TABLE `pages` (

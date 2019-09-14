@@ -162,6 +162,26 @@
             header("Location: /manage/index");
         }
         
+        public function stepdel($step) {
+            $Step = new Step;
+            $result = $Step->delete($step);
+            
+            if (!$result) {
+                new ErrorMsg(609, "Unable to delete this step.  There may be slides attached.");
+            }
+            header("Location: /manage/index");
+
+        }
+        
+        public function slidedel($slide) {
+            $Slide = new Slide;
+            $Slide->deleteMany(array('slide' => $slide));
+            
+            $Slidelist = new SlideList;
+            $Slidelist->delete($slide);
+            header("Location: /manage/index");
+            
+        }
         
         /** manage user profiles **/
         public function user($user){

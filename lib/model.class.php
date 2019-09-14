@@ -50,7 +50,7 @@
             $q = $stmt->execute();
             
             if(!$q){
-                new Error(601, 'Could not execute query. (model.class.php, 46)');
+                new ErrorMsg(601, 'Could not execute query. (model.class.php, 46)');
                 return false;
             }
             else {
@@ -66,7 +66,7 @@
             $q = $stmt->execute();
             
             if(!$q){
-                new Error(601, 'Could not execute query. (model.class.php, 61)');
+                new ErrorMsg(601, 'Could not execute query. (model.class.php, 61)');
                 return false;
             }
             else {
@@ -84,7 +84,7 @@
             $q = $stmt->execute();
             
             if(!$q){
-                new Error(601, 'Could not execute query. (model.class.php, 76)');
+                new ErrorMsg(601, 'Could not execute query. (model.class.php, 76)');
                 return false;
             }
             else {
@@ -133,7 +133,7 @@
         }
         public function update($data, $id){
             if(!filter_var($id, FILTER_VALIDATE_INT)){
-                new Error(666, 'Invalid Update Parameter. (model.class.php, 130)');
+                new ErrorMsg(666, 'Invalid Update Parameter. (model.class.php, 130)');
                 return false;
             }
             $fields = array_keys($data);
@@ -172,7 +172,7 @@
         
         public function delete($id){
             if(!is_numeric($id)){
-                new Error(620, 'Invalid parameter. (model.class.php, 168)');
+                new ErrorMsg(620, 'Invalid parameter. (model.class.php, 168)');
                 return false;
                 
             }
@@ -189,13 +189,44 @@
                     if(!$q && SYSTEM_STATUS == 'development'){
                         $err = $stmt->errorInfo();
                         
-                        new Error(601, 'Could not execute query. ' . $err[2] . ' (model.class.php, 183)');
+                        new ErrorMsg(601, 'Could not execute query. ' . $err[2] . ' (model.class.php, 183)');
                         return false;
                     }
                     else {
                         return true;
                     }
                 }
+            }
+        }
+
+        public function deleteMany( $params ){
+            $sql = 'DELETE FROM ' . $this->table . ' WHERE ';
+            $clauses = array();
+            if(!empty($params)){ 
+                foreach($params as $field => $value) {
+                    $clauses[] = $field . ' = :' . $field;
+                }
+                $sql .= implode(' AND ', $clauses);
+            }
+            
+            $stmt = $this->database->prepare($sql);
+            
+            if(!empty($params)){ 
+                foreach($params as $field => &$value){
+                    $b = $stmt->bindParam(':'.$field, $value);
+                    if(!$b && SYSTEM_STATUS == 'development'){
+                        dbga($stmt->errorInfo());
+                    }
+                }
+            }
+            $q = $stmt->execute();
+            
+            if(!$q){
+                new ErrorMsg(601, 'Could not execute query. (model.class.php, 46)');
+                return false;
+            }
+            else {
+                return true;
             }
         }
         

@@ -42,10 +42,12 @@
                         <?php swaplink('/manage/step', $step->idsteps, 'up') ?>
                         <?php swaplink('/manage/step', $step->idsteps, 'down') ?>
                     </span>
+                    <a class="deletelink deletestep" href="/manage/stepdel/<?php echo $step->idsteps; ?>">
+                      <span class="glyphicon glyphicon-trash"></span> Delete</a>
                 </li>
                 <?php  } ?>
             </ul>
-            <div><a href="/manage/step/new">Add new step</a></div>
+            <div><a class="btn btn-default" href="/manage/step/new">Add new step</a></div>
         </div>
         
         <div class="col-md-7" id="manage-slide-list">
@@ -66,10 +68,12 @@
                         <?php swaplink('/manage/slide', $slide->idslide_list, 'up') ?>
                         <?php swaplink('/manage/slide', $slide->idslide_list, 'down') ?>
                     </span>
+                    <a class="deletelink deleteslide" href="/manage/slidedel/<?php echo $slide->idslide_list; ?>">
+                      <span class="glyphicon glyphicon-trash"></span> Delete</a>
                 </li>
             <?php  } ?>
             </ul>
-                        <div><a href="/manage/slide/new">Add new slide</a></div>
+            <div><a class="btn btn-default" href="/manage/slide/new">Add new slide</a></div>
 
         </div>
         

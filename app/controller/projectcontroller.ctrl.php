@@ -155,13 +155,12 @@
 
                     $slide_position = explode('.', $_POST['current_slide']);
 
-                    $slide = array();
-                    $slide['project'] = $_SESSION['project'];
-                    $slide['step'] = $slide_position[0];
-                    $slide['slide'] = $slide_position[1];
-                    $slide['status'] = 2;
-                    $slide['choice'] = (!empty($_POST['choice']) ? $_POST['choice'] : null);
-                    $slide['extra'] = (!empty($_POST['extra']) ? $_POST['extra'] : null);
+                    $slidedata = array();
+                    $slidedata['project'] = $_SESSION['project'];
+                    $slidedata['slide'] = $slide->idslide_list;
+                    $slidedata['status'] = 2;
+                    $slidedata['choice'] = (!empty($_POST['choice']) ? $_POST['choice'] : null);
+                    $slidedata['extra'] = (!empty($_POST['extra']) ? $_POST['extra'] : null);
 
                     if($_POST['current_slide'] == '1.3'){
                         // special slide with multiple answer boxes
@@ -193,24 +192,19 @@
                     /** Slide 4.1 has options instead of radios **/
                     if($_POST['current_slide'] == '4.1'){
                         $options = is_array($_POST['option']) ? array_keys($_POST['option']) : null;
-                        $slide['extra'] = !empty($_POST['option']) ? implode(';', $options) : '';
+                        $slidedata['extra'] = !empty($_POST['option']) ? implode(';', $options) : '';
                         $answer = '';
                         $this->set('selection', $options);
                     }
 
 
-                    $slide['answer'] = $answer;
+                    $slidedata['answer'] = $answer;
 
                     // creating or updating ?
                     if(isset($_POST['slide_update']) && !empty($_POST['slide_update'])){
-                        $toUpdate = $Slide->find(array('step'   => $slide['step'],
-                                                       'slide'  => $slide['slide'],
-                                                       'project'=> $slide['project']
-                                                       ));
+                        $toUpdate = $Slide->findSlide($slidedata['project'], $slide->idslide_list);
 
-
-
-                        $Slide->update($slide, $toUpdate[0]->idslides);
+                        $Slide->update($slidedata, $toUpdate[0]->idslides);
 
                         /** add a filter to sort out exiting pages **/
                         if(isset($_POST['edit']) && $_POST['edit'] === 'true'){
@@ -226,7 +220,7 @@
                             $slide['answer'] ==
                         }*/
 
-                        $r = $Slide->create($slide);
+                        $r = $Slide->create($slidedata);
                         // Check values in the choice @ the end of Step 3
                         if($slide['step'] == 3 && $slide['slide'] == 7 ) {
                             $choice = $_POST['choice'];

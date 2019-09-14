@@ -439,4 +439,16 @@ $(document).ready(function(){
         return false;
     });
 
+    $('.deleteslide').click(function(e){
+        if (!confirm("Are you sure you want to delete this slide?")) {
+            e.preventDefault();
+        };
+    });
+
+    $('.deletestep').click(function(e){
+        if (!confirm("Are you sure you want to delete this step?")) {
+            e.preventDefault();
+        };
+    });
+
 });
