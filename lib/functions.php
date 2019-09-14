@@ -143,6 +143,10 @@
         return implode('-', array_reverse($d));
     }
 
+    function getOptionName($str) {
+        $t = preg_replace('/[^A-Za-z0-9\- ]/', '', $str);
+        return strtolower($t);
+    }
 
     /** inject textarea and parse tags in text **/
     function injectAnswerField($string, $name = 'answer', $origin = null){
@@ -166,6 +170,14 @@
 
         //return htmled string
         return $string;
+    }
+
+    function injectDropdown($string) {
+        preg_match_all('/\[--dropdown\|(?<name>\w+)--](.*?)\[--enddropdown--]/', $string, $matches);
+        
+        if (!empty($matches)) {
+            
+        }
     }
 
     function injectParam($string, $param, $value){
