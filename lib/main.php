@@ -73,6 +73,8 @@
             new Error(502, 'Controller/Method <strong>'.$controller.'/'.$action.'</strong> Not Found. Program Shutdown. (main.php, 71)');
         }
 
+        $dispatch->render();
+           
 
     }
 

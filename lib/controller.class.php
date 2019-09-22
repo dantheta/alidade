@@ -22,7 +22,7 @@
             $this->_template->set($name,$value);
         }
         
-        function __destruct() {
-			$this->_template->render();
+        function render() {
+            return $this->_template->render();
         }
 	}
