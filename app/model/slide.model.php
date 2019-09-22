@@ -6,9 +6,9 @@
 
         public function findProjectSlides($p){
 
-            $sql = 'SELECT * FROM `' . $this->table . '` AS `s`
+            $sql = 'SELECT * FROM slides_with_step AS `s`
                     WHERE `s`.`project` = :p
-                    ORDER BY `s`.`step` ASC, `s`.`slide` ASC';
+                    ORDER BY `s`.`step` asc, `s`.`slide` ASC';
 
 
             $stmt = $this->database->prepare($sql);

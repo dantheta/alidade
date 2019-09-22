@@ -12,7 +12,7 @@
                     steps.position as step
                 FROM `{$this->table}`
                 INNER JOIN steps on idsteps = step
-                ORDER BY `steps`.`position` ASC, `position` ASC";
+                ORDER BY `steps`.`position` ASC, `slide_list`.`position` ASC";
             $stmt = $this->database->prepare($sql);
             
             $stmt->execute();

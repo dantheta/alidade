@@ -218,6 +218,12 @@ if(( isset($_GET['config-check']) && $_GET['config-check'] == 1) || isset($_POST
                     from `slide_list`
                     inner join steps on step = idsteps
                     order by `steps`.`position`,`slide_list`.`position`);
+
+                CREATE OR REPLACE VIEW `slides_with_step` AS 
+                select `slides`.`idslides` AS `idslides`,`slides`.`project` AS `project`,`slides`.`slide` AS `slide`,`slides`.`extra` AS `extra`,`slides`.`answer` AS `answer`,`slides`.`choice` AS `choice`,`slides`.`status` AS `status`,`slides`.`created_at` AS `created_at`,`slides`.`modified_at` AS `modified_at`,`steps`.`position` AS `step` 
+                from ((`slides` 
+                    join `slide_list` on((`slides`.`slide` = `slide_list`.`idslide_list`))) 
+                    join `steps` on((`slide_list`.`step` = `steps`.`idsteps`)));
             ";
             
             $dns = DBTYPE . ':dbname=' . DBNAME . ';host=' . DBHOST . ';charset=utf8';
