@@ -127,7 +127,7 @@
 
                     $slidecontent = $Slide->find(array(
                                                        'project'    => $project[0]->idprojects,
-                                                       'step'       => $step_no,
+                                                       # FIXME: looking up by position, not slide ID
                                                        'slide'      => $slide_no,
                                                        ));
                     //$slidecontent[0]->full_project = $project[0];
