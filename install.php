@@ -197,7 +197,7 @@ if(( isset($_GET['config-check']) && $_GET['config-check'] == 1) || isset($_POST
                   KEY `idxSlideProject` (`project`),
                   KEY `idxSlideSlideList` (`slide`),
                   CONSTRAINT `fkSlideProject` FOREIGN KEY (`project`) REFERENCES `projects` (`idprojects`) ON DELETE CASCADE ON UPDATE NO ACTION,
-                  CONSTRAINT `fkSlideSlidelist` FOREIGN KEY (`slide`) REFERENCES `slide_list` (`idslide_list`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+                  CONSTRAINT `fkSlideSlidelist` FOREIGN KEY (`slide`) REFERENCES `slide_list` (`idslide_list`) ON DELETE CASCADE ON UPDATE NO ACTION,
                 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
                 
                 CREATE TABLE `pages` (

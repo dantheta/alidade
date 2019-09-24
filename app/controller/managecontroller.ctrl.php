@@ -163,6 +163,8 @@
         }
         
         public function stepdel($step) {
+            $SlideList = new SlideList;
+            $SlideList->deleteMany(array('step' => $step));
             $Step = new Step;
             $result = $Step->delete($step);
             
@@ -174,8 +176,6 @@
         }
         
         public function slidedel($slide) {
-            $Slide = new Slide;
-            $Slide->deleteMany(array('slide' => $slide));
             
             $Slidelist = new SlideList;
             $Slidelist->delete($slide);
