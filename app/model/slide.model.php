@@ -30,7 +30,7 @@
             $sql = 'SELECT * FROM `' . $this->table . '` AS `s`
                     WHERE `s`.`project` = :p
                     AND `s`.`slide` = :slide
-                    ORDER BY `s`.`step` ASC, `s`.`slide` ASC';
+                    ORDER BY  `s`.`slide` ASC';
 
 
             $stmt = $this->database->prepare($sql);
@@ -49,7 +49,7 @@
         }
 
         public function projectSlideIndex($project){
-            $sql = 'SELECT DISTINCT(CONCAT_WS(".", step, slide)) as indexer, step FROM ' . $this->table . ' WHERE project = :id ORDER BY step ASC, slide ASC';
+            $sql = 'SELECT DISTINCT(CONCAT_WS(".", step, slide)) as indexer, step FROM view_slide_index WHERE project = :id ORDER BY step ASC, slide ASC';
             $stmt = $this->database->prepare($sql);
             $stmt->bindParam(':id', $project, PDO::PARAM_INT);
             $q = $stmt->execute();
