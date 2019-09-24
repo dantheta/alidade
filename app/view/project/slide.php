@@ -79,6 +79,8 @@
                               case 2:
                                 $text = injectChoiceButtons($text);
                                 $text = injectChoicePanels($text);
+                                $text = injectRadioButtons($text);
+                                $text = injectCheckboxes($text);
                                 echo injectAnswerField($text, 'answer', $origin);
                                 break;
                               case 3:
