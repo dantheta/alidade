@@ -233,7 +233,7 @@
             $steps = array();
             foreach($Step->findAll('position') as $step) {
                 $step->_slides = array();
-                foreach($SlideList->find(array(step => $step->idsteps)) as $slide) {
+                foreach($SlideList->find(array('step' => $step->idsteps)) as $slide) {
                     $step->_slides[] = (array)$slide;
                 }
                 $steps[] = (array)$step;
