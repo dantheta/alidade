@@ -17,7 +17,7 @@
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <div class="textarea" name="description" id="description"><?php echo $step->description; ?></div>
+                <textarea class="textarea" name="description" id="description"><?php echo $step->description; ?></textarea>
             </div>
             
             
