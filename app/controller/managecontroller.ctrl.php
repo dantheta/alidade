@@ -74,8 +74,8 @@
             $Step = new Step;
             
             if (isset($_POST) && !empty($_POST)) {
+                unset($_POST['files']);
                 if ($step == "new") {
-                    unset($_POST['files']);
                     $_POST['position'] = $Step->getNextPosition();
                     $update = $Step->create($_POST);
                     header("Location: /manage/step/" . $update);
