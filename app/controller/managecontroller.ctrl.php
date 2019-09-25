@@ -81,7 +81,7 @@
                     header("Location: /manage/step/" . $update);
                 } else {
                     $stepobj = $Step->findOne($step);
-                    $update = $Step->update($_POST, $stepobj->idstep);
+                    $update = $Step->update($_POST, $stepobj->idsteps);
                 }
             }
             
