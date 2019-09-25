@@ -2,14 +2,14 @@
     
     <div class="col-md-8 col-md-offset-2">
         <h1 class="h2">Edit Step</h1>
-        <form class="" action="/manage/step/<?php echo $step->idstep; ?>" method="post" id="step-form">
+        <form class="" action="/manage/step/<?php echo $step->idsteps; ?>" method="post" id="step-form">
             <?php
             if(isset($response) && !empty($response)) {
                 printResponse($response);     
             }
             ?>
             <?php if ($id != 'new') { ?>
-            <input type="hidden" value="<?php echo $step->idstep; ?>" id="step" name="step">
+            <input type="hidden" value="<?php echo $step->idsteps; ?>" id="step" name="step">
             <?php } ?>
             <div class="form-group">
                 <label for="title">Title</label>
