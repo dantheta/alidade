@@ -8,9 +8,6 @@
                 printResponse($response);     
             }
             ?>
-            <?php if ($id != 'new') { ?>
-            <input type="hidden" value="<?php echo $step->idsteps; ?>" id="step" name="step">
-            <?php } ?>
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" name="title" id="title" value="<?php echo $step->title; ?>" class="form-control">
