@@ -87,7 +87,7 @@
             
             if ($step == 'new') {
                 $stepobj = new stdClass();
-                $stepobj->idstep = 'new';
+                $stepobj->idsteps = 'new';
                 $stepobj->title = '';
                 $stepobj->description = '';
             } else {
