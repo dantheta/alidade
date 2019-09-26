@@ -12,15 +12,15 @@ $piece = ($inTour ? 'tour' : 'slide');
              } ?>
     <div class="step step<?php echo $step; ?> <?php echo ($currs[0] == 1 ? '' : 'hidden-xs'); ?>">
   		<header>
-          <h3><a class="slide <?php echo checkSlidePosition($step_number, $slide_number, 1, 0); ?>" href="/project/<?php echo $piece; ?>/1.0<?php echo (!is_null($hash) ? '/?p=' . $hash : ''); ?>">STEP <?php echo $step ?></a></h3>
+          <h3><a class="slide <?php echo checkSlidePosition($step_number, $slide_number, $step, 0); ?>" href="/project/<?php echo $piece; ?>/<?php echo $step; ?>.0<?php echo (!is_null($hash) ? '/?p=' . $hash : ''); ?>">STEP <?php echo $step ?></a></h3>
   		</header>
   		<ul>
   			<?php for($i = 1; $i <= count($entries); $i++){ ?>
   			<li>
   				<a
   				   title="<?php echo $slideMenu[$step . '.' . $i]; ?>"
-  				   class="slide <?php echo checkSlidePosition($step_number, $slide_number, 1, $i); ?>"
-  				   href="/project/<?php echo $piece; ?>/1.<?php echo $i; ?><?php echo (!is_null($hash) ? '/?p=' . $hash : ''); ?>&edit"
+  				   class="slide <?php echo checkSlidePosition($step_number, $slide_number, $step, $i); ?>"
+                   href="/project/<?php echo $piece; ?>/<?php echo $step; ?>.<?php echo $i; ?><?php echo (!is_null($hash) ? '/?p=' . $hash : ''); ?>&edit"
   				>
   					<?php echo $slideMenu[$step . '.' . $i]; ?>
   				</a>
