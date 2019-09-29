@@ -142,7 +142,7 @@
 </div>
 
 <?php
-if ($prevAnswer) {
+if ($prevAnswer && false) {
 // load modal box for the previous answer editing functionality
 ?>
 

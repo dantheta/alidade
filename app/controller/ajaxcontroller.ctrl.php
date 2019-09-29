@@ -82,6 +82,7 @@
 
         public function save_answer(){
             $status = false;
+            die("Nothing doing");
 
             if(strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
                 $Auth = new Auth($url);

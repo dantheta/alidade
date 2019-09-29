@@ -109,7 +109,6 @@
                 $this->set('nextSlide', $nextSlide);
                 $this->set('prevSlide', $prevSlide);
                 $this->set('currentSlide', $cur);
-                error_log($slide->idslide_list);
 
                 $this->set('slide', $slide);
                 $this->set('contents', $slide->description);
@@ -127,33 +126,21 @@
 
                     $slidecontent = $Slide->find(array(
                                                        'project'    => $project[0]->idprojects,
-                                                       # FIXME: looking up by position, not slide ID
-                                                       'slide'      => $slide_no,
+                                                       'slide'      => $slide->idslide_list,
                                                        ));
                     //$slidecontent[0]->full_project = $project[0];
                     if($slidecontent){
                         $this->set('original', $slidecontent);
                     }
-                    if(isset($_GET['edit'])){
-                        $this->set('edit', true);
-                    }
+
                     if(isset($_GET['back'])){
                         $this->set('back', true);
                     }
                 }
                 /** access the selection from other slides as well **/
-                if($cur == '4.2'){
-                  $getSlideOptions =$Slide->find(array(
-                                                     'project'    => $project[0]->idprojects,
-                                                     'step'       => 4,
-                                                     'slide'      => 1,
-                                                     ));
-                  $this->set('selection', explode(';', $getSlideOptions[0]->extra));
-                }
+
                 if(isset($_POST) && !empty($_POST)){
                     $_SESSION['plan'][$_POST['current_slide']] = $_POST;
-
-                    $slide_position = explode('.', $_POST['current_slide']);
 
                     $slidedata = array();
                     $slidedata['project'] = $_SESSION['project'];
@@ -161,85 +148,20 @@
                     $slidedata['status'] = 2;
                     $slidedata['choice'] = (!empty($_POST['choice']) ? $_POST['choice'] : null);
                     $slidedata['extra'] = (!empty($_POST['extra']) ? $_POST['extra'] : null);
-
-                    if($_POST['current_slide'] == '1.3'){
-                        // special slide with multiple answer boxes
-                        $extra = filter_var($_POST['extra'], FILTER_SANITIZE_SPECIAL_CHARS);
-                        $answer = ( $extra == '#pick-1' ? $_POST['a'] : $_POST['b'] );
-                        $answer = implode('##break## ', $answer);
-                        
-                    }
-                    // do that for the other multifields too
-                    // FIXME: remove multislide var
-                    elseif(in_array($_POST['current_slide'], $this->multiSlides)){
-                        $answer = implode('##break## ', $_POST['answer']);
-                    }
-                    //Parse Answers
-                    elseif(is_array($_POST['answer'])){
-                        $answer = array_filter($_POST['answer']);
-
-                        // implode checkboxes in step 4.2
-                        if($slidedata['step'] == 4 && $slidedata['slide'] == 2){
-                            $answer = implode(', ', $answer);
-                        }
-                        else {
-                            $answer = $answer[0];
-                        }
-                    }
-                    else {
-                        $answer = $_POST['answer'];
-                    }
-
-                    /** Slide 4.1 has options instead of radios **/
-                    if($_POST['current_slide'] == '4.1'){
-                        $options = is_array($_POST['option']) ? array_keys($_POST['option']) : null;
-                        $slidedata['extra'] = !empty($_POST['option']) ? implode(';', $options) : '';
-                        $answer = '';
-                        $this->set('selection', $options);
-                    }
-
-
-                    $slidedata['answer'] = $answer;
+                    $slidedata['answer'] = serialize($_POST['answer']);
 
                     // creating or updating ?
-                    if(isset($_POST['slide_update']) && !empty($_POST['slide_update'])){
-                        $toUpdate = $Slide->findSlide($slidedata['project'], $slide->idslide_list);
-
+                    $toUpdate = $Slide->findSlide($slidedata['project'], $slide->idslide_list);
+                    if ($toUpdate) {
                         $Slide->update($slidedata, $toUpdate[0]->idslides);
-
-                        /** add a filter to sort out exiting pages **/
-                        if(isset($_POST['edit']) && $_POST['edit'] === 'true'){
-
-                            $this->set('edit', true);
-                            //header('Location: /user/projects/?cd=2');
-                        }
-
-                    }
-                    else {
-                        // check if we are skipping stuff
-                        /*if($slide['step'] == 1 && $slide['position'] == 11 && (isset($_GET['skipped']))){
-                            $slide['answer'] ==
-                        }*/
+                    } else {
 
                         $r = $Slide->create($slidedata);
-                        // Check values in the choice @ the end of Step 3
-                        if($slidedata['step'] == 3 && $slidedata['slide'] == 7 ) {
-                            $choice = $_POST['choice'];
-                            if(!in_array('no', $choice)){
-                                header('Location: /project/slide/4.10?p='.$hash);
-                            }
-                        }
                     }
+                    
                 }
 
-                /** Conditional Logic bits **/
-                // Skip a slide if user does not select "New tool" on 2.5
-                if(isset($_POST) && !empty($_POST)){
-                  if($slidedata['step'] == 2 && $slidedata['slide'] == 5 && $slidedata['choice'] != 3){
-                    header('Location: /project/slide/2.7?p='.$hash);
-                  }
-                }
-
+                
                 $projectSlideIndex = $this->Project->getIndex($idProject);
 
                 // rearraange the index for our purposes
