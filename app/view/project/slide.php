@@ -67,32 +67,28 @@
                             $text = $prevAnswer['content'];
                           }
 
-                          // multiple answer slides
-                          if( in_array( $currentSlide, $multiSlides )){
-                            echo injectMultipleAnswerField($text, 'answer', $origin);
+                          switch($slide->slide_type){
+                            case 1:
+                              echo $text;
+                              break;
+                            case 2:
+                              $text = injectChoiceButtons($text);
+                              $text = injectChoicePanels($text);
+                              $text = injectRadioButtons($text);
+                              $text = injectCheckboxes($text);
+                              $text = injectMultipleAnswerField($text, 'answer', $origin);
+                              echo injectAnswerField($text, 'answer', $origin);
+                              break;
+                            case 3:
+                              echo injectAnswerField($text, 'answer', $origin);
+                              break;
+                            default:
+                              $text = injectParam($text, 'project', $_SESSION['project']);
+                              $text = injectParam($text, 'step', $step_number);
+                              echo $text;
+                              break;
                           }
-                          else {
-                            switch($slide->slide_type){
-                              case 1:
-                                echo $text;
-                                break;
-                              case 2:
-                                $text = injectChoiceButtons($text);
-                                $text = injectChoicePanels($text);
-                                $text = injectRadioButtons($text);
-                                $text = injectCheckboxes($text);
-                                echo injectAnswerField($text, 'answer', $origin);
-                                break;
-                              case 3:
-                                echo injectAnswerField($text, 'answer', $origin);
-                                break;
-                              default:
-                                $text = injectParam($text, 'project', $_SESSION['project']);
-                                $text = injectParam($text, 'step', $step_number);
-                                echo $text;
-                                break;
-                            }
-                          }
+                          
                         }
 
 

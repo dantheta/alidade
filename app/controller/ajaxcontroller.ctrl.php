@@ -5,6 +5,7 @@
 
     class AjaxController extends Controller {
 
+        // FIXME: remove multislides
         var $multiSlides = array( '3.2', '4.2', '4.5' );
 
         public function save_project_name(){

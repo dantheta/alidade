@@ -170,6 +170,7 @@
                         
                     }
                     // do that for the other multifields too
+                    // FIXME: remove multislide var
                     elseif(in_array($_POST['current_slide'], $this->multiSlides)){
                         $answer = implode('##break## ', $_POST['answer']);
                     }
