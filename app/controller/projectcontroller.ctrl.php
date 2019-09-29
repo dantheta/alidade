@@ -179,7 +179,7 @@
                         $answer = array_filter($_POST['answer']);
 
                         // implode checkboxes in step 4.2
-                        if($slide['step'] == 4 && $slide['slide'] == 2){
+                        if($slidedata['step'] == 4 && $slidedata['slide'] == 2){
                             $answer = implode(', ', $answer);
                         }
                         else {
