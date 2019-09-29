@@ -223,7 +223,7 @@
 
                         $r = $Slide->create($slidedata);
                         // Check values in the choice @ the end of Step 3
-                        if($slide['step'] == 3 && $slide['slide'] == 7 ) {
+                        if($slidedata['step'] == 3 && $slidedata['slide'] == 7 ) {
                             $choice = $_POST['choice'];
                             if(!in_array('no', $choice)){
                                 header('Location: /project/slide/4.10?p='.$hash);
@@ -235,7 +235,7 @@
                 /** Conditional Logic bits **/
                 // Skip a slide if user does not select "New tool" on 2.5
                 if(isset($_POST) && !empty($_POST)){
-                  if($slide['step'] == 2 && $slide['slide'] == 5 && $slide['choice'] != 3){
+                  if($slidedata['step'] == 2 && $slidedata['slide'] == 5 && $slidedata['choice'] != 3){
                     header('Location: /project/slide/2.7?p='.$hash);
                   }
                 }
