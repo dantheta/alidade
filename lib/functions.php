@@ -330,7 +330,7 @@
     }
 
     function injectRadioButtons($string) {
-        preg_match_all('/\[--radio\|(?<name>\w+)\|(?<title>[\s\w]+?)--]/', $string, $matches);
+        preg_match_all('/\[--radio\|(?<name>\w+)\|(?<title>.*?)--]/', $string, $matches);
         $fullMatches = $matches[0];
         $titles = $matches['title'];
         $names = $matches['name'];
@@ -345,7 +345,7 @@
     }
 
     function injectCheckboxes($string) {
-        preg_match_all('/\[--check\|(?<name>[\[\]\w]+)\|(?<title>[\s\w]+?)--]/', $string, $matches);
+        preg_match_all('/\[--check\|(?<name>[\[\]\w]+)\|(?<title>.*?)--]/', $string, $matches);
         $fullMatches = $matches[0];
         $titles = $matches['title'];
         $names = $matches['name'];
