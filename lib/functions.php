@@ -152,7 +152,7 @@
     function injectAnswerField($string, $name = 'answer', $origin = null){
         
         return preg_replace_callback(
-            '|\[--answer--]|',
+            '|\[--answer--]|m',
             function ($matches) use ($name, $origin) {
                 return "<textarea id=\"answer\" name=\"${name}\" class=\"form-control\" rows=\"8\">" . (!is_null($origin) ? $origin->answer : '' ) . '</textarea>';
             },
@@ -256,12 +256,9 @@
     }
 
     function injectBox($string){
-        preg_match_all('/\[--box\|(?<name>\w+)--](.*?)\[--endbox--]/', $string, $matches);
-        //preg_match_all('/\[--box\|(\w+)--](.+?)\[--endbox--]/im', $string, $matches);
-        $boxes = array();
         
         $output = preg_replace_callback(
-            '|\[--box\|(?<name>\w+)--](.*?)\[--endbox--]|',
+            '|\[--box\|(?<name>\w+)--](.*?)\[--endbox--]|s',
             function ($matches) use (&$boxes) {
                 $box = $matches['name'];
                 $text = $matches[2];
@@ -336,7 +333,7 @@
         return preg_replace_callback(
             '/\[--check\|(?<name>[\[\]\w]+)\|(?<title>.*?)--]/',
             function ($matches) {
-                return "<div class=\"checkbox\"><input id=\"check-{$name}\" name=\"{$matches['name']}\" type=\"checkbox\" value=\"{$matches['title']}\"> {$matches['title']}</div>";
+                return "<div class=\"checkbox\"><input id=\"check-{$matches['name']}\" name=\"{$matches['name']}\" type=\"checkbox\" value=\"{$matches['title']}\"> {$matches['title']}</div>";
             },
             $string);        
     }

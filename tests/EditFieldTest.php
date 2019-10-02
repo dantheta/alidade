@@ -25,11 +25,11 @@ class EditFieldTest extends TestCase {
     }
 
     public function testBox() {
-        $output = injectBox("stuff\n[--box|casestudy--]SomeText[--endbox--]\nmore stuff");
+        $output = injectBox("stuff\n[--box|casestudy--]\nSomeText\nSomeText2\n[--endbox--]\nmore stuff");
         
         $this->assertCount(2, $output);
         $this->assertSame($output['content'], "stuff\n\nmore stuff");
-        $this->assertSame($output['boxes'][0], "<div class=\"box box-casestudy\"><h3>case study</h3>SomeText</div>");
+        $this->assertSame($output['boxes'][0], "<div class=\"box box-casestudy\"><h3>case study</h3>\nSomeText\nSomeText2\n</div>");
         
     }
     
