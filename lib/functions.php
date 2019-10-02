@@ -150,26 +150,28 @@
 
     /** inject textarea and parse tags in text **/
     function injectAnswerField($string, $name = 'answer', $origin = null){
-        return str_replace('[--answer--]', '<textarea id="answer" name="'.$name.'" class="form-control" rows="8">' . (!is_null($origin) ? $origin->answer : '' ) . '</textarea>', $string);
+        
+        return preg_replace_callback(
+            '|\[--answer--]|',
+            function ($matches) use ($name, $origin) {
+                return "<textarea id=\"answer\" name=\"${name}\" class=\"form-control\" rows=\"8\">" . (!is_null($origin) ? $origin->answer : '' ) . '</textarea>';
+            },
+            $string);
     }
     function injectMultipleAnswerField($string, $name = 'answer', $origin = null){
         // get data from answer fields
         $a = explode('##break##', $origin->answer);
         $a = array_map('trim', $a);
 
-        // match placeholders
-        preg_match_all('/\[--multiple-answer-\d--]/', $string, $matches);
-        $matches = $matches[0];
-
-        // cycle over matches and inject answer text
-        foreach($matches as $i => $match){
-            $string = str_replace(  '[--multiple-answer-' . $i . '--]',
-                                    '<textarea id="answer-'.$i.'" name="'.$name.'['.$i.']" class="form-control" rows="8">' . ( isset($a[$i]) ? $a[$i] : '' ) . '</textarea>',
-                                    $string );
-        }
-
-        //return htmled string
-        return $string;
+        return preg_replace_callback(
+            '|\[--multiple-answer-(?<i>\d)--]|',
+            function ($matches) use ($a, $name) {
+                $i = $matches['i'];
+                return "<textarea id=\"answer-${i}\" name=\"${name}[${i}]\" class=\"form-control\" rows=\"8\">" . ( isset($a[$i]) ? $a[$i] : '' ) . '</textarea>';
+                
+            },
+            $string);
+            
     }
 
     function injectParam($string, $param, $value){
@@ -257,46 +259,38 @@
         preg_match_all('/\[--box\|(?<name>\w+)--](.*?)\[--endbox--]/', $string, $matches);
         //preg_match_all('/\[--box\|(\w+)--](.+?)\[--endbox--]/im', $string, $matches);
         $boxes = array();
-        // dbga($matches);
-        $fullMatches = $matches[0];
-        $names = $matches['name'];
-        $texts = $matches[2];
-        foreach($fullMatches as $index => $match){
-            $string = str_replace($match, '', $string);
-        }
-        foreach($names as $i => $box){
-
-            $boxes[] = '<div class="box box-' . $box . '"><h3>' . ($box=='casestudy' ? 'case study' : $box) . '</h3>' . $texts[$i] . '</div>';
-        }
-        return array('content' => $string, 'boxes' => $boxes);
+        
+        $output = preg_replace_callback(
+            '|\[--box\|(?<name>\w+)--](.*?)\[--endbox--]|',
+            function ($matches) use (&$boxes) {
+                $box = $matches['name'];
+                $text = $matches[2];
+                $boxes[] = "<div class=\"box box-${box}\"><h3>" . ($box=='casestudy' ? 'case study' : $box) . '</h3>' . $text . '</div>';
+                return "";
+            },
+            $string);
+        
+        return array('content' => $output, 'boxes' => $boxes);
     }
 
     function injectChoiceButtons($string) {
-        preg_match_all('/\[--choicebutton\|(?<name>\w+)\|(?<title>[\s\w]+)--]/', $string, $matches);
-        $titles = $matches['title'];
-        $names = $matches['name'];
-        foreach($names as $name) {
-            $title = array_shift($titles);
-            $string = str_replace("[--choicebutton|{$name}|{$title}--]",
-                                  "<a href=\"#\" class=\"btn btn-alidade btn-lg picker\" data-target=\"#{$name}\">{$title}</a>",
-                                  $string);
-        }
-        return $string;            
+        return preg_replace_callback(
+            '/\[--choicebutton\|(?<name>\w+)\|(?<title>[\s\w]+)--]/', 
+            function ($matches) {
+                return "<a href=\"#\" class=\"btn btn-alidade btn-lg picker\" data-target=\"#{$matches['name']}\">{$matches['title']}</a>";
+            },
+            $string);
+
     }
 
     function injectChoicePanels($string) {
-        preg_match_all('/\[--choicepanel\|(?<name>\w+)--](.*?)\[--endchoicepanel--]/', $string, $matches);
-        $fullMatches = $matches[0];
-        $names = $matches['name'];
-        $contents = $matches[2];
-        foreach($fullMatches as $match) {
-            $name = array_shift($names);
-            $content = array_shift($contents);
-            
-            $string = str_replace($match, "<div class=\"row hide picks\" id=\"{$name}\">{$content}</div>", $string);
-        }
+        return preg_replace_callback(
+            '/\[--choicepanel\|(?<name>\w+)--](.*?)\[--endchoicepanel--]/', 
+            function ($matches) {
+                return "<div class=\"row hide picks\" id=\"{$matches['name']}\">{$matches[2]}</div>";
+            },
+            $string);
         
-        return $string;
     }
 
     function injectDropDown($string) {
@@ -330,33 +324,21 @@
     }
 
     function injectRadioButtons($string) {
-        preg_match_all('/\[--radio\|(?<name>\w+)\|(?<title>.*?)--]/', $string, $matches);
-        $fullMatches = $matches[0];
-        $titles = $matches['title'];
-        $names = $matches['name'];
-        foreach($fullMatches as $match) {
-            $name = array_shift($names);
-            $title = array_shift($titles);
-            $string = str_replace($match,
-                                  "<div class=\"radio\"><label><input id=\"choice-{$name}\" name=\"choice\" class=\"choice\" type=\"radio\" value=\"{$name}\"> {$title}</label></div>",
-                                  $string);
-        }
-        return $string;            
+        return preg_replace_callback(
+            '/\[--radio\|(?<name>\w+)\|(?<title>.*?)--]/',
+            function ($matches) {
+                return "<div class=\"radio\"><label><input id=\"choice-{$matches['name']}\" name=\"choice\" class=\"choice\" type=\"radio\" value=\"{$matches['name']}\"> {$matches['title']}</label></div>";
+            },
+            $string);
     }
 
     function injectCheckboxes($string) {
-        preg_match_all('/\[--check\|(?<name>[\[\]\w]+)\|(?<title>.*?)--]/', $string, $matches);
-        $fullMatches = $matches[0];
-        $titles = $matches['title'];
-        $names = $matches['name'];
-        foreach($fullMatches as $match) {
-            $name = array_shift($names);
-            $title = array_shift($titles);
-            $string = str_replace($match,
-                                  "<div class=\"checkbox\"><input id=\"check-{$name}\" name=\"{$name}\" type=\"checkbox\" value=\"{$title}\"> {$title}</div>",
-                                  $string);
-        }
-        return $string;            
+        return preg_replace_callback(
+            '/\[--check\|(?<name>[\[\]\w]+)\|(?<title>.*?)--]/',
+            function ($matches) {
+                return "<div class=\"checkbox\"><input id=\"check-{$name}\" name=\"{$matches['name']}\" type=\"checkbox\" value=\"{$matches['title']}\"> {$matches['title']}</div>";
+            },
+            $string);        
     }
 
     /** title printing, parsing position **/
