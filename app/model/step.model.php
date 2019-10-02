@@ -12,7 +12,7 @@
             
             $ret = $stmt->fetchColumn();
             if (is_null($ret)) {
-                return 0;
+                return 1;
             }
             return $ret;
         }
