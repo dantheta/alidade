@@ -256,7 +256,8 @@
     }
 
     function injectBox($string){
-        
+    
+        $boxes = array();
         $output = preg_replace_callback(
             '|\[--box\|(?<name>\w+)--](.*?)\[--endbox--]|s',
             function ($matches) use (&$boxes) {
