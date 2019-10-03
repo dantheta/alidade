@@ -274,7 +274,7 @@
         return preg_replace_callback(
             '/\[--choicebutton\|(?<name>\w+)\|(?<title>[\s\w]+)--]/', 
             function ($matches) {
-                return "<a href=\"#\" class=\"btn btn-alidade btn-lg picker\" data-target=\"#{$matches['name']}\">{$matches['title']}</a>";
+                return "<a href=\"#\" class=\"btn btn-alidade btn-lg picker\" data-target=\"#{$matches['name']}\">{$matches['title']}</a>&nbsp;";
             },
             $string);
 
