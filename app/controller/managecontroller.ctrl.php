@@ -208,15 +208,15 @@
                         $slides = $step['_slides'];
                         unset($step['_slides']);
                         $Step->create($step);
-                        $result[] = "Created step {$step[title]}";
+                        $result[] = "Created step {$step['title']}";
                         foreach($slides as $slide) {
                             $SlideList->create($slide);
-                            $result[] = "Created slide {$slide[title]}";
+                            $result[] = "Created slide {$slide['title']}";
                         }
                     }
                     foreach($data['pages'] as $page) {
                         $Page->create($page);
-                        $result[] = "Created page {$page[title]}";
+                        $result[] = "Created page {$page['title']}";
                     }
                     $this->set('result', $result);
                 } else {
