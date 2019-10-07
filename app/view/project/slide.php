@@ -8,7 +8,7 @@
     $backKey = key($slideListMenu);
 */
 
-    $origin = !isset($original) ? null : $original[0];
+    $origin = $original;
     $slideListMenu = $slideMenu;
     $keys = array_keys($slideMenu);
     $flipped_keys = array_flip(array_keys($slideMenu));
@@ -40,13 +40,13 @@
                         <input type="hidden" name="hash"  value="<?php echo $projecthash; ?>">
                         <input type="hidden" name="next_slide"  value="<?php echo $nextSlide; ?>">
                         <input type="hidden" name="current_project" value="<?php echo $_SESSION['project']; ?>">
-                        <input type="hidden" id="extra-holder" value="<?php echo $origin->extra; ?>">
+                        <input type="hidden" name="idslide_list" value="<?php echo $slide->idslide_list; ?>">
                         <input type="hidden" name="extra" value="<?php echo(!empty($extra) ? $extra : ''); ?>" id="extra13">
 
                         <?php
 
                         if(!is_null($original)) { ?>
-                        <input type="hidden" name="slide_update" value="<?php echo $_SESSION['project']; ?>">
+                        <input type="hidden" name="slide_update" value="<?php echo $slidecontent->idslides; ?>">
                         <?php }
                         if(isset($edit) && $edit == true ) { ?>
                         <input type="hidden" name="edit" value="true">

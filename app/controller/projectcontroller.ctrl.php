@@ -124,13 +124,16 @@
                         $idProject = $project[0]->idprojects;
                     }
 
-                    $slidecontent = $Slide->find(array(
-                                                       'project'    => $project[0]->idprojects,
-                                                       'slide'      => $slide->idslide_list,
-                                                       ));
+                    $slidecontent = $Slide->findSlide($project[0]->idprojects,
+                                                      $slide->idslide_list);
+                    print_r(json_decode($slidecontent->answer, TRUE));
                     //$slidecontent[0]->full_project = $project[0];
                     if($slidecontent){
-                        $this->set('original', json_decode($slidecontent->answer));
+                        $original = json_decode($slidecontent->answer, TRUE);
+                        print_r($original);
+                        $this->set('original', $original);
+                        $this->set('extra', $slidecontent->extra);
+                        $this->set('slidecontent', $slidecontent);
                     }
 
                     if(isset($_GET['back'])){
@@ -144,18 +147,17 @@
 
                     $slidedata = array();
                     $slidedata['project'] = $_SESSION['project'];
-                    $slidedata['slide'] = $slide->idslide_list;
+                    $slidedata['slide'] = $_POST['idslide_list'];
                     $slidedata['status'] = 2;
                     $slidedata['choice'] = (!empty($_POST['choice']) ? $_POST['choice'] : null);
                     $slidedata['extra'] = (!empty($_POST['extra']) ? $_POST['extra'] : null);
-                    unset($_POST['choice']);
                     unset($_POST['extra']);
-                    $slidedata['answer'] = json_encode($_POST);
+                    $slidedata['answer'] = json_encode($_POST, TRUE);
 
                     // creating or updating ?
-                    $toUpdate = $Slide->findSlide($slidedata['project'], $slide->idslide_list);
+                    $toUpdate = $Slide->findOne($_POST['slide_update']);
                     if ($toUpdate) {
-                        $Slide->update($slidedata, $toUpdate[0]->idslides);
+                        $Slide->update($slidedata, $toUpdate->idslides);
                     } else {
 
                         $r = $Slide->create($slidedata);
