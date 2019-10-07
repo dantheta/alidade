@@ -329,7 +329,7 @@
             '/\[--radio\|(?<name>\w+)\|(?<title>.*?)--]/',
             function ($matches) use ($original) {
                 if (@$original['choice'] == $matches['name']) {
-                    $sel = " checked";
+                    $sel = "checked";
                 } else {
                     $sel = "";
                 }
@@ -342,7 +342,7 @@
         return preg_replace_callback(
             '/\[--check\|(?<name>[\[\]\w]+)\|(?<title>.*?)--]/',
             function ($matches) use ($original) {
-                if ($original[$matches['name']]) {
+                if (@$original[$matches['name']]) {
                     $sel = "checked";
                 } else {
                     $sel = "";

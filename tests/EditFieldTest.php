@@ -11,6 +11,12 @@ class EditFieldTest extends TestCase {
         
         $this->assertSame($output, "stuff\n<textarea id=\"answer\" name=\"answer\" class=\"form-control\" rows=\"8\"></textarea>\nmore stuff");
     }
+    public function testAnswerFieldWithOriginal() {
+        $original = array('answer' => 'foo');
+        $output = injectAnswerField("stuff\n[--answer--]\nmore stuff", "answer", $original);
+        
+        $this->assertSame($output, "stuff\n<textarea id=\"answer\" name=\"answer\" class=\"form-control\" rows=\"8\">foo</textarea>\nmore stuff");
+    }
 
     public function testMultipleAnswer() {
         $origin = array();
@@ -19,6 +25,18 @@ class EditFieldTest extends TestCase {
         $this->assertSame(
             $output,
             "stuff\n<textarea id=\"multianswer-0\" name=\"multianswer[0]\" class=\"form-control\" rows=\"8\"></textarea>\nsection\n<textarea id=\"multianswer-1\" name=\"multianswer[1]\" class=\"form-control\" rows=\"8\"></textarea>\nmore stuff"
+            );
+
+    }
+    public function testMultipleAnswerWithOriginal() {
+        $origin = array('multianswer' => array(0 => 'foo', 1 => 'bar'));
+        $output = injectMultipleAnswerField("stuff\n[--multiple-answer-0--]\nsection\n[--multiple-answer-1--]\nmore stuff", $origin);
+        
+        $this->assertSame(
+            $output,
+            "stuff\n<textarea id=\"multianswer-0\" name=\"multianswer[0]\" class=\"form-control\" rows=\"8\">foo</textarea>
+section
+<textarea id=\"multianswer-1\" name=\"multianswer[1]\" class=\"form-control\" rows=\"8\">bar</textarea>\nmore stuff"
             );
 
     }
@@ -61,6 +79,17 @@ class EditFieldTest extends TestCase {
         );
     }
     
+    public function testRadioButtonsWithOriginal() {
+        $original = array('choice' => 'foo');
+        $output = injectRadioButtons("stuff\n[--radio|foo|Foo--]\n[--radio|bar|Bar--]\nmore stuff", $original);
+        
+        $this->assertSame(
+            $output,
+            "stuff\n<div class=\"radio\"><label><input id=\"choice-foo\" name=\"choice\" checked class=\"choice\" type=\"radio\" value=\"foo\"> Foo</label></div>
+<div class=\"radio\"><label><input id=\"choice-bar\" name=\"choice\"  class=\"choice\" type=\"radio\" value=\"bar\"> Bar</label></div>\nmore stuff"
+        );
+    }
+    
     public function testCheckBoxes() {
         $output = injectCheckboxes("stuff\n[--check|opt1|My stuff--]\n[--check|opt2|Other stuff--]\nmore stuff");
         
@@ -68,6 +97,19 @@ class EditFieldTest extends TestCase {
             $output,
             "stuff
 <div class=\"checkbox\"><input id=\"check-opt1\"  name=\"opt1\" type=\"checkbox\" value=\"My stuff\"> My stuff</div>
+<div class=\"checkbox\"><input id=\"check-opt2\"  name=\"opt2\" type=\"checkbox\" value=\"Other stuff\"> Other stuff</div>
+more stuff"
+        );
+    }
+
+    public function testCheckBoxesWithOriginal() {
+        $original = array('opt1' => 'My stuff');
+        $output = injectCheckboxes("stuff\n[--check|opt1|My stuff--]\n[--check|opt2|Other stuff--]\nmore stuff", $original);
+        
+        $this->assertSame(
+            $output,
+            "stuff
+<div class=\"checkbox\"><input id=\"check-opt1\" checked name=\"opt1\" type=\"checkbox\" value=\"My stuff\"> My stuff</div>
 <div class=\"checkbox\"><input id=\"check-opt2\"  name=\"opt2\" type=\"checkbox\" value=\"Other stuff\"> Other stuff</div>
 more stuff"
         );
