@@ -130,7 +130,7 @@
                                                        ));
                     //$slidecontent[0]->full_project = $project[0];
                     if($slidecontent){
-                        $this->set('original', $slidecontent);
+                        $this->set('original', json_decode($slidecontent->answer));
                     }
 
                     if(isset($_GET['back'])){
@@ -148,7 +148,9 @@
                     $slidedata['status'] = 2;
                     $slidedata['choice'] = (!empty($_POST['choice']) ? $_POST['choice'] : null);
                     $slidedata['extra'] = (!empty($_POST['extra']) ? $_POST['extra'] : null);
-                    $slidedata['answer'] = serialize($_POST['answer']);
+                    unset($_POST['choice']);
+                    unset($_POST['extra']);
+                    $slidedata['answer'] = json_encode($_POST);
 
                     // creating or updating ?
                     $toUpdate = $Slide->findSlide($slidedata['project'], $slide->idslide_list);

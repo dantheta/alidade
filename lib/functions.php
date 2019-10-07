@@ -154,20 +154,23 @@
         return preg_replace_callback(
             '|\[--answer--]|m',
             function ($matches) use ($name, $origin) {
-                return "<textarea id=\"answer\" name=\"${name}\" class=\"form-control\" rows=\"8\">" . (!is_null($origin) ? $origin->answer : '' ) . '</textarea>';
+                return "<textarea id=\"answer\" name=\"${name}\" class=\"form-control\" rows=\"8\">" . (!is_null($origin) ? $origin['answer'] : '' ) . '</textarea>';
             },
             $string);
     }
-    function injectMultipleAnswerField($string, $name = 'answer', $origin = null){
+    function injectMultipleAnswerField($string, $origin = null){
         // get data from answer fields
-        $a = explode('##break##', $origin->answer);
-        $a = array_map('trim', $a);
+        $name = 'multianswer';
+        $a = @$origin[$name];
+        if (is_array($a)) {
+            $a = array_map('trim', $a);
+        }
 
         return preg_replace_callback(
             '|\[--multiple-answer-(?<i>\d)--]|',
             function ($matches) use ($a, $name) {
                 $i = $matches['i'];
-                return "<textarea id=\"answer-${i}\" name=\"${name}[${i}]\" class=\"form-control\" rows=\"8\">" . ( isset($a[$i]) ? $a[$i] : '' ) . '</textarea>';
+                return "<textarea id=\"multianswer-${i}\" name=\"${name}[${i}]\" class=\"form-control\" rows=\"8\">" . ( isset($a[$i]) ? $a[$i] : '' ) . '</textarea>';
                 
             },
             $string);
@@ -321,20 +324,30 @@
         return $string;            
     }
 
-    function injectRadioButtons($string) {
+    function injectRadioButtons($string, $original=null) {
         return preg_replace_callback(
             '/\[--radio\|(?<name>\w+)\|(?<title>.*?)--]/',
-            function ($matches) {
-                return "<div class=\"radio\"><label><input id=\"choice-{$matches['name']}\" name=\"choice\" class=\"choice\" type=\"radio\" value=\"{$matches['name']}\"> {$matches['title']}</label></div>";
+            function ($matches) use ($original) {
+                if (@$original['choice'] == $matches['name']) {
+                    $sel = " checked";
+                } else {
+                    $sel = "";
+                }
+                return "<div class=\"radio\"><label><input id=\"choice-{$matches['name']}\" name=\"choice\" $sel class=\"choice\" type=\"radio\" value=\"{$matches['name']}\"> {$matches['title']}</label></div>";
             },
             $string);
     }
 
-    function injectCheckboxes($string) {
+    function injectCheckboxes($string, $original=null) {
         return preg_replace_callback(
             '/\[--check\|(?<name>[\[\]\w]+)\|(?<title>.*?)--]/',
-            function ($matches) {
-                return "<div class=\"checkbox\"><input id=\"check-{$matches['name']}\" name=\"{$matches['name']}\" type=\"checkbox\" value=\"{$matches['title']}\"> {$matches['title']}</div>";
+            function ($matches) use ($original) {
+                if ($original[$matches['name']]) {
+                    $sel = "checked";
+                } else {
+                    $sel = "";
+                }
+                return "<div class=\"checkbox\"><input id=\"check-{$matches['name']}\" $sel name=\"{$matches['name']}\" type=\"checkbox\" value=\"{$matches['title']}\"> {$matches['title']}</div>";
             },
             $string);        
     }

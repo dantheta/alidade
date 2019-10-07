@@ -13,13 +13,12 @@ class EditFieldTest extends TestCase {
     }
 
     public function testMultipleAnswer() {
-        $origin = new stdClass();
-        $origin->answer = '';
-        $output = injectMultipleAnswerField("stuff\n[--multiple-answer-0--]\nsection\n[--multiple-answer-1--]\nmore stuff", "answer", $origin);
+        $origin = array();
+        $output = injectMultipleAnswerField("stuff\n[--multiple-answer-0--]\nsection\n[--multiple-answer-1--]\nmore stuff", $origin);
         
         $this->assertSame(
             $output,
-            "stuff\n<textarea id=\"answer-0\" name=\"answer[0]\" class=\"form-control\" rows=\"8\"></textarea>\nsection\n<textarea id=\"answer-1\" name=\"answer[1]\" class=\"form-control\" rows=\"8\"></textarea>\nmore stuff"
+            "stuff\n<textarea id=\"multianswer-0\" name=\"multianswer[0]\" class=\"form-control\" rows=\"8\"></textarea>\nsection\n<textarea id=\"multianswer-1\" name=\"multianswer[1]\" class=\"form-control\" rows=\"8\"></textarea>\nmore stuff"
             );
 
     }
@@ -38,7 +37,7 @@ class EditFieldTest extends TestCase {
         
         $this->assertSame(
             $output,
-            "stuff\n<a href=\"#\" class=\"btn btn-alidade btn-lg picker\" data-target=\"#foo\">Foo</a>\nmore stuff"
+            "stuff\n<a href=\"#\" class=\"btn btn-alidade btn-lg picker\" data-target=\"#foo\">Foo</a>&nbsp;\nmore stuff"
         );
         
     }
@@ -57,8 +56,8 @@ class EditFieldTest extends TestCase {
         
         $this->assertSame(
             $output,
-            "stuff\n<div class=\"radio\"><label><input id=\"choice-foo\" name=\"choice\" class=\"choice\" type=\"radio\" value=\"foo\"> Foo</label></div>
-<div class=\"radio\"><label><input id=\"choice-bar\" name=\"choice\" class=\"choice\" type=\"radio\" value=\"bar\"> Bar</label></div>\nmore stuff"
+            "stuff\n<div class=\"radio\"><label><input id=\"choice-foo\" name=\"choice\"  class=\"choice\" type=\"radio\" value=\"foo\"> Foo</label></div>
+<div class=\"radio\"><label><input id=\"choice-bar\" name=\"choice\"  class=\"choice\" type=\"radio\" value=\"bar\"> Bar</label></div>\nmore stuff"
         );
     }
     
@@ -68,8 +67,8 @@ class EditFieldTest extends TestCase {
         $this->assertSame(
             $output,
             "stuff
-<div class=\"checkbox\"><input id=\"check-opt1\" name=\"opt1\" type=\"checkbox\" value=\"My stuff\"> My stuff</div>
-<div class=\"checkbox\"><input id=\"check-opt2\" name=\"opt2\" type=\"checkbox\" value=\"Other stuff\"> Other stuff</div>
+<div class=\"checkbox\"><input id=\"check-opt1\"  name=\"opt1\" type=\"checkbox\" value=\"My stuff\"> My stuff</div>
+<div class=\"checkbox\"><input id=\"check-opt2\"  name=\"opt2\" type=\"checkbox\" value=\"Other stuff\"> Other stuff</div>
 more stuff"
         );
     }
