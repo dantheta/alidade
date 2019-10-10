@@ -114,4 +114,17 @@ more stuff"
 more stuff"
         );
     }
+    
+    public function testGetPlaceholders() {
+        $result = getPlaceholders(" stuff [--box|foo|bar--] other [--check|opt|My Stuff--] other");
+        
+        $this->assertSame(
+            $result,
+            array(
+                array('box','foo','bar'),
+                array('check','opt','My Stuff')
+                )
+            );
+            
+    }
 }

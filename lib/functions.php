@@ -148,6 +148,15 @@
         return strtolower($t);
     }
 
+    function getPlaceholders($str) {
+        $ph = array();
+        preg_match_all('/\[--(.*?)\--]/', $str, $matches);
+        foreach ($matches[1] as $match) {
+            $ph[] = explode('|', $match);
+        }
+        return $ph;
+    }
+
     /** inject textarea and parse tags in text **/
     function injectAnswerField($string, $name = 'answer', $origin = null){
         
