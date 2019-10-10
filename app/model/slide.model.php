@@ -63,30 +63,34 @@
             }
         }
 
-        public function findPreviousAnswer($hash, $step, $slide){
+        public function findPreviousAnswer($project, $step, $slide){
             $sql.='
             SELECT
                 `slides`.*,
                 `slide_list`.`title`,
                 `slide_list`.`description`,
-                `projects`.`hash`
+                `projects`.`hash`,
+                `slide_list`.`description` as slide_description
             FROM `slides`
-            INNER JOIN `slide_list` ON (`slide_list`.`step` = `slides`.`step` AND `slide_list`.`position` = `slides`.`slide`)
+            INNER JOIN `slide_list` ON (`slide_list`.`idslide_list` = `slides`.`slide`)
+            INNER JOIN `steps` on (slide_list.step = steps.idsteps)
             INNER JOIN `projects` ON `projects`.`idprojects` = `slides`.`project`
             WHERE
-                `projects`.`hash` = :hash AND `slides`.`step` = :step and `slides`.`slide` = :slide
+                `projects`.`idprojects` = :project AND 
+                `steps`.`position` = :step AND
+                `slide_list`.`position` = :slide
             ORDER BY `slides`.`modified_at` DESC
             LIMIT 1';
             $stmt = $this->database->prepare($sql);
 
-            $stmt->bindParam(':hash', $hash, PDO::PARAM_STR);
+            $stmt->bindParam(':project', $project, PDO::PARAM_STR);
             $stmt->bindParam(':step', $step, PDO::PARAM_INT);
             $stmt->bindParam(':slide', $slide, PDO::PARAM_INT);
 
             $q = $stmt->execute();
 
             if(!$q){
-                new Error(601, 'Could not execute query. (slide.model.php, 20)');
+                new ErrorMsg(601, 'Could not execute query. (slide.model.php, 20)');
                 return false;
             }
             else {

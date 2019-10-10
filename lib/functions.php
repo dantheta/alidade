@@ -190,43 +190,39 @@
         return str_replace('[--'.$param.'--]', $value, $string);
     }
 
-    function injectPrevAnswer($string){
+    function injectPrevAnswer($string, $project){
         //$string = strip_tags($string, '<div><b><i><a><ul><ol><li>');
+        
+        $Slides = new Slide;
+        
+        return preg_replace_callback(
+            '!\[--prev\|(\d)\.(\d)\|([\w\d\-\[\]]+?)--]!',
+            function ($matches) use ($project, $Slides) {
+                $slidecontent = $Slides->findPreviousAnswer($project, $matches[1], $matches[2]);
+                $name = $matches[3];
+                
+                if (!$slidecontent) {
+                    return "<b>previous answer not found</b>";
+                }
+                
+                $data = json_decode($slidecontent->answer, true);
+                if (is_array($data[$name])) {
+                    $answer = implode(",", $data[$name]);
+                } else {
+                    $answer = $data[$name];
+                }
+                
+                $previous = "<div class=\"previous-answer box box-answer\"><h3>" . $slidecontent->step . "." . $slidecontent->slide . " "  . $slidecontent->title . "</h3>
+<div id=\"answerBox\">" . $answer . "</div>
+<a href=\"#\" class=\"prev-answer\" data-toggle=\"modal\" data-target=\".editPrevAnswer\">I need to change this answer.</a>
+</div>";
+                return $a;
+            },
+            $string
+        );
+        
+        // return array( 'content' => $string, 'slide' => $slide, 'multi' => $multi );
 
-        preg_match_all('/\[--prev\|\d\.\d\--]/im', $string, $matches);
-        $matches =  $matches[0];
-
-        if(!empty($matches) && is_array($matches)){
-
-            $p = explode('|', $matches[0]);
-            $slide = str_replace('--]', '', $p[1]);
-            $parts = explode('.', $slide);
-            $step = $parts[0];
-            $slide = $parts[1];
-            // palce slide model here and use getPreviousANswer method
-            $Slides = new Slide;
-            $hash = filter_var($_GET['p'], FILTER_SANITIZE_SPECIAL_CHARS);
-            $slide = $Slides->findPreviousAnswer($hash, $step, $slide);
-            // if the answer had multi texts, manage that
-            if(preg_match('/##break##/', $slide->answer) !== false){
-                $parts = explode('##break##', $slide->answer);
-                $text = '<ul><li>' . implode('</li><li>', $parts) . '</li></ul>';
-                $multi = true;
-            }
-            else {
-                $text = nl2br($slide->answer);
-                $multi = false;
-            }
-
-            $previous = "<div class=\"previous-answer box box-answer\"><h3>" . $slide->step . "." . $slide->slide . " "  . $slide->title . "</h3><div id=\"answerBox\">" . $text . "</div><a href=\"#\" class=\"prev-answer\" data-toggle=\"modal\" data-target=\".editPrevAnswer\">I need to change this answer.</a></div>";
-
-            $string = str_replace($matches[0], $previous, $string);
-
-            return array( 'content' => $string, 'slide' => $slide, 'multi' => $multi );
-        }
-        else {
-            return false;
-        }
     }
 
     function injectRecap($string){

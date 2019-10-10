@@ -62,10 +62,8 @@
                           $boxes = injectBox($slide->description);
                           $text = $boxes['content'];
 
-                          $prevAnswer = injectPrevAnswer($text);
-                          if($prevAnswer){
-                            $text = $prevAnswer['content'];
-                          }
+                          $text = injectPrevAnswer($text, $_SESSION['project']);
+                          
 
                           switch($slide->slide_type){
                             case 1:

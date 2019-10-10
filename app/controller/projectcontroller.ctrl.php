@@ -126,11 +126,9 @@
 
                     $slidecontent = $Slide->findSlide($project[0]->idprojects,
                                                       $slide->idslide_list);
-                    print_r(json_decode($slidecontent->answer, TRUE));
                     //$slidecontent[0]->full_project = $project[0];
                     if($slidecontent){
                         $original = json_decode($slidecontent->answer, TRUE);
-                        print_r($original);
                         $this->set('original', $original);
                         $this->set('extra', $slidecontent->extra);
                         $this->set('slidecontent', $slidecontent);
