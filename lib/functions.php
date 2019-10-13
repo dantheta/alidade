@@ -198,8 +198,12 @@
         return preg_replace_callback(
             '!\[--prev\|(\d)\.(\d)\|([\w\d\-\[\]]+?)--]!',
             function ($matches) use ($project, $Slides) {
-                $slidecontent = $Slides->findPreviousAnswer($project, $matches[1], $matches[2]);
+                $step = $matches[1];
+                $slide = $matches[2];
+                $slidecontent = $Slides->findPreviousAnswer($project, $step, $slide);
                 $name = $matches[3];
+                
+                //return "$name $project, $step, $slide";
                 
                 if (!$slidecontent) {
                     return "<b>previous answer not found</b>";
@@ -212,11 +216,11 @@
                     $answer = $data[$name];
                 }
                 
-                $previous = "<div class=\"previous-answer box box-answer\"><h3>" . $slidecontent->step . "." . $slidecontent->slide . " "  . $slidecontent->title . "</h3>
+                $previous = "<div class=\"previous-answer box box-answer\"><h3>{$step}.{$slide} {$slidecontent->title}</h3>
 <div id=\"answerBox\">" . $answer . "</div>
-<a href=\"#\" class=\"prev-answer\" data-toggle=\"modal\" data-target=\".editPrevAnswer\">I need to change this answer.</a>
+<!-- <a href=\"#\" class=\"prev-answer\" data-toggle=\"modal\" data-target=\".editPrevAnswer\">I need to change this answer.</a> -->
 </div>";
-                return $a;
+                return $previous;
             },
             $string
         );

@@ -194,10 +194,12 @@ if(( isset($_GET['config-check']) && $_GET['config-check'] == 1) || isset($_POST
                   `created_at` timestamp NULL DEFAULT NULL,
                   `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                   PRIMARY KEY (`idslides`),
+                  UNIQUE KEY `project` (`project`,`slide`),
                   KEY `idxSlideProject` (`project`),
                   KEY `idxSlideSlideList` (`slide`),
                   CONSTRAINT `fkSlideProject` FOREIGN KEY (`project`) REFERENCES `projects` (`idprojects`) ON DELETE CASCADE ON UPDATE NO ACTION,
                   CONSTRAINT `fkSlideSlidelist` FOREIGN KEY (`slide`) REFERENCES `slide_list` (`idslide_list`) ON DELETE CASCADE ON UPDATE NO ACTION,
+                  
                 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
                 
                 CREATE TABLE `pages` (
