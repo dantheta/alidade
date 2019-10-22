@@ -295,7 +295,7 @@
 
     function injectChoicePanels($string) {
         return preg_replace_callback(
-            '/\[--choicepanel\|(?<name>\w+)--](.*?)\[--endchoicepanel--]/', 
+            '/\[--choicepanel\|(?<name>[\w\d]+)--](.*?)\[--endchoicepanel--]/s', 
             function ($matches) {
                 return "<div class=\"row hide picks\" id=\"{$matches['name']}\">{$matches[2]}</div>";
             },

@@ -68,6 +68,14 @@ section
             "stuff\n<div class=\"row hide picks\" id=\"foo\">Some Stuff</div>\nmore stuff"
         );
     }
+    public function testChoicePanelsMultiline() {
+        $output = injectChoicePanels("stuff\n[--choicepanel|foo1--]\nSome Stuff\n[--endchoicepanel--]\nmore stuff");
+        
+        $this->assertSame(
+            $output,
+            "stuff\n<div class=\"row hide picks\" id=\"foo1\">\nSome Stuff\n</div>\nmore stuff"
+        );
+    }
     
     public function testRadioButtons() {
         $output = injectRadioButtons("stuff\n[--radio|foo|Foo--]\n[--radio|bar|Bar--]\nmore stuff");
