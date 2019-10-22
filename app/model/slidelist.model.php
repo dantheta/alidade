@@ -70,7 +70,7 @@
             else {
                 $ret = $stmt->fetchColumn(0);
                 if (is_null($ret)) {
-                    return 1;
+                    return 0;
                 } else {
                     return $ret + 1;
                 }
