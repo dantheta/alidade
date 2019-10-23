@@ -13,6 +13,14 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+         
+        <!-- alpaca -->
+        <link type="text/css" href="//cdn.jsdelivr.net/npm/alpaca@1.5.27/dist/alpaca/bootstrap/alpaca.min.css" rel="stylesheet"/>
+        <script type="text/javascript" src="/dist/js/alpaca.js"></script>
+
         <!-- Local Styles, if Any -->
         <?php if(isset($css) && !empty($css)){ print_styles($css); } ?>
 
@@ -41,6 +49,7 @@
 <!-- End Twitter and Open Graph cards -->
         
 <!-- Matomo -->
+<!--
 <script type="text/javascript">
   var _paq = window._paq || [];
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
@@ -54,6 +63,7 @@
     g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
   })();
 </script>
+-->
 <!-- End Matomo Code -->
 
     </head>

@@ -135,4 +135,28 @@ more stuff"
             );
             
     }
+
+
+    public function testArray() {
+        $result = injectArray("stuff\n[--array|items--]\nstuff",
+            array(
+                'items' => array(
+                    'item1','item2','item3'
+                    )
+                )
+            );
+
+        $exp = <<<EOM
+stuff
+<div id="items"></div>
+<script type="text/javascript">
+$('#items').alpaca({
+    data: ["item1","item2","item3"]
+});
+</script>
+stuff
+EOM;
+
+        $this->assertSame($result, $exp);
+    }
 }

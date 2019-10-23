@@ -303,6 +303,33 @@
         
     }
 
+    function injectArray($string, $original) {
+        return preg_replace_callback(
+            '/\[--array\|(?<name>[\w\d]+)--]/',
+            function ($matches) use ($original) {
+                $name = $matches['name'];
+                if (!@$original[$name]) {
+                    $d = "[]";
+                } else {
+                    $d = json_encode(@$original[$name]);
+                }
+                $s = <<<EOM
+<div id="$name"></div>
+<script type="text/javascript">
+$('#$name').alpaca({
+    data: $d,
+    options: {
+        name: "${name}",
+        id: "$name"
+    }
+});
+</script>
+EOM;
+                return $s;
+            },
+            $string);
+    }
+
     function injectDropDown($string) {
         preg_match_all('/\[--dropdown\|(?<name>\w+)--](.*?)\[--enddropdown--]/', $string, $matches);
         $fullMatches = $matches[0];

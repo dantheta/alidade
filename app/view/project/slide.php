@@ -35,7 +35,7 @@
 
             <div class="row">
                 <div class="col-md-7 col-sm-8 col-xs-12">
-                    <form action="/project/slide/<?php echo $nextSlide . '/?p=' . $projecthash ; ?> " method="post"  id="mainForm">
+                    <form action="/project/slide/<?php echo $nextSlide . '/?p=' . $projecthash ; ?> " method="post"  id="mainForm" rubyrails="true">
                         <input type="hidden" name="current_slide"  value="<?php echo $currentSlide; ?>">
                         <input type="hidden" name="hash"  value="<?php echo $projecthash; ?>">
                         <input type="hidden" name="next_slide"  value="<?php echo $nextSlide; ?>">
@@ -74,6 +74,7 @@
                               $text = injectChoicePanels($text);
                               $text = injectRadioButtons($text, $origin);
                               $text = injectCheckboxes($text, $origin);
+                              $text = injectArray($text, $origin);
                               $text = injectMultipleAnswerField($text, $origin);
                               echo injectAnswerField($text, 'answer', $origin);
                               break;
