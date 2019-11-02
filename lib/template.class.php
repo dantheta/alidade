@@ -21,6 +21,7 @@
                     $excludes[] = $method;
                 }
             }
+            $excludes[] = "form";
             $this->exclude = $excludes;
           
             if($action == 'forbidden'){

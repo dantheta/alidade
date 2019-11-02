@@ -153,11 +153,15 @@
                     $slidedata['answer'] = json_encode($_POST, TRUE);
 
                     // creating or updating ?
-                    $toUpdate = $Slide->findOne($_POST['slide_update']);
+                    $toUpdate = $Slide->find(
+                        array(
+                            'project' => $_POST['current_project'],
+                            'slide' => $_POST['idslide_list'],                    
+                        )
+                    );
                     if ($toUpdate) {
-                        $Slide->update($slidedata, $toUpdate->idslides);
+                        $Slide->update($slidedata, $toUpdate[0]->idslides);
                     } else {
-
                         $r = $Slide->create($slidedata);
                     }
                     
@@ -181,6 +185,35 @@
 
 
             }
+        }
+
+        public function form($slidepos) {
+                $position = explode('.', $slidepos);
+
+                $step_no    = (int)$position[0];
+                $slide_no   = (int)$position[1];
+
+                $Step = new Step;
+                $Slide = new Slide;
+                $Slidelist = new Slidelist;
+
+                $step = $Step->getByPosition($step_no);
+
+                $slide = $Slidelist->getSlide(            
+                                            $step->idsteps,
+                                            $slide_no
+                                            );
+                $slidecontent = $Slide->findSlide($project[0]->idprojects,
+                                                  $slide->idslide_list);
+                $original = json_decode($slidecontent->answer, TRUE);
+
+                $formjson = file_get_contents("forms/$slidepos.json", 'r');
+                $formdata = json_decode($formjson, TRUE);
+
+                ## do some manipulation of the form data depending on which slide it is
+
+                $this->set('formdata', $formdata);
+                $this->set('exclude', 1);
         }
 
     }
