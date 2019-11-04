@@ -24,13 +24,15 @@
 .picks > div { margin-top: 20px; margin-bottom: 15px;  }
 .printer { font-size: 20px; font-weight: 700;  }
 
-#alpaca-form * .alpaca-container legend {
-    background-color: lightgrey;
-    cursor: pointer;
-}
-#alpaca-form * .alpaca-container legend:after {
-    content: "▼";
-}
-#alpaca-form * .alpaca-container .alpaca-container  {
-    display: none;
+#alpaca-form  .alpaca-top .alpaca-container .alpaca-container-item .alpaca-field {
+    legend {
+        background-color: lightgrey;
+        cursor: pointer;
+    }
+    legend:after {
+        content: "▼";
+    }
+    .alpaca-container  {
+        display: none;
+    }
 }
