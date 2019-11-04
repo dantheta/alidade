@@ -1,0 +1,20 @@
+{
+    "title": "Sharing data",
+    "description": "Who else has access to the personal information?",
+    "type": "object",
+    "properties": {
+        "group":{
+            "title": "group",
+            "type": "object",
+            "properties": {
+                "shared_with": {
+                    "type": "array",
+                    "title": "Organisation name(s):"
+                }
+            }
+        }
+    }
+}
+                    
+
+

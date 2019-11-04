@@ -388,6 +388,28 @@ EOM;
             $string);        
     }
 
+    function injectAlpaca($string, $project, $original) {
+        return preg_replace_callback(
+            '/\[--alpaca\|(?<name>[\d\.]+)--]/',
+            function ($matches) use ($original, $project) {
+                $slide = $matches['name'];
+                $out = <<<EOM
+<div id="alpaca-form"></div>
+<script type="text/javascript">
+$('#alpaca-form').alpaca({
+    "schemaSource": "/project/form/$slide?p=$project"
+});
+$(document).on("click", "legend", function(){
+    $(this).next().slideToggle();
+});
+</script>
+EOM;
+                return $out;
+
+            },
+            $string);
+    }
+
     /** title printing, parsing position **/
     function printTitle($slide, $slideTitle){
         $cur = explode('.', $slide);

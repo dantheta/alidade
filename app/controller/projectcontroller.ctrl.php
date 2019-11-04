@@ -211,6 +211,32 @@
                 $formdata = json_decode($formjson, TRUE);
 
                 ## do some manipulation of the form data depending on which slide it is
+                if ($slidepos == "1.1") {
+                    $group = $formdata['properties']['group1'];
+                    unset($formdata['properties']['group1']);
+                    $categories = array("Personal contact details, eg. email and phone number",
+                                        "Location history",
+                                        "Debit or credit card details",
+                                        "Usage data",
+                                        "Facial features of users",
+                                        "Fingerprints");
+
+                    foreach($categories as $cat) {
+                        $k = strtolower(str_replace(" ", "_", $cat));
+                        error_log($k);
+                        $formdata['properties'][$k] = $group;
+                        $formdata['properties'][$k]['title'] = $cat;
+                    }
+                }
+                if ($slidepos == "2.1") {
+                    $group = $formdata['properties']['group'];
+                    unset($formdata['properties']['group']);
+                    foreach($original['data_collected'] as $category) {
+                        $k = strtolower(str_replace(' ', '_', $category);
+                        $formdata['properties'][$k] = $group;
+                        $formdata['properties'][$k]['title'] = $category;
+                    }
+                }
 
                 $this->set('formdata', $formdata);
                 $this->set('exclude', 1);

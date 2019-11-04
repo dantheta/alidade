@@ -44,13 +44,7 @@
                         <input type="hidden" name="extra" value="<?php echo(!empty($extra) ? $extra : ''); ?>" id="extra13">
 
                         <?php
-
-                        if(!is_null($original)) { ?>
-                        <input type="hidden" name="slide_update" value="<?php echo $slidecontent->idslides; ?>">
-                        <?php }
-                        if(isset($edit) && $edit == true ) { ?>
-                        <input type="hidden" name="edit" value="true">
-                        <?php }
+                        
                         /** check if this is a recap slide **/
                         if($slide->slide_type == 4){
                           $boxes = injectBox($slide->description);
@@ -72,6 +66,7 @@
                             case 2:
                               $text = injectChoiceButtons($text);
                               $text = injectChoicePanels($text);
+                              $text = injectAlpaca($text, $_SESSION['project'], $origin);
                               $text = injectRadioButtons($text, $origin);
                               $text = injectCheckboxes($text, $origin);
                               $text = injectArray($text, $origin);
