@@ -232,7 +232,7 @@
                     $group = $formdata['properties']['group'];
                     unset($formdata['properties']['group']);
                     foreach($original['data_collected'] as $category) {
-                        $k = strtolower(str_replace(' ', '_', $category);
+                        $k = strtolower(str_replace(' ', '_', $category));
                         $formdata['properties'][$k] = $group;
                         $formdata['properties'][$k]['title'] = $category;
                     }
