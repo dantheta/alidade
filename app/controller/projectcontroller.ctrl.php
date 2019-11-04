@@ -203,7 +203,7 @@
                                             $step->idsteps,
                                             $slide_no
                                             );
-                $slidecontent = $Slide->findSlide($project[0]->idprojects,
+                $slidecontent = $Slide->findSlide($_GET['p'],
                                                   $slide->idslide_list);
                 $original = json_decode($slidecontent->answer, TRUE);
 
