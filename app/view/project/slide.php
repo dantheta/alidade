@@ -96,22 +96,6 @@
                               <?php
                                 }
                               ?>
-                                <?php
-                                if(isset($inProcess) && $inProcess == true){
-                                    if($currentSlide == '3.5') {
-                                ?>
-                                <p></p>
-                                <p>Do you need more help to choose, build or implement a tool?</p>
-                                <button type="submit" class="btn btn-alidade btn-lg">Yes, we need help</button> or <a href="/project/slide/4.8?p=<?php echo $hash; ?>" class="btn btn-alidade btn-lg">No, we don't</a>
-                                <?php
-                                }
-                                elseif(!is_null($nextSlide) && !empty($nextSlide)) {
-                                ?>
-                                <button type="submit" class="btn btn-alidade btn-lg">NEXT: <?php echo $slideMenu[$nextSlide]; ?></button>
-                                <?php
-                                    }
-                                }
-                                ?>
                             </div>
                         </div>
                     </form>
