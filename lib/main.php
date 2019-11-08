@@ -70,7 +70,11 @@
         if((int)method_exists($controller, $action)){
             call_user_func_array(array($dispatch,$action),$qs);
         } else {
-            new Error(502, 'Controller/Method <strong>'.$controller.'/'.$action.'</strong> Not Found. Program Shutdown. (main.php, 71)');
+            if ((int)method_exists($controller, "_default")) {
+                call_user_func_array(array($dispatch, "_default"), $qs);
+            } else {
+                new Error(502, 'Controller/Method <strong>'.$controller.'/'.$action.'</strong> Not Found. Program Shutdown. (main.php, 71)');
+            }
         }
 
         $dispatch->render();

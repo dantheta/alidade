@@ -32,6 +32,10 @@
             }
         }
 
+        function setAction($action) {
+            $this->_action = $action;
+        }
+
         /** Set Variables **/
         function set($name,$value) {
             $this->variables[$name] = $value;

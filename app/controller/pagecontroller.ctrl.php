@@ -14,11 +14,25 @@
             
         }
 
+        private function setAction($action) {
+            /* Used to update the action when the _default controller method us used */
+            $this->action = $action;
+            $this->_template->setAction($action);  // set the action on the template object too 
+
+        }
+
         public function index($url = null){
             $url = (is_null($url) ? 'homepage' : $url);
             $url = filter_var($url, FILTER_SANITIZE_URL);
 
+            $page = $this->Page->find(array('url' => $url));
 
+            $this->set('page', $page[0]->contents);
+        }
+
+        public function _default($url=null) {
+            $this->setAction("index");
+            return $this->index($url);
         }
 
         public function research(){
