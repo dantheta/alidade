@@ -37,14 +37,21 @@
                 </div>
 
                 <div id="pages" role="tabpanel" class="tab-pane manage-pane">
+                    <div style="float: right"><a class="btn btn-default" href="/manage/page/new">Add new page</a></div>
                     <h2>Pages</h2>
-                    <ul>
+                    <table class="table">
                         <?php foreach ( $pages as $page ){ ?>
-                        <li>
-                            <a href="/manage/page/<?php echo $page->idpages; ?>"><?php echo $page->title; ?></a>
-                        </li>
+                        <tr>
+                            <td><a href="/manage/page/<?php echo $page->idpages; ?>"><?php echo $page->title; ?></a></td>
+                            <td>/page/<?php echo $page->url; ?></td>
+                            <td>
+                            <a class="deletepage" href="/manage/pagedel/<?php echo $page->idpages; ?>">
+                              <span class="glyphicon glyphicon-trash"></span> Delete</a>
+                            </td>
+
+                        </tr>
                         <?php  } ?>
-                    </ul>
+                    </table>
                 </div>
 
                 <div id="steps" role="tabpanel" class="tab-pane manage-pane active">

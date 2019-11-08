@@ -48,18 +48,32 @@
                 $data['url'] = $_POST['url'];
                 $data['contents'] = $_POST['contents'];
                 $id = $_POST['page'];
-                $update = $Pages->update($data, $id);
-                if($update){
-                    $response['success'] = 'Page contents updated';
-                }
-                else{
-                    $response['danger'] = 'Could not update the page.';
+                if ($id == "new") {
+                    $update = $Pages->create($_POST);
+                    header("Location: /manage/page/" . $update);
+                } else {
+                    $update = $Pages->update($data, $id);
+                    if($update){
+                        $response['success'] = 'Page contents updated';
+                    }
+                    else{
+                        $response['danger'] = 'Could not update the page.';
+                    }
                 }
                 $this->set('response', $response);
             }
             
-            $this->set('page', $Pages->findOne($page));
-            
+            if ($page == "new") {
+                $pageobj = new stdClass();
+                $pageobj->idpages = 'new';
+                $pageobj->title = '';
+                $pageobj->url = '';
+                $pageobj->description = '';
+            } else {
+                $pageobj =  $Pages->findOne($page);
+            }
+
+            $this->set('page', $pageobj);
             
         }
         
@@ -162,6 +176,16 @@
             header("Location: /manage/index");
         }
         
+        public function pagedel($page) {
+            $Page = new Page;
+            $result = $Page->delete($page);
+            
+            if (!$result) {
+                new ErrorMsg(609, "Unable to delete this page.");
+            }
+            header("Location: /manage/index#pages");
+
+        }
         public function stepdel($step) {
             $SlideList = new SlideList;
             $SlideList->deleteMany(array('step' => $step));

@@ -34,7 +34,8 @@ module.exports = function (grunt) {
         uglify: {
             js: {
                 options: { 
-                    preserveComments: false
+                    preserveComments: false,
+			beautify: true
                 },
                 files: {
                     'public/dist/js/script.min.js': ['public/dist/js/<%= pkg.name %>.js']

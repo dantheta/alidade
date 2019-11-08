@@ -290,13 +290,25 @@
                     $title = $_POST['title'];
                     $contents = $_POST['contents'];
                     $url = $_POST['url'];
-                    $id = (integer)$_POST['id'];
+                    if ($_POST['id'] == "new") {
+                        $update = $Page->create(array(
+                            'title' => $title,
+                            'contents' => $contents,
+                            'url' => $url
+                        ));
+                        $created = $update;
 
-                    $update = $Page->update(array('title' => $title, 'contents' => $contents, 'url' => $url), $id );
+                    } else {
+                        $id = (integer)$_POST['id'];
+
+                        $update = $Page->update(array('title' => $title, 'contents' => $contents, 'url' => $url), $id );
+                        $created = false;
+                    }
                     if($update){
                         $response['code'] = 'success';
                         $response['icon'] = 'tick';
                         $response['message'] = '<strong>Awww yeah!</strong> The page has been correctly updated.';
+                        $response['created'] = $created;
                     }
                     else {
                         $response['code'] = 'danger';
