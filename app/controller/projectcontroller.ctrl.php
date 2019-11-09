@@ -100,6 +100,11 @@
                                             $step->idsteps,
                                             $slide_no
                                             );
+                if (!$slide) {
+                    header("HTTP/1.0 404 Not found");
+                    print "<h1>Not found</h1>";
+                    exit();
+                }
 
 
                 $nextSlide = $slideIndex['fullIndex'][array_search($cur, $slideIndex['fullIndex'], true) + 1];
