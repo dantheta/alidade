@@ -77,9 +77,11 @@
                 $slidelist = $Slidelist->getList();
 
                 $slideIndex = array();
+                $step_titles = array();
                 foreach($slidelist as $s){
                     $slideIndex[$s->step][] = $s->position;
                     $slideIndex['fullIndex'][] = $s->step . '.' . $s->position;
+                    $step_titles[$s->step] = $s->step_title;
                 }
 
                 $projectSlides = $Slide->findProjectSlides($project);
@@ -88,6 +90,7 @@
                 $this->set('slide_number', $slide_no);
                 $this->set('slidelist', $slidelist);
                 $this->set('slideindex', $slideIndex);
+                $this->set('step_titles', $step_titles);
 
                 if(!empty($_SESSION['project'])) {
                     $loaded_project = $this->Project->findOne($_SESSION['project']);

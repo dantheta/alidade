@@ -12,7 +12,9 @@ $piece = ($inTour ? 'tour' : 'slide');
              } ?>
     <div class="step step<?php echo $step; ?> <?php echo ($currs[0] == 1 ? '' : 'hidden-xs'); ?>">
   		<header>
-          <h3><a class="slide <?php echo checkSlidePosition($step_number, $slide_number, $step, 0); ?>" href="/project/<?php echo $piece; ?>/<?php echo $step; ?>.0<?php echo (!is_null($hash) ? '/?p=' . $hash : ''); ?>">STEP <?php echo $step ?></a></h3>
+          <h3><a class="slide <?php echo checkSlidePosition($step_number, $slide_number, $step, 0); ?>" href="/project/<?php echo $piece; ?>/<?php echo $step; ?>.0<?php echo (!is_null($hash) ? '/?p=' . $hash : ''); ?>">
+            <?php  echo $step_titles[$step]; ?>
+          </a></h3>
   		</header>
   		<ul>
   			<?php for($i = 1; $i <= count($entries); $i++){ ?>

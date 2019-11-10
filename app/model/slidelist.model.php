@@ -9,7 +9,8 @@
             
             $sql = "SELECT `{$this->table}`.*, 
                     CONCAT_WS('.', `steps`.`position`, `slide_list`.`position`) AS `indexer`,
-                    steps.position as step
+                    steps.position as step,
+                    steps.title as step_title
                 FROM `{$this->table}`
                 INNER JOIN steps on idsteps = step
                 ORDER BY `steps`.`position` ASC, `slide_list`.`position` ASC";
