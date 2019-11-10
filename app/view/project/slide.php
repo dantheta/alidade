@@ -100,6 +100,10 @@
                               <a href="/printer/output/<?php echo $_SESSION['project'] . '/' . substr($currentSlide, 0, 1); ?>" target="_blank" class="btn btn-alidade btn-lg">Download PDF</a>
                               <?php
                                 }
+                                if(!is_null($nextSlide) && !empty($nextSlide)) { ?>
+                                    <button type="submit" class="btn btn-alidade btn-lg">NEXT: <?php echo $slideMenu[$nextSlide]; ?></button>
+                                    <?php
+                                }
                               ?>
                             </div>
                         </div>
@@ -107,6 +111,10 @@
                     <?php } // end slide_no > 0 ?>
                     <?php if ($slide_number == 0) { 
                         print $step_model->description;    
+                        if(!is_null($nextSlide) && !empty($nextSlide)) { ?>
+                            <a href="/project/slide/<?php echo $nextSlide . '/?p=' . $projecthash ; ?> " class="btn btn-alidade btn-lg">NEXT: <?php echo $slideMenu[$nextSlide]; ?></a>
+                            <?php
+                        }
                     } ?>
                 </div>
                 <div class="col-md-5 col-sm-4 col-xs-12">

@@ -110,8 +110,12 @@
                 }
 
 
-                $nextSlide = $slideIndex['fullIndex'][array_search($cur, $slideIndex['fullIndex'], true) + 1];
-                $prevSlide = $slideIndex['fullIndex'][array_search($cur, $slideIndex['fullIndex'], true) - 1];
+                if ($slide_no == 0) {
+                    $nextSlide = $step_no . '.1'; 
+                } else {
+                    $nextSlide = $slideIndex['fullIndex'][array_search($cur, $slideIndex['fullIndex'], true) + 1];
+                    $prevSlide = $slideIndex['fullIndex'][array_search($cur, $slideIndex['fullIndex'], true) - 1];
+                }
 
 
                 $this->set('nextSlide', $nextSlide);
