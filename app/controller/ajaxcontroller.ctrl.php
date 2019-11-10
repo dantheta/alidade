@@ -225,6 +225,7 @@
 
                     $title = $_POST['title'];
                     $description = $_POST['description'];
+                    $position = $_POST['position'];
 
                     if ($_POST['id'] == "new" || $step != $slide->step ) {
                         // get last position if step is changing
