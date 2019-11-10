@@ -196,7 +196,7 @@
         $Slides = new Slide;
         
         return preg_replace_callback(
-            '!\[--prev\|(\d)\.(\d)\|([\w\d\-\[\]]+?)--]!',
+            '!\[--prev\|(\d)\.(\d+)\|([\w\d\-\[\]]+?)--]!',
             function ($matches) use ($project, $Slides) {
                 $step = $matches[1];
                 $slide = $matches[2];
