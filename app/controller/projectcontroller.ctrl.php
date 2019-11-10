@@ -100,7 +100,7 @@
                                             $step->idsteps,
                                             $slide_no
                                             );
-                if (!$slide && $step_no != 0) {
+                if (!$slide && $slide_no != 0) {
                     header("HTTP/1.0 404 Not found");
                     print "<h1>Not found</h1>";
                     exit();
