@@ -29,12 +29,17 @@
                 <?php if(!empty($backSlide)) { ?>
                 <a class="back-link" href="/project/slide/<?php echo $backKey; ?>/?p=<?php echo $hash; ?>&edit"><i class="fa fa-chevron-left"></i> BACK: <?php echo $backSlide; ?></a>
                 <?php } ?>
+                <?php if ($slide_number == 0) { ?>
+                <h1><?php echo $currentSlide . ' ' . $step_model->title; ?></h1>
+                <?php } else { ?>
                 <h1><?php echo $currentSlide . ' ' . $slide->title; ?></h1>
+                <?php } ?>
               </div>
             </div>
 
             <div class="row">
                 <div class="col-md-7 col-sm-8 col-xs-12">
+                <?php if ($slide_number > 0) { ?>
                     <form action="/project/slide/<?php echo $nextSlide . '/?p=' . $projecthash ; ?> " method="post"  id="mainForm" rubyrails="true">
                         <input type="hidden" name="current_slide"  value="<?php echo $currentSlide; ?>">
                         <input type="hidden" name="hash"  value="<?php echo $projecthash; ?>">
@@ -99,6 +104,10 @@
                             </div>
                         </div>
                     </form>
+                    <?php } // end slide_no > 0 ?>
+                    <?php if ($slide_number == 0) { 
+                        print $step_model->description;    
+                    } ?>
                 </div>
                 <div class="col-md-5 col-sm-4 col-xs-12">
                   <aside>

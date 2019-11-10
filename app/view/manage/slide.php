@@ -6,10 +6,12 @@
 
             <form class="/manage/slide/<?php echo $slide->step . '/' . $slide->position; ?>" method="post" id="slide-form">
                 <input id="id" name="id" type="hidden" value="<?php echo $slide->idslide_list; ?>">
-                <input id="position" name="position" type="hidden" value="<?php echo $slide->position; ?>">
         
                 <div class="form-group">
-                    <input type="text" id="title" name="title" class="form-control" value="<?php echo $slide->title; ?>">
+                    Title: <input type="text" id="title" name="title" class="form-control" value="<?php echo $slide->title; ?>">
+                </div>
+                <div class="form-group">
+                    Position: <input type="text" id="position" name="position" class="form-control" value="<?php echo $slide->position; ?>">
                 </div>
                 <div class="form-group">
                     Step: <select id="step" name="step">

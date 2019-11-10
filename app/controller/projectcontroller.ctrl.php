@@ -100,7 +100,7 @@
                                             $step->idsteps,
                                             $slide_no
                                             );
-                if (!$slide) {
+                if (!$slide && $step_no != 0) {
                     header("HTTP/1.0 404 Not found");
                     print "<h1>Not found</h1>";
                     exit();
@@ -115,6 +115,7 @@
                 $this->set('prevSlide', $prevSlide);
                 $this->set('currentSlide', $cur);
 
+                $this->set('step_model', $step);
                 $this->set('slide', $slide);
                 $this->set('contents', $slide->description);
 
