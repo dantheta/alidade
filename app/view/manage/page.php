@@ -2,6 +2,7 @@
     
     <div class="col-md-8 col-md-offset-2">
         <h1 class="h2">Edit Page</h1>
+        <a href="/manage#pages" class="btn btn-alidade"><i class="fa fa-angle-left"></i> back to management</a>
         <form class="" action="/manage/page/<?php echo $page->idpages; ?>" method="post" id="page-form">
             <?php
             if(isset($response) && !empty($response)) {
@@ -29,7 +30,6 @@
     </div>
     <div class="col-md-2">
         <br />
-        <a href="/manage#pages" class="btn btn-sm btn-alt pull-right">back to management <i class="fa fa-angle-right"></i></a>
     </div>
 </div>
 

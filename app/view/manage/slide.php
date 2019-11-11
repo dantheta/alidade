@@ -4,6 +4,7 @@
         <div class="col-md-9">
             <h1>Edit "<?php echo $slide->title; ?>"</h1>
 
+            <a href="/manage#slides" class="btn btn-alidade"><i class="fa fa-angle-left"></i> back to management</a>
             <form class="/manage/slide/<?php echo $slide->step . '/' . $slide->position; ?>" method="post" id="slide-form">
                 <input id="id" name="id" type="hidden" value="<?php echo $slide->idslide_list; ?>">
         
@@ -57,7 +58,6 @@
                     </ul>
                 </li>
             </ul>
-            <a href="/manage#slides" class="btn btn-sm btn-alt pull-right">back to management <i class="fa fa-angle-right"></i></a>
             
         </div>
     </div>
