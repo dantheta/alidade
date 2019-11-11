@@ -455,4 +455,9 @@ $(document).ready(function(){
         };
     });
 
+    if (window.location.hash) {
+        if ($(window.location.hash).hasClass('tab-link')) {
+            $(window.location.hash).tab('show');
+        }
+    }
 });

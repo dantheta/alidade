@@ -22,21 +22,21 @@
         <div class="col-md-12">
 
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class=""><a data-toggle="tab" href="#pages">Pages</a></li>
-                <li role="presentation" class="active"><a data-toggle="tab" href="#steps">Steps</a></li>
-                <li role="presentation" class=""><a data-toggle="tab" href="#slides">Slides</a></li>
-                <li role="presentation" class=""><a data-toggle="tab" href="#manage">Manage</a></li>
+                <li role="presentation"  class="">      <a class="tab-link" id="pages" data-toggle="tab" href="#tab-pages">Pages</a></li>
+                <li role="presentation"  class="active"><a class="tab-link" id="steps" data-toggle="tab" href="#tab-steps">Steps</a></li>
+                <li role="presentation"  class="">      <a class="tab-link" id="slides" data-toggle="tab" href="#tab-slides">Slides</a></li>
+                <li role="presentation"  class="">      <a class="tab-link" id="manage" data-toggle="tab" href="#tab-manage">Manage</a></li>
             </ul> <!-- /.nav-tabs -->
 
             <div class="tab-content">
 
-                <div id="manage" role="tabpanel" class="tab-pane manage-pane">
+                <div id="tab-manage" role="tabpanel" class="tab-pane manage-pane">
                     <h2>Management</h2>
                     <div><a href="/manage/import" class="btn btn-default">Import Content</a></div>
                     <div><a href="/manage/export" class="btn btn-default">Export Content</a></div>
                 </div>
 
-                <div id="pages" role="tabpanel" class="tab-pane manage-pane">
+                <div id="tab-pages" role="tabpanel" class="tab-pane manage-pane">
                     <div style="float: right"><a class="btn btn-default" href="/manage/page/new">Add new page</a></div>
                     <h2>Pages</h2>
                     <table class="table">
@@ -54,7 +54,7 @@
                     </table>
                 </div>
 
-                <div id="steps" role="tabpanel" class="tab-pane manage-pane active">
+                <div id="tab-steps" role="tabpanel" class="tab-pane manage-pane active">
                     <div style="float: right"><a class="btn btn-default" href="/manage/step/new">Add new step</a></div>
                     <h2>Steps</h2>
 
@@ -73,7 +73,7 @@
                     </table>
                 </div>
 
-                <div id="slides" role="tabpanel" class="tab-pane manage-pane">
+                <div id="tab-slides" role="tabpanel" class="tab-pane manage-pane">
                     <div style="float: right"><a class="btn btn-default" href="/manage/slide/new">Add new slide</a></div>
                     <h2>Slides</h2>
 
@@ -105,4 +105,7 @@
     </div>
     
 </div>
+<script type="text/javascript">
 
+
+</script>

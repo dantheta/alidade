@@ -29,7 +29,7 @@
     </div>
     <div class="col-md-2">
         <br />
-        <a href="/manage" class="btn btn-sm btn-alt pull-right">back to management <i class="fa fa-angle-right"></i></a>
+        <a href="/manage#pages" class="btn btn-sm btn-alt pull-right">back to management <i class="fa fa-angle-right"></i></a>
     </div>
 </div>
 
