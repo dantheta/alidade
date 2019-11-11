@@ -362,14 +362,16 @@ EOM;
 
     function injectRadioButtons($string, $original=null) {
         return preg_replace_callback(
-            '/\[--radio\|(?<name>\w+)\|(?<title>.*?)--]/',
+            '/\[--radio\|(?<name>[\w\d]+)\|(?<key>[\w\d]+)\|(?<title>.*?)--]/',
             function ($matches) use ($original) {
-                if (@$original['choice'] == $matches['name']) {
+                $name = $matches['name'];
+                $key = $matches['key'];
+                if (@$original[$name] == $key) {
                     $sel = "checked";
                 } else {
                     $sel = "";
                 }
-                return "<div class=\"radio\"><label><input id=\"choice-{$matches['name']}\" name=\"choice\" $sel class=\"choice\" type=\"radio\" value=\"{$matches['name']}\"> {$matches['title']}</label></div>";
+                return "<div class=\"radio\"><label><input id=\"choice-{$key}\" name=\"{$name}\" $sel class=\"choice\" type=\"radio\" value=\"{$key}\"> {$matches['title']}</label></div>";
             },
             $string);
     }

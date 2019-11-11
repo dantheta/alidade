@@ -78,23 +78,23 @@ section
     }
     
     public function testRadioButtons() {
-        $output = injectRadioButtons("stuff\n[--radio|foo|Foo--]\n[--radio|bar|Bar--]\nmore stuff");
+        $output = injectRadioButtons("stuff\n[--radio|blark|foo|Foo--]\n[--radio|blark|bar|Bar--]\nmore stuff");
         
         $this->assertSame(
             $output,
-            "stuff\n<div class=\"radio\"><label><input id=\"choice-foo\" name=\"choice\"  class=\"choice\" type=\"radio\" value=\"foo\"> Foo</label></div>
-<div class=\"radio\"><label><input id=\"choice-bar\" name=\"choice\"  class=\"choice\" type=\"radio\" value=\"bar\"> Bar</label></div>\nmore stuff"
+            "stuff\n<div class=\"radio\"><label><input id=\"choice-foo\" name=\"blark\"  class=\"choice\" type=\"radio\" value=\"foo\"> Foo</label></div>
+<div class=\"radio\"><label><input id=\"choice-bar\" name=\"blark\"  class=\"choice\" type=\"radio\" value=\"bar\"> Bar</label></div>\nmore stuff"
         );
     }
     
     public function testRadioButtonsWithOriginal() {
-        $original = array('choice' => 'foo');
-        $output = injectRadioButtons("stuff\n[--radio|foo|Foo--]\n[--radio|bar|Bar--]\nmore stuff", $original);
+        $original = array('blark' => 'foo');
+        $output = injectRadioButtons("stuff\n[--radio|blark|foo|Foo--]\n[--radio|blark|bar|Bar--]\nmore stuff", $original);
         
         $this->assertSame(
             $output,
-            "stuff\n<div class=\"radio\"><label><input id=\"choice-foo\" name=\"choice\" checked class=\"choice\" type=\"radio\" value=\"foo\"> Foo</label></div>
-<div class=\"radio\"><label><input id=\"choice-bar\" name=\"choice\"  class=\"choice\" type=\"radio\" value=\"bar\"> Bar</label></div>\nmore stuff"
+            "stuff\n<div class=\"radio\"><label><input id=\"choice-foo\" name=\"blark\" checked class=\"choice\" type=\"radio\" value=\"foo\"> Foo</label></div>
+<div class=\"radio\"><label><input id=\"choice-bar\" name=\"blark\"  class=\"choice\" type=\"radio\" value=\"bar\"> Bar</label></div>\nmore stuff"
         );
     }
     
@@ -151,7 +151,11 @@ stuff
 <div id="items"></div>
 <script type="text/javascript">
 $('#items').alpaca({
-    data: ["item1","item2","item3"]
+    data: ["item1","item2","item3"],
+    options: {
+        name: "items",
+        id: "items"
+    }
 });
 </script>
 stuff
