@@ -114,6 +114,9 @@
                     $nextSlide = $step_no . '.1'; 
                 } else {
                     $nextSlide = $slideIndex['fullIndex'][array_search($cur, $slideIndex['fullIndex'], true) + 1];
+                    if ($nextSlide && substr($nextSlide, -2) == '.1') {
+                        $nextSlide = ($step_no + 1) . '.0';
+                    }
                     $prevSlide = $slideIndex['fullIndex'][array_search($cur, $slideIndex['fullIndex'], true) - 1];
                 }
 
