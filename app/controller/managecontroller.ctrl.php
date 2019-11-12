@@ -154,26 +154,26 @@
             $Step = new Step;
             $stepobj = $Step->findOne($step);
             $Step->swapPosition($stepobj, -1);
-            header("Location: /manage/index");
+            header("Location: /manage/index#steps");
         }
         public function stepdown($step) {
             $Step = new Step;
             $stepobj = $Step->findOne($step);
             $Step->swapPosition($stepobj, 1);
-            header("Location: /manage/index");
+            header("Location: /manage/index#steps");
         }
         public function slideup($slide) {
             $SlideList = new SlideList;
             $slideobj = $SlideList->findOne($slide);
             $SlideList->swapPosition($slideobj, -1);
-            header("Location: /manage/index");
+            header("Location: /manage/index#slides");
         }
         public function slidedown($slide) {
             $SlideList = new SlideList;
             $slideobj = $SlideList->findOne($slide);
             error_log("Loaded: {$slideobj->idslide_list} {$slideobj->step}");
             $SlideList->swapPosition($slideobj, 1);
-            header("Location: /manage/index");
+            header("Location: /manage/index#slides");
         }
         
         public function pagedel($page) {
@@ -195,15 +195,17 @@
             if (!$result) {
                 new ErrorMsg(609, "Unable to delete this step.  There may be slides attached.");
             }
-            header("Location: /manage/index");
+            header("Location: /manage/index#steps");
 
         }
         
         public function slidedel($slide) {
             
             $Slidelist = new SlideList;
+            $slideobj = $Slidelist->findOne($slide);
             $Slidelist->delete($slide);
-            header("Location: /manage/index");
+            $Slidelist->shiftPosition($slideobj->step, $slideobj->position);
+            header("Location: /manage/index#slides");
             
         }
         
