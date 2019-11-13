@@ -1,6 +1,6 @@
 {
-    "title": "Sharing data",
-    "description": "Who else has access to the personal information?",
+    "title": "Using data",
+    "description": "For each category of data that you collect, what purposes do you use it for?",
     "type": "object",
     "properties": {
         "group":{
@@ -9,7 +9,7 @@
             "properties": {
                 "shared_with": {
                     "type": "array",
-                    "title": "Organisation name(s):"
+                    "title": ""
                 }
             }
         }
