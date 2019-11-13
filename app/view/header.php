@@ -97,7 +97,7 @@
 					<?php if(isset($userRole) && $userRole == 'root') { ?>
 					<li><a href="/manage/index" title="Manage Contents" class="mininav btn btn-alidade"><i class="fa fa-wrench fa-fw"></i><span class="hidden-xs">Manage</span></a></li>
 					<?php } ?>
-          <li><a href="/user/projects" title="All your Projects" class="mininav btn btn-alidade" id="projects-page"><i class="fa fa-tasks fa-fw"></i><span class="hidden-xs">My Projects</span></a></li>
+          <li><a href="/user/projects" title="All your Projects" class="mininav btn btn-alidade" id="projects-page-1"><i class="fa fa-tasks fa-fw"></i><span class="hidden-xs">My Projects</span></a></li>
 				  <li><a href="/user/logout" title="Logout" class="mininav btn btn-blank">Logout</a></li>
 				</ul>
 			</div>
