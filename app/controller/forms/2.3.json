@@ -1,0 +1,21 @@
+{
+    "title": "Using data",
+    "description": "For each category of data that you collect, select the lawful basis that permits its use",
+    "type": "object",
+    "properties": {
+        "group":{
+            "title": "group",
+            "type": "object",
+            "properties": {
+                "shared_with": {
+                    "type": "enum",
+                    "title": "Lawful basis",
+                    "options": ["Lawful basis 1","Lawful basis 2"]
+                }
+            }
+        }
+    }
+}
+                    
+
+
