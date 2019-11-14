@@ -1,5 +1,5 @@
 {
-    "title": "Using data",
+    "title": "Authorisation",
     "description": "For each category of data that you collect, select the lawful basis that permits its use",
     "type": "object",
     "properties": {
@@ -7,10 +7,10 @@
             "title": "group",
             "type": "object",
             "properties": {
-                "shared_with": {
-                    "type": "enum",
+                "authorization": {
+                    "type": "select",
                     "title": "Lawful basis",
-                    "options": ["Lawful basis 1","Lawful basis 2"]
+                    "enum": ["Lawful basis 1","Lawful basis 2"]
                 }
             }
         }
