@@ -10,6 +10,7 @@
                 "authorization": {
                     "type": "select",
                     "title": "Lawful basis",
+                    "required": true,
                     "enum": ["Lawful basis 1","Lawful basis 2"]
                 }
             }
