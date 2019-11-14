@@ -204,17 +204,23 @@
         }
 
         public function form($slidepos) {
-                $position = explode('.', $slidepos);
-
-                $step_no    = (int)$position[0];
-                $slide_no   = (int)$position[1];
 
                 $Step = new Step;
                 $Slide = new Slide;
                 $Slidelist = new Slidelist;
 
-                $step = $Step->getByPosition($step_no);
 
+                if ($slidepos == "2.2") {
+                    $original_slidepos = "2.1";
+                }
+
+                $position = explode('.', $original_slidepos);
+
+                $step_no    = (int)$position[0];
+                $slide_no   = (int)$position[1];
+
+
+                $step = $Step->getByPosition($step_no);
                 $slide = $Slidelist->getSlide(            
                                             $step->idsteps,
                                             $slide_no
@@ -244,7 +250,7 @@
                         $formdata['properties'][$k]['title'] = $cat;
                     }
                 }
-                if ($slidepos == "2.1") {
+                if ($slidepos == "2.2") {
                     $group = $formdata['properties']['group'];
                     unset($formdata['properties']['group']);
                     foreach($original['data_collected'] as $category) {
