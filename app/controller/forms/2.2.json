@@ -9,7 +9,7 @@
             "properties": {
                 "shared_with": {
                     "type": "array",
-                    "title": ""
+                    "title": "Purposes for collected data"
                 }
             }
         }
