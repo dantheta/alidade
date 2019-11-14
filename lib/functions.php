@@ -395,10 +395,16 @@ EOM;
             '/\[--alpaca\|(?<name>[\d\.]+)--]/',
             function ($matches) use ($original, $project) {
                 $slide = $matches['name'];
+                if ($original->answer) {
+                    $json = json_encode($original->answer);
+                } else {
+                    $json = "null";
+                }
                 $out = <<<EOM
 <div id="alpaca-form"></div>
 <script type="text/javascript">
 $('#alpaca-form').alpaca({
+    "data": $json,
     "schemaSource": "/project/form/$slide?p=$project"
 });
 $(document).on("click", "legend", function(){
