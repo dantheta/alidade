@@ -210,7 +210,7 @@
                 $Slidelist = new Slidelist;
 
 
-                if ($slidepos == "2.2") {
+                if ($slidepos == "2.2"|| $slidepos == "2.3") {
                     $original_slidepos = "2.1";
                 }
 
@@ -250,7 +250,7 @@
                         $formdata['properties'][$k]['title'] = $cat;
                     }
                 }
-                if ($slidepos == "2.2") {
+                if ($slidepos == "2.2" || $slidepos == "2.3") {
                     $group = $formdata['properties']['group'];
                     unset($formdata['properties']['group']);
                     foreach($original['data_collected'] as $category) {
