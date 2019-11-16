@@ -460,6 +460,12 @@ $(document).ready(function(){
             $(window.location.hash).tab('show');
         }
     }
+
+
+    $(document).on("click", ".custom-form .fieldcontainer legend", function(){
+        $(this).next().slideToggle();
+    });
+
 });
 
 ;

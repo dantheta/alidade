@@ -1,5 +1,7 @@
 <?php
 
+    require_once("forms.php");
+
     /** checks if user has a role
      * var object $user from Auth->getProfile() (Session->getSession())
      * returns boolean
@@ -308,24 +310,7 @@
             '/\[--array\|(?<name>[\w\d]+)--]/',
             function ($matches) use ($original) {
                 $name = $matches['name'];
-                if (!@$original[$name]) {
-                    $d = "[]";
-                } else {
-                    $d = json_encode(@$original[$name]);
-                }
-                $s = <<<EOM
-<div id="$name"></div>
-<script type="text/javascript">
-$('#$name').alpaca({
-    data: $d,
-    options: {
-        name: "${name}",
-        id: "$name"
-    }
-});
-</script>
-EOM;
-                return $s;
+                return alpaca_field($name, @$original[$name]);
             },
             $string);
     }
@@ -390,6 +375,16 @@ EOM;
             $string);        
     }
 
+    function injectCustomForm($string, $project, $original) {
+        return preg_replace_callback(
+            '/\[--customform\|(?<name>[\d\.]+)--]/',
+            function ($matches) use ($original, $project) {
+                return customform($matches['name'], $original, $project);
+            },
+            $string
+        );
+    }
+
     function injectAlpaca($string, $project, $original) {
         return preg_replace_callback(
             '/\[--alpaca\|(?<name>[\d\.]+)--]/',
@@ -406,9 +401,6 @@ EOM;
 $('#alpaca-form').alpaca({
     "data": $json,
     "schemaSource": "/project/form/$slide?p=$project"
-});
-$(document).on("click", "legend", function(){
-    $(this).next().slideToggle();
 });
 </script>
 EOM;

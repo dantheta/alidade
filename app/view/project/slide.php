@@ -62,7 +62,6 @@
                           $text = $boxes['content'];
 
                           $text = injectPrevAnswer($text, $_SESSION['project']);
-                          
 
                           switch($slide->slide_type){
                             case 1:
@@ -72,6 +71,7 @@
                               $text = injectChoiceButtons($text);
                               $text = injectChoicePanels($text);
                               $text = injectAlpaca($text, $_SESSION['project'], $origin);
+                              $text = injectCustomForm($text, $_SESSION['project'], $origin);
                               $text = injectRadioButtons($text, $origin);
                               $text = injectCheckboxes($text, $origin);
                               $text = injectArray($text, $origin);
