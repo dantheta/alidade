@@ -68,6 +68,33 @@ section
             "stuff\n<div class=\"row hide picks\" id=\"foo\">Some Stuff</div>\nmore stuff"
         );
     }
+
+    public function testNamedChoicePanels() {
+        $output = injectChoicePanels("stuff\n[--choicepanel|foo--]Some Stuff[--endchoicepanel|foo--]\nmore stuff");
+
+        $this->assertSame(
+            $output,
+            "stuff\n<div class=\"row hide picks\" id=\"foo\">Some Stuff</div>\nmore stuff"
+        );
+    }
+
+    public function testNamedChoicePanelsBad() {
+        $output = injectChoicePanels("stuff\n[--choicepanel|foo--]Some Stuff[--endchoicepanel|bar--]\nmore stuff");
+
+        $this->assertNotSame(
+            $output,
+            "stuff\n<div class=\"row hide picks\" id=\"foo\">Some Stuff</div>\nmore stuff"
+        );
+    }
+    public function testNamedChoicePanelsNested() {
+        $output = injectChoicePanels("stuff\n[--choicepanel|foo--]Some Stuff [--choicepanel|bar--]  [--endchoicepanel|bar--]  [--endchoicepanel|foo--]\nmore stuff");
+
+        $this->assertSame(
+            $output,
+            "stuff\n<div class=\"row hide picks\" id=\"foo\">Some Stuff <div class=\"row hide picks\" id=\"bar\">  </div>  </div>\nmore stuff"
+        );
+    }
+
     public function testChoicePanelsMultiline() {
         $output = injectChoicePanels("stuff\n[--choicepanel|foo1--]\nSome Stuff\n[--endchoicepanel--]\nmore stuff");
         

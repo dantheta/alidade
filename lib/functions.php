@@ -295,14 +295,20 @@
 
     }
 
-    function injectChoicePanels($string) {
-        return preg_replace_callback(
-            '/\[--choicepanel\|(?<name>[\w\d]+)--](.*?)\[--endchoicepanel--]/s', 
+    function injectChoicePanels($string, $depth=0) {
+        $s = preg_replace_callback(
+            '/\[--choicepanel\|(?<name>[\w\d]+)--](.*?)\[--endchoicepanel(\|\1)?--]/s',
             function ($matches) {
                 return "<div class=\"row hide picks\" id=\"{$matches['name']}\">{$matches[2]}</div>";
             },
             $string);
-        
+        if ($s == $string || $depth == 3) {
+            // no changes
+            return $s;
+        } else {
+            // attempt another pass, for nested panels
+            return injectChoicePanels($s, $depth+1);
+        }
     }
 
     function injectArray($string, $original) {
