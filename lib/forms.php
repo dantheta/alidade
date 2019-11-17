@@ -73,12 +73,12 @@ function customform_2_3($answer, $previousanswer) {
     $s = '<div class="custom-form">';
 
     $lawful_bases = array(
-    'Consent',
-    'Contractual',
-    'Legal Obligation',
-    'Vital Interests',
-    'Public Task',
-    'Legitimate Interests'
+    'consent' => 'Consent',
+    'contractual' => 'Contractual',
+    'legal_obligation' => 'Legal Obligation',
+    'vital_interests' => 'Vital Interests',
+    'public_task' => 'Public Task',
+    'legitimate_interests' => 'Legitimate Interests'
     );
 
     foreach($previousanswer['data_collected'] as $category) {
@@ -91,16 +91,17 @@ function customform_2_3($answer, $previousanswer) {
 <div>
 Select a lawful basis for processing $category:
 <select name="{$fieldname}___lawful_basis">
+
 EOM;
-        foreach($lawful_bases as $basis) {
-            $basisname = get_sanitized_name($basis);
+        foreach($lawful_bases as $basisname => $basis_title) {
             if ($answer["{$fieldname}___lawful_basis"] == $basisname) {
                 $sel = " selected";
             } else {
                 $sel = '';
             }
             $s .=<<<EOM
-    <option value="$basisname" $sel>$basis</option>
+    <option value="$basisname" $sel>$basis_title</option>
+
 EOM;
         }
         $s .=<<<EOM
