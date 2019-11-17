@@ -24,7 +24,7 @@ EOM;
 }
 
 function get_sanitized_name($value) {
-    return preg_replace('/[^\w\d]+/', '_', $value);
+    return preg_replace('/[^\w\d]+/', '_', strtolower($value));
 }
 
 function customform($slide, $original, $project) {  // original json data
@@ -43,6 +43,7 @@ function customform($slide, $original, $project) {  // original json data
 
     switch($slide) {
     case "2.2": return customform_2_2($original, $previousanswer); break;
+    case "2.3": return customform_2_3($original, $previousanswer); break;
     }
 
 }
@@ -64,6 +65,50 @@ EOM;
 EOM;
     }
     $s .= "</div>";
+    return $s;
+
+}
+
+function customform_2_3($answer, $previousanswer) {
+    $s = '<div class="custom-form">';
+
+    $lawful_bases = array(
+    'Consent',
+    'Contractual',
+    'Legal Obligation',
+    'Vital Interests',
+    'Public Task',
+    'Legitimate Interests'
+    );
+
+    foreach($previousanswer['data_collected'] as $category) {
+        $fieldname = get_sanitized_name($category);
+        $title = ucfirst($category);
+
+        $s .=<<<EOM
+<div class="fieldcontainer" id="$category">
+<legend>$title</legend>
+<div>
+Select a lawful basis for processing $category:
+<select name="{$fieldname}___lawful_basis">
+EOM;
+        foreach($lawful_bases as $basis) {
+            $basisname = get_sanitized_name($basis);
+            if ($answer["{$fieldname}___lawful_basis"] == $basisname) {
+                $sel = " selected";
+            } else {
+                $sel = '';
+            }
+            $s .=<<<EOM
+    <option value="$basisname" $sel>$basis</option>
+EOM;
+        }
+        $s .=<<<EOM
+</select>
+</div>
+</div>
+EOM;
+    }
     return $s;
 
 }
