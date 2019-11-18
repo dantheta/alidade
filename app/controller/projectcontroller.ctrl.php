@@ -84,8 +84,6 @@
                     $step_titles[$s->step] = $s->step_title;
                 }
 
-                $projectSlides = $Slide->findProjectSlides($project);
-
                 $this->set('step_number', $step_no);
                 $this->set('slide_number', $slide_no);
                 $this->set('slidelist', $slidelist);
@@ -108,7 +106,6 @@
                     print "<h1>Not found</h1>";
                     exit();
                 }
-
 
                 if ($slide_no == 0) {
                     $nextSlide = $step_no . '.1'; 
@@ -183,6 +180,9 @@
                     
                 }
 
+                if ($slide->slide_type == 4) {
+                    $this->set('recap', $this->getRecap($project, $step_no, $step, $slidelist));
+                }
                 
                 $projectSlideIndex = $this->Project->getIndex($idProject);
 
@@ -201,6 +201,38 @@
 
 
             }
+        }
+
+        private function getRecap($project, $step_no, $step, $slidelist) {
+            $loader = new \Twig\Loader\FilesystemLoader(ROOT . DS . 'app' . DS . 'view');
+            $twig = new \Twig\Environment($loader);
+
+            $Project = new Project;
+            $Slide = new Slide;
+
+            echo "<pre>";
+            $answerslides = array();
+            foreach($Slide->findProjectSlides($project[0]->idprojects) as $slide) {
+                if ($slide->step == $step_no) {
+                    $answerslides[$slide->slide] = json_decode($slide->answer, TRUE);
+                }
+            }
+
+
+            $stepslides = array();
+            foreach($slidelist as $slide) {
+                if ($slide->step == $step_no) {
+                    $slide->description = injectAnswers($slide->description, $answerslides[$slide->idslide_list]);
+                    $stepslides[] = $slide;
+                }
+            }
+            echo "</pre>";
+            $tmpl = $twig->load('project/recap.html');
+            $s =  $tmpl->render(array(
+                'slides' => $stepslides,
+                'step' => $step,
+            ));
+            return $s;
         }
 
     }

@@ -85,7 +85,7 @@
     /** autoload functions **/
     function autoloader($className){
 
-	require_once(ROOT.DS.'lib'.DS.'vendor'.DS.'autoload.php');
+        require_once(ROOT.DS.'lib'.DS.'vendor'.DS.'autoload.php');
 
         if(file_exists(ROOT . DS . 'lib' . DS . strtolower($className).'.class.php')){
             require_once(ROOT . DS . 'lib' . DS . strtolower($className).'.class.php');

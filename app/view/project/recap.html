@@ -1,0 +1,10 @@
+<h2>{{ step.title }}</h2>
+<div>
+    {{ step.description|raw }}
+</div>
+{% for slide in slides  %}
+<h3>{{ slide.title }}</h3>
+<div>
+    {{ slide.description|raw }}
+</div>
+{% endfor %}

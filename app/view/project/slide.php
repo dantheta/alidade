@@ -54,7 +54,8 @@
                         if($slide->slide_type == 4){
                           $boxes = injectBox($slide->description);
                           $text = $boxes['content'];
-                          echo injectRecap($text);
+                          $text .=  $recap;
+                          echo $text;
 
                         } else {
 

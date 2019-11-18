@@ -188,6 +188,40 @@
             
     }
 
+    function injectAnswers($string, $original) {
+        return preg_replace_callback('/\[--(.*?)\--]/',
+            function ($matches) use ($original) {
+                $parts = explode('|', $matches[1]);
+
+                if (substr($parts[0], 0, 15) == "multiple-answer") {
+                    $multiparts = explode('-', $parts[0]);
+                    $multipart = array_pop($multiparts);
+                    return "<p class=\"recap-answer\">" . $original['multianswer'][$multipart] . "</p>";
+                }
+
+                switch ($parts[0]) {
+                    case "answer":
+                        return "<p class=\"recap-answer\">" . $original['answer'] . "</p>";
+                        break;
+                    case "radio":
+                        if ($original[$parts[1]] == $parts[2]) {
+                            return "<p class=\"recap-answer\"> selected: " . $parts[3] . "</p>";
+                        }
+                        break;
+                    case "check":
+                        if (@$original[$parts[1]]) {
+                            return "<p class=\"recap-answer\">checked: " . $parts[2] . "</p>";
+                        }
+                        break;
+                    default:
+                        return "<p class=\"recap-answer\">" . $original[$parts[1]] . "</p>";
+                        break;
+                }
+            },
+            $string
+        );
+    }
+
     function injectParam($string, $param, $value){
         return str_replace('[--'.$param.'--]', $value, $string);
     }
@@ -229,44 +263,6 @@
         
         // return array( 'content' => $string, 'slide' => $slide, 'multi' => $multi );
 
-    }
-
-    function injectRecap($string){
-      preg_match_all('/\[--prev\|\d\.\d\--]/im', $string, $matches);
-      if(!empty($matches[0]) && is_array($matches[0])){
-        foreach($matches[0] as $i => $match){
-          $p = explode('|', $match);
-          $slide = str_replace('--]', '', $p[1]);
-          $parts = explode('.', $slide);
-          $step = $parts[0];
-          $slide = $parts[1];
-
-          // place slide model here and use getPreviousANswer method
-          $Slides = new Slide;
-          $hash = filter_var($_GET['p'], FILTER_SANITIZE_SPECIAL_CHARS);
-          $slide = $Slides->findPreviousAnswer($hash, $step, $slide);
-
-          $title = $slide->step . "." . $slide->slide . " " . $slide->title;
-          if(preg_match('/##break##/', $slide->answer) !== false){
-            $parts = explode('##break##', $slide->answer);
-            $text = '<ul><li>' . implode('</li><li>', $parts) . '</li></ul>';
-            $multi = true;
-          }
-          else {
-            $text = nl2br($slide->answer);
-            $multi = false;
-          }
-          $box =  "<div class=\"previous-answer box box-answer\"><h3>" . $title . "</h3>" .
-                  "<div id=\"answerBox\">" . $text . "</div>" .
-                  "</div>" ;
-          /* "<a href=\"#\" class=\"prev-answer\" data-toggle=\"modal\" data-target=\".editPrevAnswer\">I need to change this answer.</a>*/
-          $string = str_replace($match, $box, $string);
-        }
-        return $string;
-      }
-      else {
-        return $string; 
-      }
     }
 
     function injectBox($string){
@@ -485,6 +481,6 @@ EOM;
             }
         }
         else {
-            echo '<link type="tex/css" rel="stylesheet" href="' . $css . '">';
+            echo '<link type="text/css" rel="stylesheet" href="' . $css . '">';
         }
     }
