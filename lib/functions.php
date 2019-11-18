@@ -200,6 +200,12 @@
                 }
 
                 switch ($parts[0]) {
+                    case "prev":
+                    case "box":
+                    case "choicebutton":
+                    case "choicepanel":
+                        return "";
+                        break;
                     case "answer":
                         return "<p class=\"recap-answer\">" . $original['answer'] . "</p>";
                         break;
@@ -213,6 +219,13 @@
                             return "<p class=\"recap-answer\">checked: " . $parts[2] . "</p>";
                         }
                         break;
+                    case "array":
+                        $s = "<ul class=\"recap-answer\">\n";
+                        foreach($original[$parts[1]] as $value) {
+                            $s .= "<li>" . $value . "</li>\n";
+                        }
+                        $s .= "</ul>\n";
+                        return $s;
                     default:
                         return "<p class=\"recap-answer\">" . $original[$parts[1]] . "</p>";
                         break;
