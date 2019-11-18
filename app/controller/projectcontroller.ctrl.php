@@ -210,7 +210,6 @@
             $Project = new Project;
             $Slide = new Slide;
 
-            echo "<pre>";
             $answerslides = array();
             foreach($Slide->findProjectSlides($project[0]->idprojects) as $slide) {
                 if ($slide->step == $step_no) {
@@ -230,7 +229,6 @@
                     $stepslides[] = $slide;
                 }
             }
-            echo "</pre>";
             $tmpl = $twig->load('project/recap.html');
             $s =  $tmpl->render(array(
                 'slides' => $stepslides,
