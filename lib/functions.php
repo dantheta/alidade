@@ -188,9 +188,9 @@
             
     }
 
-    function injectAnswers($string, $original, $slide, $project) {
+    function injectAnswers($string, $original, $project) {
         return preg_replace_callback('/\[--(.*?)\--]/',
-            function ($matches) use ($original, $slide, $project) {
+            function ($matches) use ($original, $project) {
                 $parts = explode('|', $matches[1]);
 
                 if (substr($parts[0], 0, 15) == "multiple-answer") {
@@ -200,7 +200,7 @@
                 }
 
                 if ($parts[0] == 'customform') {
-                    return customform($slide, $original, $project, true);
+                    return customform($parts[1], $original, $project, true);
                 }
 
                 switch ($parts[0]) {

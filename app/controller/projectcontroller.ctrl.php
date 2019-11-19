@@ -223,7 +223,6 @@
                 if ($slide->step == $step_no) {
                     $slide->description = injectAnswers($slide->description,
                                                         $answerslides[$slide->idslide_list],
-                                                        "{$step_no}.{$slide->position}",
                                                         $project[0]->idprojects
                                                         );
                     $stepslides[] = $slide;
