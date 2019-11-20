@@ -7,6 +7,7 @@
     class PrinterController extends Controller {
 
         public function output( $project, $step, $type = 'pdf' ){
+            error_reporting(0);
             $Project = new Project;
             $Slide = new Slide;
 
