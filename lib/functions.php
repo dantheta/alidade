@@ -189,6 +189,13 @@
     }
 
     function injectAnswers($string, $original, $project) {
+
+        $string = preg_replace(
+            '|\[--box\|(?<name>\w+)--](.*?)\[--endbox--]|s',
+            "",
+            $string
+        );
+
         return preg_replace_callback('/\[--(.*?)\--]/',
             function ($matches) use ($original, $project) {
                 $parts = explode('|', $matches[1]);
@@ -206,8 +213,10 @@
                 switch ($parts[0]) {
                     case "prev":
                     case "box":
+                    case "endbox":
                     case "choicebutton":
                     case "choicepanel":
+                    case "endchoicepanel":
                         return "";
                         break;
                     case "answer":
@@ -215,12 +224,12 @@
                         break;
                     case "radio":
                         if ($original[$parts[1]] == $parts[2]) {
-                            return "<p class=\"previous-answer box box-answer recap-answer\"> selected: " . $parts[3] . "</p>";
+                            return "<p class=\"previous-answer box box-answer recap-answer\">Selected: " . $parts[3] . "</p>";
                         }
                         break;
                     case "check":
                         if (@$original[$parts[1]]) {
-                            return "<p class=\"previous-answer box box-answer  recap-answer\">checked: " . $parts[2] . "</p>";
+                            return "<p class=\"previous-answer box box-answer  recap-answer\">Checked: " . $parts[2] . "</p>";
                         }
                         break;
                     case "array":
