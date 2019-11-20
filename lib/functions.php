@@ -233,7 +233,7 @@
                         }
                         break;
                     case "array":
-                        $s = "<ul class=\"previous-answer box box-answer recap-answer\">\n";
+                        $s = "<ul class=\"previous-answer box box-answer recap-answer\" data-field=\"{$parts[1]}\">\n";
                         foreach($original[$parts[1]] as $value) {
                             $s .= "<li>" . $value . "</li>\n";
                         }
