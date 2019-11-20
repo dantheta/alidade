@@ -90,7 +90,7 @@ function customform_2_2_recap($answer, $previousanswer) {
         $s .=<<<EOM
 <div class="recap-fieldcontainer" id="$category">
 <h3>$title</h3>
-<ul class="box box-answer previous-answer recap-answer">
+<ul class="box box-answer previous-answer recap-answer" data-field="{$fieldname}">
 EOM;
         foreach($answer["{$fieldname}___purposes"] as $value) {
             $s .= "<li>$value</li>\n";
@@ -163,7 +163,7 @@ function customform_2_3_recap($answer, $previousanswer) {
         $s .=<<<EOM
 <div class="recap-fieldcontainer" id="$category">
 <h3>$title</h3>
-<div class="box box-answer previous-answer recap-answer">
+<div class="box box-answer previous-answer recap-answer" data-field="{$answerfield}">
 Lawful basis for processing $category:  {$lawful_bases[$answer[$answerfield]]}
 </div>
 </div>
