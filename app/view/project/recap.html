@@ -3,8 +3,10 @@
     {{ step.description|raw }}
 </div>
 {% for slide in slides  %}
+{% if slide.slide_type != 4 %}
 <h3>{{ slide.title }}</h3>
 <div>
     {{ slide.description|raw }}
 </div>
+{% endif %}
 {% endfor %}
