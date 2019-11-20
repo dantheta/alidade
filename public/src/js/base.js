@@ -95,12 +95,12 @@ $(document).ready(function(){
     }
 
     /** check checkboxes on checkbox pages **/
-    if( $('input[type="checkbox"]').length > 0 ){
+    /*if( $('input[type="checkbox"]').length > 0 ){
       var selection = $('#extra-holder').val().split(';');
       for( i = 0; i < selection.length; i++ ){
         $('input[type="checkbox"]#r-' + selection[i]).prop('checked', true);;
       }
-    }
+    }*/
 
     /** display/hide textareas in slide 4.2 depending on slide 4.1 **/
     if( $('#preselected').length > 0 ){
@@ -464,6 +464,12 @@ $(document).ready(function(){
 
     $(document).on("click", ".custom-form .fieldcontainer legend", function(){
         $(this).next().slideToggle();
+    });
+
+    $(document).on("keypress", ".alpaca-field-text .alpaca-control", function(e) {
+        if (e.which == 13 || e.which == 10) {
+            e.preventDefault();
+        }
     });
 
 });
