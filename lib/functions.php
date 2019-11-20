@@ -203,7 +203,7 @@
                 if (substr($parts[0], 0, 15) == "multiple-answer") {
                     $multiparts = explode('-', $parts[0]);
                     $multipart = array_pop($multiparts);
-                    return "<p class=\"previous-answer box box-answer  recap-answer\">" . $original['multianswer'][$multipart] . "</p>";
+                    return "<p class=\"previous-answer box box-answer  recap-answer\" data-field=\"{$parts[0]}\">" . $original['multianswer'][$multipart] . "</p>";
                 }
 
                 if ($parts[0] == 'customform') {
@@ -220,16 +220,16 @@
                         return "";
                         break;
                     case "answer":
-                        return "<p class=\"previous-answer box box-answer  recap-answer\">" . $original['answer'] . "</p>";
+                        return "<p class=\"previous-answer box box-answer  recap-answer\" data-field=\"answer\">" . $original['answer'] . "</p>";
                         break;
                     case "radio":
                         if ($original[$parts[1]] == $parts[2]) {
-                            return "<p class=\"previous-answer box box-answer recap-answer\">Selected: " . $parts[3] . "</p>";
+                            return "<p class=\"previous-answer box box-answer recap-answer\" data-field=\"{$parts[1]}\">Selected: " . $parts[3] . "</p>";
                         }
                         break;
                     case "check":
                         if (@$original[$parts[1]]) {
-                            return "<p class=\"previous-answer box box-answer  recap-answer\">Checked: " . $parts[2] . "</p>";
+                            return "<p class=\"previous-answer box box-answer  recap-answer\" data-field=\"{$parts[1]}\">Checked: " . $parts[2] . "</p>";
                         }
                         break;
                     case "array":
@@ -240,7 +240,7 @@
                         $s .= "</ul>\n";
                         return $s;
                     default:
-                        return "<p class=\"previous-answer box box-answer recap-answer\">" . $original[$parts[1]] . "</p>";
+                        return "<p class=\"previous-answer box box-answer recap-answer\" data-field=\"{$parts[1]}\">" . $original[$parts[1]] . "</p>";
                         break;
                 }
             },
