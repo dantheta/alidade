@@ -290,8 +290,9 @@
             function ($matches) use (&$boxes) {
                 $box = $matches['name'];
                 $text = $matches[2];
-                $boxes[] = "<div class=\"box box-${box}\"><h3>" . ($box=='casestudy' ? 'case study' : $box) . '</h3>' . $text . '</div>';
-                return "";
+                $id = rand(0, 1000); // this is very yucky
+                $boxes[] = "<div id=\"$box-$id\" class=\"box box-${box}\"><h3>" . ($box=='casestudy' ? 'case study' : $box) . '</h3>' . $text . '</div>';
+                return "<a name=\"$box-$id\"></a>";
             },
             $string);
         
