@@ -204,8 +204,7 @@
         }
 
         private function getRecap($project, $step_no, $step, $slidelist) {
-            $loader = new \Twig\Loader\FilesystemLoader(ROOT . DS . 'app' . DS . 'view');
-            $twig = new \Twig\Environment($loader);
+            $twig = TwigManager::getInstance();
 
             $Project = new Project;
             $Slide = new Slide;
