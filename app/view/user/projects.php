@@ -32,7 +32,7 @@
               <div class="project-wrapper">
                 <div class="project-bar">
                   <div class="project-progress" style="width: <?php echo $completeness; ?>%"></div>
-                  <div class="project-title">Project #<?php echo $counter; ?> (<?php echo strftime('%d %b %Y', strtotime($p['created_at'])); ?>) <div class="pull-right"><?php echo $completeness; ?>%</div></div>
+                  <div class="project-title">Project #<?php echo $counter; ?>: <?php echo $p['title']; ?> (<?php echo strftime('%d %b %Y', strtotime($p['created_at'])); ?>) <div class="pull-right"><?php echo $completeness; ?>%</div></div>
                 </div>
               </div>
               <div class="project-continue">
