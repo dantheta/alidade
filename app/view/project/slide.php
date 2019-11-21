@@ -101,7 +101,7 @@
                               <?php
                                 }
                                 if(!is_null($nextSlide) && !empty($nextSlide)) { ?>
-                                    <button type="submit" class="btn btn-alidade btn-lg">NEXT: <?php echo $slideMenu[$nextSlide]; ?></button>
+                                    <button type="submit" class="btn btn-alidade btn-lg">Save and continue: <?php echo $slideMenu[$nextSlide]; ?></button>
                                     <?php
                                 }
                               ?>
