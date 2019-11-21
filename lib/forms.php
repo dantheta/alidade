@@ -128,27 +128,15 @@ function customform_2_3($answer, $previousanswer, $recap) {
 }
 
 function customform_2_3_recap($answer, $previousanswer) {
-
     global $lawful_bases;
 
-    $s = '<div class="custom-form">';
+    $twig = TwigManager::getInstance();
 
-    foreach($previousanswer['data_collected'] as $category) {
-        $fieldname = get_sanitized_name($category);
-        $title = ucfirst($category);
-        $answerfield = "{$fieldname}___lawful_basis";
-        $s .=<<<EOM
-<div class="recap-fieldcontainer" id="$category">
-<h3>$title</h3>
-<div class="box box-answer previous-answer recap-answer" data-field="{$answerfield}">
-Lawful basis for processing $category:  {$lawful_bases[$answer[$answerfield]]}
-</div>
-</div>
-EOM;
-    }
-    $s .= "</div>";
-    return $s;
-
+    return $twig->render('forms/customform_2.3_recap.html', array(
+        'lawful_bases' => $lawful_bases,
+        'answer' => $answer,
+        'categories' => $previousanswer['data_collected']
+    ));
 
 }
 
