@@ -45,6 +45,7 @@ function customform($slide, $original, $project, $recap=false) {  // original js
     switch($slide) {
     case "2.2":
     case "2.3":
+    case "2.4":
         $previous = $Slide->findPreviousAnswer($project, 2, 1);
         break;
     default: die("unknown slide $slide"); break;
