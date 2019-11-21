@@ -486,7 +486,6 @@ $(document).ready(function(){
 
     $('.customform-23-select').on('change', function(idx, obj) {
         if ($(this).val() == 'consent') {
-            alert($(this).val());
             $('#consentform').show();
             $('#consentform').removeClass('hide');
         }
