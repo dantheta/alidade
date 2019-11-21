@@ -71,7 +71,6 @@
                             case 2:
                               $text = injectChoiceButtons($text);
                               $text = injectChoicePanels($text);
-                              $text = injectAlpaca($text, $_SESSION['project'], $origin);
                               $text = injectCustomForm($text, $_SESSION['project'], $origin);
                               $text = injectRadioButtons($text, $origin);
                               $text = injectCheckboxes($text, $origin);

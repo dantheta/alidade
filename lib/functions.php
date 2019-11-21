@@ -161,11 +161,11 @@
 
     /** inject textarea and parse tags in text **/
     function injectAnswerField($string, $name = 'answer', $origin = null){
-        
+        $tmpl = TwigManager::getInstance()->createTemplate("<textarea id=\"answer\" name=\"{{name}}\" class=\"form-control\" rows=\"8\">{{ answer }}</textarea>");
         return preg_replace_callback(
             '|\[--answer--]|m',
-            function ($matches) use ($name, $origin) {
-                return "<textarea id=\"answer\" name=\"${name}\" class=\"form-control\" rows=\"8\">" . (!is_null($origin) ? $origin['answer'] : '' ) . '</textarea>';
+            function ($matches) use ($name, $origin, $tmpl) {
+                return $tmpl->render(array('name' => $name, 'answer' => @$origin['answer']));
             },
             $string);
     }
@@ -177,11 +177,13 @@
             $a = array_map('trim', $a);
         }
 
+        $tmpl = TwigManager::getInstance()->createTemplate("<textarea id=\"multianswer-{{i}}\" name=\"{{name}}[{{i}}]\" class=\"form-control\" rows=\"8\">{{ answer }}</textarea>");
+
         return preg_replace_callback(
             '|\[--multiple-answer-(?<i>\d)--]|',
-            function ($matches) use ($a, $name) {
+            function ($matches) use ($a, $name, $tmpl) {
                 $i = $matches['i'];
-                return "<textarea id=\"multianswer-${i}\" name=\"${name}[${i}]\" class=\"form-control\" rows=\"8\">" . ( isset($a[$i]) ? $a[$i] : '' ) . '</textarea>';
+                return $tmpl->render(array('i' => $i, 'name' => $name, 'answer' => $a[$i]));
                 
             },
             $string);
@@ -220,7 +222,8 @@
                         return "";
                         break;
                     case "answer":
-                        return "<p class=\"previous-answer box box-answer  recap-answer\" data-field=\"answer\">" . $original['answer'] . "</p>";
+                        $tmpl = TwigManager::getInstance()->createTemplate("<p class=\"previous-answer box box-answer  recap-answer\" data-field=\"answer\">{{ answer }}</p>");
+                        return $tmpl->render(array('answer' => $original['answer']));
                         break;
                     case "radio":
                         if ($original[$parts[1]] == $parts[2]) {
@@ -233,14 +236,17 @@
                         }
                         break;
                     case "array":
-                        $s = "<ul class=\"previous-answer box box-answer recap-answer\" data-field=\"{$parts[1]}\">\n";
-                        foreach($original[$parts[1]] as $value) {
-                            $s .= "<li>" . $value . "</li>\n";
-                        }
-                        $s .= "</ul>\n";
+                        $tmpl = TwigManager::getInstance()->createTemplate("<ul class=\"previous-answer box box-answer recap-answer\" data-field=\"{{name}}\">
+{% for value in answers %}
+<li>{{ value }}</li>
+{% endfor %}
+</ul>");
+                        $s = $tmpl->render(array('answers' => $original[$parts[1]],  'name' => $parts[1]));
                         return $s;
                     default:
-                        return "<p class=\"previous-answer box box-answer recap-answer\" data-field=\"{$parts[1]}\">" . $original[$parts[1]] . "</p>";
+                        $tmpl = TwigManager::getInstance()->createTemplate("<p class=\"previous-answer box box-answer recap-answer\" data-field=\"{{name}}\">{{ answer }}</p>");
+
+                        return $tmpl->render(array('name' => $parts[1], 'answer' => $original[$parts[1]]));
                         break;
                 }
             },
@@ -272,16 +278,13 @@
                 }
                 
                 $data = json_decode($slidecontent->answer, true);
-                if (is_array($data[$name])) {
-                    $answer = implode(",", $data[$name]);
-                } else {
-                    $answer = $data[$name];
-                }
-                
-                $previous = "<div class=\"previous-answer box box-answer\"><h3>{$step}.{$slide} {$slidecontent->title}</h3>
-<div id=\"answerBox\">" . $answer . "</div>
+
+                $tmpl = TwigManager::getInstance()->createTemplate(
+                "<div class=\"previous-answer box box-answer\"><h3>{{step}}.{{slide}} {{title}}</h3>
+<div id=\"answerBox\">{% if answer is iterable %}{{ answer|join(',') }}{% else %}{{ answer }}{% endif %}</div>
 <!-- <a href=\"#\" class=\"prev-answer\" data-toggle=\"modal\" data-target=\".editPrevAnswer\">I need to change this answer.</a> -->
-</div>";
+</div>");
+                $previous = $tmpl->render(array('answer' => $data['name'], 'step' => $step, 'slide' => $slide, 'title' => $slidecontent->title));
                 return $previous;
             },
             $string
@@ -294,13 +297,15 @@
     function injectBox($string){
     
         $boxes = array();
+        $tmpl = TwigManager::getInstance()->createTemplate("<div id=\"{{box}}-{{id}}\" class=\"box box-{{box}}\"><h3>{% if box == 'casestudy'%}case study{% else %}{{ box }}{% endif %}</h3>{{ text|raw }}</div>");
+
         $output = preg_replace_callback(
             '|\[--box\|(?<name>\w+)--](.*?)\[--endbox--]|s',
-            function ($matches) use (&$boxes) {
+            function ($matches) use (&$boxes, $tmpl) {
                 $box = $matches['name'];
                 $text = $matches[2];
                 $id = rand(0, 1000); // this is very yucky
-                $boxes[] = "<div id=\"$box-$id\" class=\"box box-${box}\"><h3>" . ($box=='casestudy' ? 'case study' : $box) . '</h3>' . $text . '</div>';
+                $boxes[] = $tmpl->render(array('box' => $box, 'id' => $id, 'text' => $text));
                 return "<a name=\"$box-$id\"></a>";
             },
             $string);
@@ -412,31 +417,6 @@
             },
             $string
         );
-    }
-
-    function injectAlpaca($string, $project, $original) {
-        return preg_replace_callback(
-            '/\[--alpaca\|(?<name>[\d\.]+)--]/',
-            function ($matches) use ($original, $project) {
-                $slide = $matches['name'];
-                if ($original->answer) {
-                    $json = json_encode($original->answer);
-                } else {
-                    $json = "null";
-                }
-                $out = <<<EOM
-<div id="alpaca-form"></div>
-<script type="text/javascript">
-$('#alpaca-form').alpaca({
-    "data": $json,
-    "schemaSource": "/project/form/$slide?p=$project"
-});
-</script>
-EOM;
-                return $out;
-
-            },
-            $string);
     }
 
     /** title printing, parsing position **/
