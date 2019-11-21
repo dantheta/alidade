@@ -117,38 +117,12 @@ function customform_2_3($answer, $previousanswer, $recap) {
         return customform_2_3_recap($answer, $previousanswer);
     }
 
-    $s = '<div class="custom-form">';
-
-    foreach($previousanswer['data_collected'] as $category) {
-        $fieldname = get_sanitized_name($category);
-        $title = ucfirst($category);
-
-        $s .=<<<EOM
-<div class="fieldcontainer" id="$category">
-<legend>$title</legend>
-<div>
-Select a lawful basis for processing $category:
-<select name="{$fieldname}___lawful_basis">
-
-EOM;
-        foreach($lawful_bases as $basisname => $basis_title) {
-            if ($answer["{$fieldname}___lawful_basis"] == $basisname) {
-                $sel = " selected";
-            } else {
-                $sel = '';
-            }
-            $s .=<<<EOM
-    <option value="$basisname" $sel>$basis_title</option>
-
-EOM;
-        }
-        $s .=<<<EOM
-</select>
-</div>
-</div>
-EOM;
-    }
-    $s .= "</div>";
+    $twig = TwigManager::getInstance();
+    $s = $twig->render('forms/customform_2.3.html', array(
+        'lawful_bases' => $lawful_bases,
+        'answer' => $answer,
+        'categories' => $previousanswer['data_collected']
+    ));
     return $s;
 
 }

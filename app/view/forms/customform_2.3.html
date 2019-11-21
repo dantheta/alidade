@@ -1,0 +1,44 @@
+{% macro radiobool(name, answer) %}
+<div>
+    <input type="radio" name="{{name}}" value="yes" {{ answer[name] == 'yes' ? 'checked' : '' }}> Yes
+</div>
+<div>
+    <input type="radio" name="{{name}}" value="no" {{ answer[name] == 'no' ? 'checked' : '' }}> No
+</div>
+{% endmacro %}
+<div class="custom-form">
+    {% set followup = 'hide' %}
+    {% for category in categories %}
+        {% set fieldname = category|sanitizename %}
+        {% set value = answer[fieldname ~ '___lawful_basis'] %}
+        {% if value == 'consent' %}
+            {% set followup = '' %}
+        {% endif %}
+
+    <div class="fieldcontainer" id="{{category}}">
+        <legend>{{category|title}}</legend>
+        <div>
+            Select a lawful basis for processing {{category}}:
+            <select class="customform-23-select" name="{{fieldname}}___lawful_basis">
+                <option value="">(none selected)</option>
+            {% for basisname, basis_title in lawful_bases %}
+                <option value="{{basisname}}" {{ (value == basisname) ? 'selected' : '' }}>{{basis_title}}</option>
+            {% endfor %}
+            </select>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="{{ followup }} followup" id="consentform">
+        <div>At the moment of the data collection, is a concise, transparent, intelligible and clear
+            notice and consent given to the data subjects?
+            {{ _self.radiobool('notice_provided', answer) }}
+        </div>
+        <div>Are procedures provided for the withdrawal of the consent?
+            {{ _self.radiobool('withdrawal_procedure', answer) }}
+        </div>
+        <div>Do you delete data after withdrawal of consent?
+            {{ _self.radiobool('delete_after_withdrawal', answer) }}
+        </div>
+    </div>
+
+</div>

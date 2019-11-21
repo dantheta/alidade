@@ -484,6 +484,14 @@ $(document).ready(function(){
         $(obj).css("top", pos.top);
     });
 
+    $('.customform-23-select').on('change', function(idx, obj) {
+        if ($(this).val() == 'consent') {
+            alert($(this).val());
+            $('#consentform').show();
+            $('#consentform').removeClass('hide');
+        }
+    })
+
 });
 
 ;
