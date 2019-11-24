@@ -175,6 +175,9 @@
                     'box' => $box
                 );
             }
+            if (preg_match('|(?<=endbox--])(?:\s*</[pP]>)?(?<ending>.*?)$|s', $string, $match)) {
+                $output[] = array('content' => $match['ending']);
+            }
             return $output;
         } else {
             return array(array('content' => $string));

@@ -206,13 +206,16 @@ some leading content
 my box content
 [--endbox--]
 </p>
+more stuff
 EOM;
 
     $content = splitBoxes($orig);
 
-    $this->assertCount(1, $content);
+    $this->assertCount(2, $content);
     $this->assertTrue(array_key_exists('content', $content[0]));
     $this->assertTrue(array_key_exists('box', $content[0]));
+    $this->assertFalse(array_key_exists('box', $content[1]));
+    $this->assertEquals($content[1]['content'], "\nmore stuff");
 
     }
 
@@ -232,14 +235,17 @@ some more leading content
 my second box content
 [--endbox--]
 </p>
+more stuff
 EOM;
 
         $content = splitBoxes($orig);
 
-        $this->assertCount(2, $content);
+        $this->assertCount(3, $content);
         $this->assertTrue(array_key_exists('content', $content[0]));
         $this->assertTrue(array_key_exists('box', $content[0]));
-
+        $this->assertTrue(array_key_exists('content', $content[1]));
+        $this->assertTrue(array_key_exists('box', $content[1]));
+        $this->assertEquals($content[2]['content'], "\nmore stuff");
     }
 
     function testSplitNoBoxes() {
