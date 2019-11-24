@@ -159,6 +159,25 @@
         return $ph;
     }
 
+    /* Split content at infoboxes, return list of content/box arrays */
+    function splitBoxes($string) {
+        if (preg_match_all('!(?<content>.*?)(?<box>\[--box.*?--\].*?\[--endbox--])\s*(?<trailer><\/[pP]>)?!s', $string, $matches)) {
+            $output = array();
+            foreach($matches['content'] as $content) {
+                $box = array_shift($matches['box']);
+                $trailer = array_shift($matches['trailer']);
+
+                $output[] = array(
+                    'content' => $content . $trailer,
+                    'box' => $box
+                );
+            }
+            return $output;
+        } else {
+            return array(array('content' => $string));
+        }
+    }
+
     /** inject textarea and parse tags in text **/
     function injectAnswerField($string, $name = 'answer', $origin = null){
         $tmpl = TwigManager::getInstance()->createTemplate("<textarea id=\"answer\" name=\"{{name}}\" class=\"form-control\" rows=\"8\">{{ answer }}</textarea>");

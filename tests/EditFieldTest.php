@@ -195,4 +195,66 @@ EOM;
 
         $this->assertSame($result, $exp);
     }
+
+
+    function testSplitBoxes() {
+        $orig =<<< EOM
+<p>
+some leading content
+</p>
+<p>[--box|info--]
+my box content
+[--endbox--]
+</p>
+EOM;
+
+    $content = splitBoxes($orig);
+
+    $this->assertCount(1, $content);
+    $this->assertTrue(array_key_exists('content', $content[0]));
+    $this->assertTrue(array_key_exists('box', $content[0]));
+
+    }
+
+    function testSplit2Boxes() {
+            $orig =<<< EOM
+<p>
+some leading content
+</p>
+<p>[--box|info--]
+my box content
+[--endbox--]
+</p>
+<p>
+some more leading content
+</p>
+<p>[--box|info--]
+my second box content
+[--endbox--]
+</p>
+EOM;
+
+        $content = splitBoxes($orig);
+
+        $this->assertCount(2, $content);
+        $this->assertTrue(array_key_exists('content', $content[0]));
+        $this->assertTrue(array_key_exists('box', $content[0]));
+
+    }
+
+    function testSplitNoBoxes() {
+            $orig =<<< EOM
+<p>
+some leading content
+</p>
+<p>
+EOM;
+
+        $content = splitBoxes($orig);
+
+        $this->assertCount(1, $content);
+        $this->assertTrue(array_key_exists('content', $content[0]));
+        $this->assertFalse(array_key_exists('box', $content[0]));
+
+    }
 }
