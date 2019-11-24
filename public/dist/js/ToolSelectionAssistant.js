@@ -467,14 +467,13 @@ $(document).ready(function(){
     });
 
     $(document).on("keypress", ".alpaca-field-text .alpaca-control", function(e) {
-        if (e.which == 13 || e.which == 10) {
+        if (e.which === 13 || e.which === 10) {
             e.preventDefault();
         }
     });
     $('.customform-23-select').on('change', function(idx, obj) {
-        if ($(this).val() == 'consent') {
-            $('#consentform').show();
-            $('#consentform').removeClass('hide');
+        if ($(this).val() === 'consent') {
+            $('#consentform').show().removeClass('hide');
         }
     })
 
