@@ -471,19 +471,6 @@ $(document).ready(function(){
             e.preventDefault();
         }
     });
-
-    $('aside .box').each(function(idx, obj){
-        // this is horrid, but it will do for now.
-
-        // get vertical position of anchor
-        pos = $('a[name=' + $(obj).attr('id') + ']').position() ;
-
-        //alert("top: " + pos.top + " left: " + pos.left);
-        $('aside').height(pos.top + 250);
-        $(obj).css('position', 'relative');
-        $(obj).css("top", pos.top);
-    });
-
     $('.customform-23-select').on('change', function(idx, obj) {
         if ($(this).val() == 'consent') {
             $('#consentform').show();

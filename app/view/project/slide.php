@@ -37,59 +37,92 @@
               </div>
             </div>
 
+            <?php if ($slide_number == 0) { ?>
             <div class="row">
                 <div class="col-md-7 col-sm-8 col-xs-12">
-                <?php if ($slide_number > 0) { ?>
-                    <form action="/project/slide/<?php echo $nextSlide . '/?p=' . $projecthash ; ?> " method="post"  id="mainForm" rubyrails="true">
-                        <input type="hidden" name="current_slide"  value="<?php echo $currentSlide; ?>">
-                        <input type="hidden" name="hash"  value="<?php echo $projecthash; ?>">
-                        <input type="hidden" name="next_slide"  value="<?php echo $nextSlide; ?>">
-                        <input type="hidden" name="current_project" value="<?php echo $_SESSION['project']; ?>">
-                        <input type="hidden" name="idslide_list" value="<?php echo $slide->idslide_list; ?>">
-                        <input type="hidden" name="extra" value="<?php echo(!empty($extra) ? $extra : ''); ?>" id="extra13">
+                <?php print $step_model->description;
+                if(!is_null($nextSlide) && !empty($nextSlide)) { ?>
+                    <a href="/project/slide/<?php echo $nextSlide . '/?p=' . $projecthash ; ?> " class="btn btn-alidade btn-lg">NEXT: <?php echo $slideMenu[$nextSlide]; ?></a>
+                <?php } ?>
+                </div>
+                <div class="col-md-5 col-sm-4 col-xs-12">
+                    <aside>
+                    <?php echo (!empty($boxes) && isset($boxes) ? implode(' ', $boxes['boxes']) : ''); ?>
+                    </aside>
+                </div>
+            </div>
+            <?php } ?>
 
+            <?php if ($slide_number > 0) { ?>
+            <form action="/project/slide/<?php echo $nextSlide . '/?p=' . $projecthash ; ?> " method="post"  id="mainForm" rubyrails="true">
+                <input type="hidden" name="hash"  value="<?php echo $projecthash; ?>">
+                <input type="hidden" name="next_slide"  value="<?php echo $nextSlide; ?>">
+                <input type="hidden" name="current_project" value="<?php echo $_SESSION['project']; ?>">
+                <input type="hidden" name="idslide_list" value="<?php echo $slide->idslide_list; ?>">
+                <input type="hidden" name="extra" value="<?php echo(!empty($extra) ? $extra : ''); ?>" id="extra13">
+                <input type="hidden" name="current_slide"  value="<?php echo $currentSlide; ?>">
                         <?php
-                        
-                        /** check if this is a recap slide **/
-                        if($slide->slide_type == 4){
-                          $boxes = injectBox($slide->description);
-                          $text = $boxes['content'];
-                          $text .=  $recap;
-                          echo $text;
 
-                        } else {
+                        foreach (splitBoxes($slide->description) as $content) {
+                            $text = $content['content'];
+                            $boxes = array('boxes' => array($content['box']));
 
-                          $boxes = injectBox($slide->description);
-                          $text = $boxes['content'];
 
-                          $text = injectPrevAnswer($text, $_SESSION['project']);
+                            /** check if this is a recap slide **/
+                            if ($slide->slide_type == 4) {
+                                $boxes = injectBox($slide->description);
+                                $text = $boxes['content'];
+                                $text .= $recap;
+                                echo $text;
 
-                          switch($slide->slide_type){
-                            case 1:
-                              echo $text;
-                              break;
-                            case 2:
-                              $text = injectChoiceButtons($text);
-                              $text = injectChoicePanels($text);
-                              $text = injectCustomForm($text, $_SESSION['project'], $origin);
-                              $text = injectRadioButtons($text, $origin);
-                              $text = injectCheckboxes($text, $origin);
-                              $text = injectArray($text, $origin);
-                              $text = injectMultipleAnswerField($text, $origin);
-                              echo injectAnswerField($text, 'answer', $origin);
-                              break;
-                            case 3:
-                              echo injectAnswerField($text, 'answer', $origin);
-                              break;
-                            default:
-                              $text = injectParam($text, 'project', $_SESSION['project']);
-                              $text = injectParam($text, 'step', $step_number);
-                              echo $text;
-                              break;
-                          }
-                          
+                            } else {
+
+                                /*$boxes = injectBox($slide->description);
+                                $text = $boxes['content'];*/
+
+                                $text = injectPrevAnswer($text, $_SESSION['project']);
+
+                                switch ($slide->slide_type) {
+                                    case 1:
+                                        break;
+                                    case 2:
+                                        $text = injectChoiceButtons($text);
+                                        $text = injectChoicePanels($text);
+                                        $text = injectCustomForm($text, $_SESSION['project'], $origin);
+                                        $text = injectRadioButtons($text, $origin);
+                                        $text = injectCheckboxes($text, $origin);
+                                        $text = injectArray($text, $origin);
+                                        $text = injectMultipleAnswerField($text, $origin);
+                                        $text = injectAnswerField($text, 'answer', $origin);
+                                        break;
+                                    case 3:
+                                        $text = injectAnswerField($text, 'answer', $origin);
+                                        break;
+                                    default:
+                                        $text = injectParam($text, 'project', $_SESSION['project']);
+                                        $text = injectParam($text, 'step', $step_number);
+                                        break;
+                                }
+
+                            } ?>
+                            <div class="row">
+                                <div class="col-md-7 col-sm-8 col-xs-12">
+                                    <?php echo $text; ?>
+                                </div>
+                                <div class="col-md-5 col-sm-4 col-xs-12">
+                                    <aside>
+                                        <?php foreach ($boxes['boxes'] as $box) {
+                                            if (is_object($box)) {
+                                                echo formatBox($box->type, $box->text);
+                                            } else {
+                                                echo $box;
+                                            }
+                                        } ?>
+                                    </aside>
+                                </div>
+                            </div>
+                        <?php
                         }
-
 
                         ?>
                         <div class="row" id="slide-buttons">
@@ -107,31 +140,10 @@
                               ?>
                             </div>
                         </div>
-                    </form>
-                    <?php } // end slide_no > 0 ?>
-                    <?php if ($slide_number == 0) { 
-                        print $step_model->description;    
-                        if(!is_null($nextSlide) && !empty($nextSlide)) { ?>
-                            <a href="/project/slide/<?php echo $nextSlide . '/?p=' . $projecthash ; ?> " class="btn btn-alidade btn-lg">NEXT: <?php echo $slideMenu[$nextSlide]; ?></a>
-                            <?php
-                        }
-                    } ?>
-                </div>
-                <div class="col-md-5 col-sm-4 col-xs-12">
-                  <aside>
-                  <?php
-                  if($slide->slide_type == 4) {
-                    echo '<img class="img-responsive" src="/assets/images/tool/RecapStep' . $slide->step . '.svg" alt="' . $slide->title . '">';
-                  }
-                  elseif($slide->slide_type == 1){
-                    echo '<img class="img-responsive center-block" src="/assets/images/six-rules/Step' . $slide->step . '.svg" alt="' . $slide->title . '"><p></p>';
 
-                  }
-                  ?>
-                  <?php echo (!empty($boxes) && isset($boxes) ? implode(' ', $boxes['boxes']) : ''); ?>
-                  </aside>
-                </div>
-            </div>
+
+            </form>
+            <?php } // end slide_no > 0 ?>
       </div>
     </div>
 </div>

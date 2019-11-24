@@ -161,11 +161,14 @@
 
     /* Split content at infoboxes, return list of content/box arrays */
     function splitBoxes($string) {
-        if (preg_match_all('!(?<content>.*?)(?<box>\[--box.*?--\].*?\[--endbox--])\s*(?<trailer><\/[pP]>)?!s', $string, $matches)) {
+        if (preg_match_all('!(?<content>.*?)(?<box>\[--box\|(?<boxtype>.*?)--](?<boxcontent>.*?)\[--endbox--])\s*(?<trailer></[pP]>)?!s', $string, $matches)) {
             $output = array();
             foreach($matches['content'] as $content) {
-                $box = array_shift($matches['box']);
                 $trailer = array_shift($matches['trailer']);
+
+                $box = new stdClass();
+                $box->type = array_shift($matches['boxtype']);
+                $box->text = array_shift($matches['boxcontent']);
 
                 $output[] = array(
                     'content' => $content . $trailer,
@@ -313,19 +316,24 @@
 
     }
 
+    function formatBox($type, $text) {
+        $tmpl = TwigManager::getInstance()->createTemplate("<div class=\"box box-{{box}}\"><h3>{% if box == 'casestudy'%}case study{% else %}{{ box }}{% endif %}</h3>{{ text|raw }}</div>");
+
+        return $tmpl->render(array('box' => $type, 'text' => $text));
+
+    }
+
     function injectBox($string){
     
         $boxes = array();
-        $tmpl = TwigManager::getInstance()->createTemplate("<div id=\"{{box}}-{{id}}\" class=\"box box-{{box}}\"><h3>{% if box == 'casestudy'%}case study{% else %}{{ box }}{% endif %}</h3>{{ text|raw }}</div>");
 
         $output = preg_replace_callback(
             '|\[--box\|(?<name>\w+)--](.*?)\[--endbox--]|s',
-            function ($matches) use (&$boxes, $tmpl) {
+            function ($matches) use (&$boxes) {
                 $box = $matches['name'];
                 $text = $matches[2];
-                $id = rand(0, 1000); // this is very yucky
-                $boxes[] = $tmpl->render(array('box' => $box, 'id' => $id, 'text' => $text));
-                return "<a name=\"$box-$id\"></a>";
+                $boxes[] = formatBox($box, $text);
+                return "";
             },
             $string);
         

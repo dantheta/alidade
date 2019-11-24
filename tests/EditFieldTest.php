@@ -50,8 +50,8 @@ section
         
         $this->assertCount(2, $output);
         // strip random IDs from output for test comparison
-        $this->assertSame(preg_replace('|\-\d+|','',$output['content']), "stuff\n<a name=\"casestudy\"></a>\nmore stuff");
-        $this->assertSame(preg_replace('|id="casestudy-\d+" |', '', $output['boxes'][0]), "<div class=\"box box-casestudy\"><h3>case study</h3>\nSomeText\nSomeText2\n</div>");
+        $this->assertSame($output['content'], "stuff\n\nmore stuff");
+        $this->assertSame($output['boxes'][0], "<div class=\"box box-casestudy\"><h3>case study</h3>\nSomeText\nSomeText2\n</div>");
         
     }
     
