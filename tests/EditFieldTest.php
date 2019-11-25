@@ -215,10 +215,10 @@ EOM;
     $this->assertTrue(array_key_exists('content', $content[0]));
     $this->assertTrue(array_key_exists('box', $content[0]));
     $this->assertEquals($content[0]['box']->type, "info");
-    $this->assertEquals($content[0]['box']->text, "\nmy box content\n");
+    $this->assertEquals($content[0]['box']->text, "my box content");
 
     $this->assertFalse(array_key_exists('box', $content[1]));
-    $this->assertEquals($content[1]['content'], "\nmore stuff");
+    $this->assertEquals($content[1]['content'], "more stuff");
 
     }
 
@@ -247,13 +247,13 @@ EOM;
         $this->assertTrue(array_key_exists('content', $content[0]));
         $this->assertTrue(array_key_exists('box', $content[0]));
         $this->assertEquals($content[0]['box']->type, "info");
-        $this->assertEquals($content[0]['box']->text, "\nmy box content\n");
+        $this->assertEquals($content[0]['box']->text, "my box content");
 
         $this->assertTrue(array_key_exists('content', $content[1]));
         $this->assertTrue(array_key_exists('box', $content[1]));
 
         $this->assertFalse(array_key_exists('box', $content[2]));
-        $this->assertEquals($content[2]['content'], "\nmore stuff");
+        $this->assertEquals($content[2]['content'], "more stuff");
     }
 
     function testSplitNoBoxes() {

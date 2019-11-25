@@ -170,7 +170,7 @@
 
                 $box = new stdClass();
                 $box->type = array_shift($matches['boxtype']);
-                $box->text = array_shift($matches['boxcontent']);
+                $box->text = trim(array_shift($matches['boxcontent']));
 
                 $output[] = array(
                     'content' => $content . $trailer,
@@ -182,7 +182,7 @@
             foreach($matches[0] as $s) {
                 $matchoffset += strlen($s);
             }
-            $remainder = substr($string, $matchoffset);
+            $remainder = trim(substr($string, $matchoffset));
 
             // return remaining string as another content segment
             if ($remainder) {
