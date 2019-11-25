@@ -175,8 +175,24 @@
                     'box' => $box
                 );
             }
-            if (preg_match('|(?<=endbox--])(?:\s*</[pP]>)?(?<ending>.*?)$|s', $string, $match)) {
-                $output[] = array('content' => $match['ending']);
+            /* this is hilarious - I couldn't find a decent way of getting the least greedy
+            match against the end of the string when more then one infobox was present (the second infobox
+            was always present in the trailing text).
+
+            It isn't possible to use a negative lookahead between two wildcard captures, even non-greedy (it
+            always matches).
+
+            The string is reversed so that the end of the string is the start, and the least greedy match works.
+
+            Forward pattern:
+            '|(?<=endbox--])(?:\s*</[pP]>)?(?<ending>.*?)$|s',
+
+            */
+            if (preg_match_all('|^(?<ending>.*?)(?:>[pP]/<\s*)?(?=]--xobdne)|s',
+                strrev($string),
+                $matches)) {
+
+                $output[] = array('content' => strrev(array_pop($matches['ending'])) );
             }
             return $output;
         } else {

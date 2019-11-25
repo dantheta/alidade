@@ -214,6 +214,9 @@ EOM;
     $this->assertCount(2, $content);
     $this->assertTrue(array_key_exists('content', $content[0]));
     $this->assertTrue(array_key_exists('box', $content[0]));
+    $this->assertEquals($content[0]['box']->type, "info");
+    $this->assertEquals($content[0]['box']->text, "\nmy box content\n");
+
     $this->assertFalse(array_key_exists('box', $content[1]));
     $this->assertEquals($content[1]['content'], "\nmore stuff");
 
@@ -239,10 +242,14 @@ more stuff
 EOM;
 
         $content = splitBoxes($orig);
+        //print_r($content);
 
         $this->assertCount(3, $content);
         $this->assertTrue(array_key_exists('content', $content[0]));
         $this->assertTrue(array_key_exists('box', $content[0]));
+        $this->assertEquals($content[0]['box']->type, "info");
+        $this->assertEquals($content[0]['box']->text, "\nmy box content\n");
+
         $this->assertTrue(array_key_exists('content', $content[1]));
         $this->assertTrue(array_key_exists('box', $content[1]));
         $this->assertEquals($content[2]['content'], "\nmore stuff");
