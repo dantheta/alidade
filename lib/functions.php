@@ -161,7 +161,9 @@
 
     /* Split content at infoboxes, return list of content/box arrays */
     function splitBoxes($string) {
-        if (preg_match_all('!(?<content>.*?)(?<box>\[--box\|(?<boxtype>.*?)--](?<boxcontent>.*?)\[--endbox--])\s*(?<trailer></[pP]>)?!s', $string, $matches)) {
+        if (preg_match_all('!(?<content>.*?)(?<box>\[--box\|(?<boxtype>.*?)--](?<boxcontent>.*?)\[--endbox--])\s*(?<trailer></[pP]>)?!s',
+                $string,
+                $matches)) {
             $output = array();
             foreach($matches['content'] as $content) {
                 $trailer = array_shift($matches['trailer']);
@@ -175,25 +177,18 @@
                     'box' => $box
                 );
             }
-            /* this is hilarious - I couldn't find a decent way of getting the least greedy
-            match against the end of the string when more then one infobox was present (the second infobox
-            was always present in the trailing text).
-
-            It isn't possible to use a negative lookahead between two wildcard captures, even non-greedy (it
-            always matches).
-
-            The string is reversed so that the end of the string is the start, and the least greedy match works.
-
-            Forward pattern:
-            '|(?<=endbox--])(?:\s*</[pP]>)?(?<ending>.*?)$|s',
-
-            */
-            if (preg_match_all('|^(?<ending>.*?)(?:>[pP]/<\s*)?(?=]--xobdne)|s',
-                strrev($string),
-                $matches)) {
-
-                $output[] = array('content' => strrev(array_pop($matches['ending'])) );
+            // work out how much of the string has been consumed
+            $matchoffset = 0;
+            foreach($matches[0] as $s) {
+                $matchoffset += strlen($s);
             }
+            $remainder = substr($string, $matchoffset);
+
+            // return remaining string as another content segment
+            if ($remainder) {
+                $output[] = array('content' => $remainder);
+            }
+
             return $output;
         } else {
             return array(array('content' => $string));
