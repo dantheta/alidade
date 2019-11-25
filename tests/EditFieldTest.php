@@ -242,7 +242,6 @@ more stuff
 EOM;
 
         $content = splitBoxes($orig);
-        //print_r($content);
 
         $this->assertCount(3, $content);
         $this->assertTrue(array_key_exists('content', $content[0]));
@@ -252,6 +251,8 @@ EOM;
 
         $this->assertTrue(array_key_exists('content', $content[1]));
         $this->assertTrue(array_key_exists('box', $content[1]));
+
+        $this->assertFalse(array_key_exists('box', $content[2]));
         $this->assertEquals($content[2]['content'], "\nmore stuff");
     }
 
