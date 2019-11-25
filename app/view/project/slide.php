@@ -47,7 +47,6 @@
                 </div>
                 <div class="col-md-5 col-sm-4 col-xs-12">
                     <aside>
-                    <?php echo (!empty($boxes) && isset($boxes) ? implode(' ', $boxes['boxes']) : ''); ?>
                     </aside>
                 </div>
             </div>
@@ -61,87 +60,90 @@
                 <input type="hidden" name="idslide_list" value="<?php echo $slide->idslide_list; ?>">
                 <input type="hidden" name="extra" value="<?php echo(!empty($extra) ? $extra : ''); ?>" id="extra13">
                 <input type="hidden" name="current_slide"  value="<?php echo $currentSlide; ?>">
-                        <?php
+                <?php
 
-                        foreach (splitBoxes($slide->description) as $content) {
-                            $text = $content['content'];
-                            $boxes = array('boxes' => array($content['box']));
+                $contentrow = 0;
+                foreach (splitBoxes($slide->description) as $content) {
+                    $text = $content['content'];
 
+                    $text = injectPrevAnswer($text, $_SESSION['project']);
 
-                            /** check if this is a recap slide **/
-                            if ($slide->slide_type == 4) {
-                                $boxes = injectBox($slide->description);
-                                $text = $boxes['content'];
+                    switch ($slide->slide_type) {
+                        case 1:
+                            break;
+                        case 2:
+                            $text = injectChoiceButtons($text);
+                            $text = injectChoicePanels($text);
+                            $text = injectCustomForm($text, $_SESSION['project'], $origin);
+                            $text = injectRadioButtons($text, $origin);
+                            $text = injectCheckboxes($text, $origin);
+                            $text = injectArray($text, $origin);
+                            $text = injectMultipleAnswerField($text, $origin);
+                            $text = injectAnswerField($text, 'answer', $origin);
+                            break;
+                        case 3:
+                            $text = injectAnswerField($text, 'answer', $origin);
+                            break;
+                        case 4:
+                            if ($contentrow ==0) {
                                 $text .= $recap;
-                                echo $text;
+                            }
+                            break;
+                        default:
+                            $text = injectParam($text, 'project', $_SESSION['project']);
+                            $text = injectParam($text, 'step', $step_number);
+                            break;
+                    }
 
-                            } else {
-
-                                /*$boxes = injectBox($slide->description);
-                                $text = $boxes['content'];*/
-
-                                $text = injectPrevAnswer($text, $_SESSION['project']);
-
-                                switch ($slide->slide_type) {
-                                    case 1:
-                                        break;
-                                    case 2:
-                                        $text = injectChoiceButtons($text);
-                                        $text = injectChoicePanels($text);
-                                        $text = injectCustomForm($text, $_SESSION['project'], $origin);
-                                        $text = injectRadioButtons($text, $origin);
-                                        $text = injectCheckboxes($text, $origin);
-                                        $text = injectArray($text, $origin);
-                                        $text = injectMultipleAnswerField($text, $origin);
-                                        $text = injectAnswerField($text, 'answer', $origin);
-                                        break;
-                                    case 3:
-                                        $text = injectAnswerField($text, 'answer', $origin);
-                                        break;
-                                    default:
-                                        $text = injectParam($text, 'project', $_SESSION['project']);
-                                        $text = injectParam($text, 'step', $step_number);
-                                        break;
-                                }
-
-                            } ?>
-                            <div class="row">
-                                <div class="col-md-7 col-sm-8 col-xs-12">
-                                    <?php echo $text; ?>
-                                </div>
-                                <div class="col-md-5 col-sm-4 col-xs-12">
-                                    <aside>
-                                        <?php foreach ($boxes['boxes'] as $box) {
-                                            if (is_object($box)) {
-                                                echo formatBox($box->type, $box->text);
-                                            } else {
-                                                echo $box;
-                                            }
-                                        } ?>
-                                    </aside>
-                                </div>
-                            </div>
-                        <?php
-                        }
-
-                        ?>
-                        <div class="row" id="slide-buttons">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                              <?php
-                                if($slide->slide_type == 4) {
-                              ?>
-                              <a href="/printer/output/<?php echo $_SESSION['project'] . '/' . substr($currentSlide, 0, 1); ?>" target="_blank" class="btn btn-alidade btn-lg">Download PDF</a>
-                              <?php
-                                }
-                                if(!is_null($nextSlide) && !empty($nextSlide)) { ?>
-                                    <button type="submit" class="btn btn-alidade btn-lg">Save and continue: <?php echo $slideMenu[$nextSlide]; ?></button>
-                                    <?php
-                                }
-                              ?>
-                            </div>
+                    ?>
+                    <div class="row">
+                        <div class="col-md-7 col-sm-8 col-xs-12">
+                            <?php echo $text; ?>
                         </div>
+                        <div class="col-md-5 col-sm-4 col-xs-12">
+                            <aside>
+                                <?php
+                                // only show these in the first aside
+                                if ($contentrow == 0) {
+                                    if($slide->slide_type == 4) {
+                                        echo '<img class="img-responsive" src="/assets/images/tool/RecapStep' . $slide->step . '.svg" alt="' . $slide->title . '">';
+                                    }
+                                    elseif($slide->slide_type == 1){
+                                        echo '<img class="img-responsive center-block" src="/assets/images/six-rules/Step' . $slide->step . '.svg" alt="' . $slide->title . '"><p></p>';
 
+                                    }
+                                }
+                                if (isset($content['box'])) {
+                                    if (is_object($content['box'])) {
+                                        echo formatBox($content['box']->type, $content['box']->text);
+                                    } else {
+                                        echo $content['box'];
+                                    }
+                                }
+                                ?>
+                            </aside>
+                        </div>
+                    </div>
+                <?php
+                    $contentrow += 1;
+                }
 
+                ?>
+                <div class="row" id="slide-buttons">
+                    <div class="col-md-7 col-sm-8 col-xs-12">
+                      <?php
+                        if($slide->slide_type == 4) {
+                      ?>
+                      <a href="/printer/output/<?php echo $_SESSION['project'] . '/' . substr($currentSlide, 0, 1); ?>" target="_blank" class="btn btn-alidade btn-lg">Download PDF</a>
+                      <?php
+                        }
+                        if(!is_null($nextSlide) && !empty($nextSlide)) { ?>
+                            <button type="submit" class="btn btn-alidade btn-lg">Save and continue: <?php echo $slideMenu[$nextSlide]; ?></button>
+                            <?php
+                        }
+                      ?>
+                    </div>
+                </div>
             </form>
             <?php } // end slide_no > 0 ?>
       </div>
