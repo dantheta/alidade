@@ -331,7 +331,7 @@
     }
 
     function formatBox($type, $text) {
-        $tmpl = TwigManager::getInstance()->createTemplate("<div class=\"box box-{{box}}\"><h3>{% if box == 'casestudy'%}case study{% else %}{{ box }}{% endif %}</h3>{{ text|raw }}</div>");
+        $tmpl = TwigManager::getInstance()->createTemplate("<div class=\"box box-{{box}}\">{% if box != 'context' %}<h3>{% if box == 'casestudy'%}case study{% else %}{{ box }}{% endif %}</h3>{% endif %}{{ text|raw }}</div>");
 
         return $tmpl->render(array('box' => $type, 'text' => $text));
 
