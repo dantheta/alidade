@@ -227,6 +227,8 @@
     }
 
     function injectAnswers($string, $original, $project, &$warnings=null) {
+        // Warnings is passed by reference, since this function adds a "done" flag to
+        // each warning displayed.  This prevents repeat rendering.
         if (is_null($warnings)) {
             $warnings = array();
         }
@@ -236,15 +238,21 @@
             $string
         );
 
+        $tmplb = TwigManager::getInstance()->load("project/recap_fields.html");
+
         return preg_replace_callback('/\[--(.*?)\--]/',
-            function ($matches) use ($original, $project, &$warnings) {
+            function ($matches) use ($original, $project, $tmplb, &$warnings) {
                 $parts = explode('|', $matches[1]);
 
                 $out = "";
                 if (substr($parts[0], 0, 15) == "multiple-answer") {
                     $multiparts = explode('-', $parts[0]);
                     $multipart = array_pop($multiparts);
-                    $out = "<p class=\"previous-answer box box-answer  recap-answer\" data-field=\"{$parts[0]}\">" . $original['multianswer'][$multipart] . "</p>";
+                    $out = $tmplb->renderBlock("multianswer", array(
+                        'original' => $original,
+                        'multipart' => $multipart,
+                        'parts' => $parts
+                    ));
                     $critname = "multianswer-" . $multipart;
                 } elseif ($parts[0] == 'customform') {
                     $out = customform($parts[1], $original, $project, true);
@@ -260,56 +268,41 @@
                             return "";
                             break;
                         case "answer":
-                            $tmpl = TwigManager::getInstance()->createTemplate("<p class=\"previous-answer box box-answer  recap-answer\" data-field=\"answer\">{{ answer }}</p>");
-                            $out = $tmpl->render(array('answer' => $original['answer']));
+                            $out = $tmplb->renderBlock('answer', array('answer' => $original['answer']));
                             $critname = "answer";
                             break;
                         case "radio":
                             if ($original[$parts[1]] == $parts[2]) {
-                                $out = "<p class=\"previous-answer box box-answer recap-answer\" data-field=\"{$parts[1]}\">Selected: " . $parts[3] . "</p>";
+                                $out = $tmplb->renderBlock('radio', array('parts' => $parts));
                             }
                             $critname = $parts[1];
                             break;
                         case "check":
                             if (@$original[$parts[1]]) {
-                                $out = "<p class=\"previous-answer box box-answer  recap-answer\" data-field=\"{$parts[1]}\">Checked: " . $parts[2] . "</p>";
+                                $out = $tmplb->renderBlock('check', array('parts' => $parts));
                             }
                             $critname = $parts[1];
                             break;
                         case "array":
-                            $tmpl = TwigManager::getInstance()->createTemplate("<ul class=\"previous-answer box box-answer recap-answer\" data-field=\"{{name}}\">
-{% for value in answers %}
-<li>{{ value }}</li>
-{% endfor %}
-</ul>");
-                            $out = $tmpl->render(array('answers' => $original[$parts[1]], 'name' => $parts[1]));
+                            $out = $tmplb->renderBlock('array', array('answers' => $original[$parts[1]], 'name' => $parts[1]));
                             $critname = $parts[1];
                             break;
                         default:
-                            $tmpl = TwigManager::getInstance()->createTemplate("<p class=\"previous-answer box box-answer recap-answer\" data-field=\"{{name}}\">{{ answer }}</p>");
-
-                            $out = $tmpl->render(array('name' => $parts[1], 'answer' => $original[$parts[1]]));
+                            $out = $tmplb->renderBlock('default', array('name' => $parts[1], 'answer' => $original[$parts[1]]));
                             $critname = $parts[1];
                             break;
                     }
                 }
                 foreach($warnings as &$warn) {
-                    print_r($warn); echo "$critname {$warn['done']}";
                     foreach ($warn['criteria'] as $criterion) {
                         if ($criterion['name'] == $critname) {
                             if (!@$warn['done']) {
                                 $warn['done'] = 1;
-                                $tmpl = TwigManager::getInstance()->createTemplate("
-<div class=\"alert alert-warning\"><h4><span class=\"glyphicon glyphicon-warning-sign\"></span>Warning {{name}}</h4>
-<p>{{ warn.warning }}</p>
-</div>");
-                                $out .= $tmpl->render(array('warn' => $warn, 'name' => $critname));
-                                echo "  rendered";
+                                $out .= $tmplb->renderBlock('warning', array('warn' => $warn, 'name' => $critname));
                             }
                             break;
                         }
                     }
-                    echo "<br />";
                 }
                 return $out;
             },

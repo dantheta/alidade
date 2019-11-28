@@ -1,0 +1,33 @@
+{% block multianswer %}
+<p class="previous-answer box box-answer  recap-answer" data-field="{{parts[0]}}">{{ original.multianswer[multipart] }}</p>
+{% endblock %}
+
+{% block answer %}
+<p class="previous-answer box box-answer  recap-answer" data-field="answer">{{ answer }}</p>
+{% endblock %}
+
+{% block radio %}
+<p class="previous-answer box box-answer recap-answer" data-field="{{ parts[1] }}">Selected: {{parts[3]}}</p>
+{% endblock %}
+
+{% block check %}}
+<p class="previous-answer box box-answer  recap-answer" data-field="{{parts[1]}}">Checked: {{parts[2]}}</p>
+{% endblock %}
+
+{% block array %}
+<ul class="previous-answer box box-answer recap-answer" data-field="{{name}}">
+    {% for value in answers %}
+    <li>{{ value }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% block default %}
+<p class="previous-answer box box-answer recap-answer" data-field="{{name}}">{{ answer }}</p>
+{% endblock %}
+
+{% block warning %}
+<div class="alert alert-warning"><h4><span class="glyphicon glyphicon-warning-sign"></span>Warning</h4>
+    <p>{{ warn.warning }}</p>
+</div>
+{% endblock %}
