@@ -216,20 +216,19 @@
             $stepslides = array();
             foreach($slidelist as $slide) {
                 if ($slide->step == $step_no) {
-                    $slide->description = injectAnswers($slide->description,
-                                                        $answerslides[$slide->idslide_list],
-                                                        $project[0]->idprojects
-                                                        );
-                    $slidewarnings = findWarnings($warnings, "{$step_no}.{$slide->position}");
+
                     $slide->warnings = array();
-                    foreach($slidewarnings as $warn) {
+                    foreach(findWarnings($warnings, "{$step_no}.{$slide->position}") as $warn) {
                         if (evaluateWarning($warn, $answerslides[$slide->idslide_list])) {
-                            print_r($warn['criteria']); echo "<br/>";
                             $slide->warnings[] = $warn;
                         }
                     }
 
-
+                    $slide->description = injectAnswers($slide->description,
+                                                        $answerslides[$slide->idslide_list],
+                                                        $project[0]->idprojects,
+                                                        $slide->warnings
+                                                        );
                     $stepslides[] = $slide;
                 }
             }

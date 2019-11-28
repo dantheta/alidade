@@ -8,10 +8,13 @@
 <div>
     {{ slide.description|raw }}
 </div>
+{# show remaining warnings #}
 {% for warn in slide.warnings %}
+{% if warn.done != 1 %}
 <div class="alert alert-warning"><h4><span class="glyphicon glyphicon-warning-sign"></span>Warning</h4>
 <p>{{ warn.warning }}</p>
 </div>
+{% endif %}
 {% endfor %}
 {% endif %}
 {% endfor %}
