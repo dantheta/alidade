@@ -203,6 +203,8 @@
             $Project = new Project;
             $Slide = new Slide;
 
+            $warnings = loadWarnings();
+
             $answerslides = array();
             foreach($Slide->findProjectSlides($project[0]->idprojects) as $slide) {
                 if ($slide->step == $step_no) {
@@ -218,6 +220,16 @@
                                                         $answerslides[$slide->idslide_list],
                                                         $project[0]->idprojects
                                                         );
+                    $slidewarnings = findWarnings($warnings, "{$step_no}.{$slide->position}");
+                    $slide->warnings = array();
+                    foreach($slidewarnings as $warn) {
+                        if (evaluateWarning($warn, $answerslides[$slide->idslide_list])) {
+                            print_r($warn['criteria']); echo "<br/>";
+                            $slide->warnings[] = $warn;
+                        }
+                    }
+
+
                     $stepslides[] = $slide;
                 }
             }

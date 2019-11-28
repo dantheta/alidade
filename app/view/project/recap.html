@@ -8,5 +8,10 @@
 <div>
     {{ slide.description|raw }}
 </div>
+{% for warn in slide.warnings %}
+<div class="alert alert-warning"><h4><span class="glyphicon glyphicon-warning-sign"></span>Warning</h4>
+<p>{{ warn.warning }}</p>
+</div>
+{% endfor %}
 {% endif %}
 {% endfor %}

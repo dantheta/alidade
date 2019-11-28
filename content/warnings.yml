@@ -1,7 +1,7 @@
 - slide: "3.1"
   criteria:
     - name: choice
-      value: yes
+      value: "yes"
     - name: multianswer-0
       is: empty
   warning: "This response indicates a high privacy risk.  You should put measures in place to mitigate the risk and explain these in the text box provided."
@@ -9,7 +9,7 @@
 - slide: "3.1"
   criteria:
     - name: choice2
-      value: yes
+      value: "yes"
     - name: multianswer-1
       is: empty
   warning: "This response indicates a high privacy risk.  You should put measures in place to mitigate the risk and explain these in the text box provided."
