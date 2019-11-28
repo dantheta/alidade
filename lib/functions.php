@@ -532,3 +532,39 @@
             echo '<link type="text/css" rel="stylesheet" href="' . $css . '">';
         }
     }
+
+    /* warning functions */
+
+    function loadWarnings() {
+        $data = yaml_parse_file(ROOT . DS . 'content' . DS . 'warnings.yml');
+        return $data;
+    }
+
+    function findWarnings($warningdata, $slide) {
+        $out = array();
+        foreach($warningdata as $warning) {
+            if ($warning['slide'] == $slide) {
+                $out[] = $warning;
+            }
+        }
+        return $out;
+    }
+
+    function evaluateWarning($warning, $answer) {
+        $result = true;
+        foreach($warning['criteria'] as $crit) {
+            if (@$crit['is'] == "empty") {
+                if (trim($answer[$crit['name']]) != "") {
+                    $result = false;
+                    break;
+                }
+            }
+            if (@$crit['value']) {
+                if ($crit['value'] != $answer[$crit['name']]) {
+                    $result = false;
+                    break;
+                }
+            }
+        }
+        return $result;
+    }
