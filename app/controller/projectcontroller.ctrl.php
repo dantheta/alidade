@@ -78,10 +78,12 @@
 
                 $slideIndex = array();
                 $step_titles = array();
+                $menu = array();
                 foreach($slidelist as $s){
                     $slideIndex[$s->step][] = $s->position;
                     $slideIndex['fullIndex'][] = $s->step . '.' . $s->position;
                     $step_titles[$s->step] = $s->step_title;
+                    $menu[$s->indexer] = $s->title;
                 }
 
                 $this->set('step_number', $step_no);
@@ -89,6 +91,7 @@
                 $this->set('slidelist', $slidelist);
                 $this->set('slideindex', $slideIndex);
                 $this->set('step_titles', $step_titles);
+                $this->set('slideMenu', $menu);
 
                 if(!empty($_SESSION['project'])) {
                     $loaded_project = $this->Project->findOne($_SESSION['project']);
@@ -185,20 +188,11 @@
                 }
                 
                 $projectSlideIndex = $this->Project->getIndex($idProject);
-
                 // rearraange the index for our purposes
                 foreach($projectSlideIndex as $p){
                     $projectIndex[$p['step']][] = $p['slideStep'];
                 }
                 $this->set('projectIndex', $projectIndex);
-
-                $menu = array();
-                foreach($slidelist as $slide){
-                    $menu[$slide->indexer] = $slide->title;
-                }
-                $this->set('slideMenu', $menu);
-
-
 
             }
         }
