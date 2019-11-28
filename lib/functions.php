@@ -573,14 +573,21 @@
     function evaluateWarning($warning, $answer) {
         $result = true;
         foreach($warning['criteria'] as $crit) {
+            if (substr($crit['name'], 0, 11) == "multianswer") {
+                $multiparts = explode('-', $crit['name']);
+                $multipart = array_pop($multiparts);
+                $value = $answer['multianswer'][$multipart];
+            } else {
+                $value = $answer[$crit['name']];
+            }
             if (@$crit['is'] == "empty") {
-                if (trim($answer[$crit['name']]) != "") {
+                if (trim($value) != "") {
                     $result = false;
                     break;
                 }
             }
             if (@$crit['value']) {
-                if ($crit['value'] != $answer[$crit['name']]) {
+                if ($crit['value'] != $value) {
                     $result = false;
                     break;
                 }

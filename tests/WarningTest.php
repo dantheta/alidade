@@ -67,9 +67,9 @@ class WarningTest extends TestCase {
         $warnings = $this->warnings;
         $warning = $warnings[0];
 
-        $result = evaluateWarning($warning, array('multianswer-0' => ""));
+        $result = evaluateWarning($warning, array('multianswer' => array("")));
         $this->assertTrue($result);
-        $result = evaluateWarning($warning, array('multianswer-0' => "    "));
+        $result = evaluateWarning($warning, array('multianswer' => array("    ")));
         $this->assertTrue($result);
     }
 
@@ -77,7 +77,7 @@ class WarningTest extends TestCase {
         $warnings = $this->warnings;
         $warning = $warnings[0];
 
-        $result = evaluateWarning($warning, array('multianswer-0' => "some stuff"));
+        $result = evaluateWarning($warning, array('multianswer' => array("some stuff")));
         $this->assertFalse($result);
     }
 
@@ -98,28 +98,28 @@ class WarningTest extends TestCase {
     function testEvaluateMultiAllMatch() {
         $warnings = findWarnings($this->warnings, "1.3");
 
-        $result = evaluateWarning($warnings[0], array('choice' => "yes", 'multianswer-0' => ""));
+        $result = evaluateWarning($warnings[0], array('choice' => "yes", 'multianswer' => array("")));
         $this->assertTrue($result);
     }
 
     function testEvaluateMultiFirstNotMatch() {
         $warnings = findWarnings($this->warnings, "1.3");
 
-        $result = evaluateWarning($warnings[0], array('choice' => "no", 'multianswer-0' => ""));
+        $result = evaluateWarning($warnings[0], array('choice' => "no", 'multianswer' => array("")));
         $this->assertFalse($result);
     }
 
     function testEvaluateMultiSecondNotMatch() {
         $warnings = findWarnings($this->warnings, "1.3");
 
-        $result = evaluateWarning($warnings[0], array('choice' => "yes", 'multianswer-0' => "stuff"));
+        $result = evaluateWarning($warnings[0], array('choice' => "yes", 'multianswer' => array("stuff")));
         $this->assertFalse($result);
     }
 
     function testEvaluateMultiNoneMatch() {
         $warnings = findWarnings($this->warnings, "1.3");
 
-        $result = evaluateWarning($warnings[0], array('choice' => "no", 'multianswer-0' => "stuff"));
+        $result = evaluateWarning($warnings[0], array('choice' => "no", 'multianswer' => array("stuff")));
         $this->assertFalse($result);
     }
 
