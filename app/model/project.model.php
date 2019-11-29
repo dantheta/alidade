@@ -50,7 +50,7 @@
         }
 
         public function getIndex($p){
-            $sql = "SELECT DISTINCT(CONCAT_WS('.',  step, slide)) AS slide_step, step 
+            $sql = "SELECT DISTINCT(CONCAT_WS('.',  step, position)) AS slide_step, step, slide, status 
                     FROM slides_with_step 
                     WHERE project = :id 
                     GROUP BY slide_step";

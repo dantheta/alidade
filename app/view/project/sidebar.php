@@ -21,10 +21,11 @@ $piece = ($inTour ? 'tour' : 'slide');
   			<li>
   				<a
   				   title="<?php echo $slideMenu[$step . '.' . $i]; ?>"
-  				   class="slide <?php echo checkSlidePosition($step_number, $slide_number, $step, $i); ?>"
+  				   class="slide <?php echo checkSlidePosition($step_number, $slide_number, $step, $i, $projectIndex[$step . '.' . $i]); ?>"
                    href="/project/<?php echo $piece; ?>/<?php echo $step; ?>.<?php echo $i; ?><?php echo (!is_null($hash) ? '/?p=' . $hash : ''); ?>&edit"
   				>
   					<?php echo $slideMenu[$step . '.' . $i]; ?>
+                    :: <?php echo $projectIndex[$step . '.' . $i]; ?>
   				</a>
   			</li>
   			<?php } ?>

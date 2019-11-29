@@ -190,7 +190,7 @@
                 $projectSlideIndex = $this->Project->getIndex($idProject);
                 // rearraange the index for our purposes
                 foreach($projectSlideIndex as $p){
-                    $projectIndex[$p['step']][] = $p['slideStep'];
+                    $projectIndex[$p['slide_step']] = $p['status'];
                 }
                 $this->set('projectIndex', $projectIndex);
 

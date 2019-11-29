@@ -507,20 +507,18 @@
 
 
     /** check slide position and status, return css class **/
-    function checkSlidePosition($currentStep, $currentSlide, $indexStep, $indexSlide){
+    function checkSlidePosition($currentStep, $currentSlide, $indexStep, $indexSlide, $status){
         $check = '';
 
-        if($currentStep == $indexStep){
-            if($currentSlide == $indexSlide){
-                return 'working';
-            }
-            elseif($currentSlide > $indexSlide) {
-                return 'done';
-            }
+
+
+        if($currentStep == $indexStep && $currentSlide == $indexSlide){
+            return 'working';
         }
-        elseif($currentStep > $indexStep) {
-            return 'done';
+        if ($status) {
+            return "done";
         }
+
         return null;
     }
 
