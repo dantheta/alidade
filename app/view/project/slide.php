@@ -16,8 +16,6 @@
     $backSlide = $values[$flipped_keys[$currentSlide] - 1];
     $backKey = $keys[$flipped_keys[$currentSlide] - 1];
 
-    print_r($projectIndex);
-
 ?>
 <div class="container-fluid slide-<?php echo $currentSlide; ?> step-<?php echo substr($currentSlide, 0, 1); ?> " id="slide-page" >
     <div class="row slide-container">
