@@ -510,8 +510,6 @@
     function checkSlidePosition($currentStep, $currentSlide, $indexStep, $indexSlide, $status){
         $check = '';
 
-
-
         if($currentStep == $indexStep && $currentSlide == $indexSlide){
             return 'working';
         }
