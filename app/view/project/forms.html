@@ -1,0 +1,47 @@
+
+{% block answer %}
+<textarea id="answer" name="{{name}}" class="form-control" rows="8">{{ answer }}</textarea>
+{%- endblock %}
+
+{% block multi_answer_field %}
+<textarea id="multianswer-{{i}}" name="{{name}}[{{i}}]" class="form-control" rows="8">{{ answer }}</textarea>
+{%- endblock %}
+
+{% block answer_not_found %}
+<b>previous answer not found</b>
+{% endblock %}
+
+{% block previous_answer %}
+<div class="previous-answer box box-answer"><h3>{{step}}.{{slide}} {{title}}</h3>
+<div id="answerBox">{% if answer is iterable %}{{ answer|join(',') }}{% else %}{{ answer }}{% endif %}</div>
+<!-- <a href="#" class="prev-answer" data-toggle="modal" data-target=".editPrevAnswer">I need to change this answer.</a> -->
+</div>
+{% endblock %}
+
+{% block box %}
+<div class="box box-{{box}}">
+    {%- if box != 'context' %}<h3>{% if box == 'casestudy'%}case study{% else %}{{ box }}{% endif %}</h3>{% endif %}
+{{- text|raw -}}
+</div>
+{%- endblock %}
+
+{%block choice_button %}
+<a href="#" class="btn btn-alidade btn-lg picker" data-target="#{{ name }}">{{ title }}</a>&nbsp;
+{%- endblock %}
+
+{% block choice_panel %}
+<div class="row hide picks" id="{{ name }}">{{ content|raw }}</div>
+{%- endblock %}
+
+{% block radio %}
+<div class="radio">
+    <label><input id="choice-{{key}}" name="{{name}}" {{sel}} class="choice" type="radio" value="{{key}}"> {{title}}</label>
+</div>
+{%- endblock %}
+
+{% block check %}
+<div class="checkbox">
+    <input id="check-{{name}}" {{sel}} name="{{name}}" type="checkbox" value="{{ title }}"> {{ title }}
+</div>
+{%- endblock %}
+

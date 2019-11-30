@@ -195,13 +195,17 @@
         }
     }
 
+    function loadFieldTemplate() {
+        return TwigManager::getInstance()->load("project/forms.html");
+    }
+
     /** inject textarea and parse tags in text **/
     function injectAnswerField($string, $name = 'answer', $origin = null){
-        $tmpl = TwigManager::getInstance()->createTemplate("<textarea id=\"answer\" name=\"{{name}}\" class=\"form-control\" rows=\"8\">{{ answer }}</textarea>");
+        $tmpl = loadFieldTemplate();
         return preg_replace_callback(
             '|\[--answer--]|m',
             function ($matches) use ($name, $origin, $tmpl) {
-                return $tmpl->render(array('name' => $name, 'answer' => @$origin['answer']));
+                return $tmpl->renderBlock('answer', array('name' => $name, 'answer' => @$origin['answer']));
             },
             $string);
     }
@@ -213,13 +217,13 @@
             $a = array_map('trim', $a);
         }
 
-        $tmpl = TwigManager::getInstance()->createTemplate("<textarea id=\"multianswer-{{i}}\" name=\"{{name}}[{{i}}]\" class=\"form-control\" rows=\"8\">{{ answer }}</textarea>");
+        $tmpl = loadFieldTemplate();
 
         return preg_replace_callback(
             '|\[--multiple-answer-(?<i>\d)--]|',
             function ($matches) use ($a, $name, $tmpl) {
                 $i = $matches['i'];
-                return $tmpl->render(array('i' => $i, 'name' => $name, 'answer' => $a[$i]));
+                return $tmpl->renderBlock('multi_answer_field', array('i' => $i, 'name' => $name, 'answer' => $a[$i]));
                 
             },
             $string);
@@ -318,10 +322,10 @@
         //$string = strip_tags($string, '<div><b><i><a><ul><ol><li>');
         
         $Slides = new Slide;
-        
+        $tmpl = loadFieldTemplate();
         return preg_replace_callback(
             '!\[--prev\|(\d)\.(\d+)\|([\w\d\-\[\]]+?)--]!',
-            function ($matches) use ($project, $Slides) {
+            function ($matches) use ($project, $Slides, $tmpl) {
                 $step = $matches[1];
                 $slide = $matches[2];
                 $slidecontent = $Slides->findPreviousAnswer($project, $step, $slide);
@@ -330,17 +334,12 @@
                 //return "$name $project, $step, $slide";
                 
                 if (!$slidecontent) {
-                    return "<b>previous answer not found</b>";
+                    return $tmpl->renderBlock('answer_not_found');
                 }
                 
                 $data = json_decode($slidecontent->answer, true);
 
-                $tmpl = TwigManager::getInstance()->createTemplate(
-                "<div class=\"previous-answer box box-answer\"><h3>{{step}}.{{slide}} {{title}}</h3>
-<div id=\"answerBox\">{% if answer is iterable %}{{ answer|join(',') }}{% else %}{{ answer }}{% endif %}</div>
-<!-- <a href=\"#\" class=\"prev-answer\" data-toggle=\"modal\" data-target=\".editPrevAnswer\">I need to change this answer.</a> -->
-</div>");
-                $previous = $tmpl->render(array('answer' => $data['name'], 'step' => $step, 'slide' => $slide, 'title' => $slidecontent->title));
+                $previous = $tmpl->renderBlock('previous_answer', array('answer' => $data['name'], 'step' => $step, 'slide' => $slide, 'title' => $slidecontent->title));
                 return $previous;
             },
             $string
@@ -351,9 +350,9 @@
     }
 
     function formatBox($type, $text) {
-        $tmpl = TwigManager::getInstance()->createTemplate("<div class=\"box box-{{box}}\">{% if box != 'context' %}<h3>{% if box == 'casestudy'%}case study{% else %}{{ box }}{% endif %}</h3>{% endif %}{{ text|raw }}</div>");
+        $tmpl = loadFieldTemplate();
 
-        return $tmpl->render(array('box' => $type, 'text' => $text));
+        return $tmpl->renderBlock('box', array('box' => $type, 'text' => $text));
 
     }
 
@@ -375,20 +374,22 @@
     }
 
     function injectChoiceButtons($string) {
+        $tmpl = loadFieldTemplate();
         return preg_replace_callback(
             '/\[--choicebutton\|(?<name>[\w\d_]+)\|(?<title>[\s\w]+)--]/',
-            function ($matches) {
-                return "<a href=\"#\" class=\"btn btn-alidade btn-lg picker\" data-target=\"#{$matches['name']}\">{$matches['title']}</a>&nbsp;";
+            function ($matches) use ($tmpl) {
+                return $tmpl->renderBlock('choice_button', array('name' => $matches['name'], 'title' => $matches['title']));
             },
             $string);
 
     }
 
     function injectChoicePanels($string, $depth=0) {
+        $tmpl = loadFieldTemplate();
         $s = preg_replace_callback(
             '/\[--choicepanel\|(?<name>[\w\d_]+)--](.*?)\[--endchoicepanel(\|\1)?--]/s',
-            function ($matches) {
-                return "<div class=\"row hide picks\" id=\"{$matches['name']}\">{$matches[2]}</div>";
+            function ($matches) use ($tmpl) {
+                return $tmpl->renderBlock('choice_panel', array('name' => $matches['name'], 'content' => $matches[2]));
             },
             $string);
         if ($s == $string || $depth == 3) {
@@ -441,31 +442,40 @@
     }
 
     function injectRadioButtons($string, $original=null) {
+        $tmpl = loadFieldTemplate();
         return preg_replace_callback(
             '/\[--radio\|(?<name>[\w\d]+)\|(?<key>[\w\d]+)\|(?<title>.*?)--]/',
-            function ($matches) use ($original) {
-                $name = $matches['name'];
-                $key = $matches['key'];
-                if (@$original[$name] == $key) {
+            function ($matches) use ($original, $tmpl) {
+                if (@$original[$matches['name']] == $matches['key']) {
                     $sel = "checked";
                 } else {
                     $sel = "";
                 }
-                return "<div class=\"radio\"><label><input id=\"choice-{$key}\" name=\"{$name}\" $sel class=\"choice\" type=\"radio\" value=\"{$key}\"> {$matches['title']}</label></div>";
+                return $tmpl->renderBlock('radio', array(
+                    'name' => $matches['name'],
+                    'key' => $matches['key'],
+                    'sel' => $sel,
+                    'title' => $matches['title']
+                ));
             },
             $string);
     }
 
     function injectCheckboxes($string, $original=null) {
+        $tmpl = loadFieldTemplate();
         return preg_replace_callback(
             '/\[--check\|(?<name>[\[\]\w]+)\|(?<title>.*?)--]/',
-            function ($matches) use ($original) {
+            function ($matches) use ($original, $tmpl) {
                 if (@$original[$matches['name']]) {
                     $sel = "checked";
                 } else {
                     $sel = "";
                 }
-                return "<div class=\"checkbox\"><input id=\"check-{$matches['name']}\" $sel name=\"{$matches['name']}\" type=\"checkbox\" value=\"{$matches['title']}\"> {$matches['title']}</div>";
+                return $tmpl->renderBlock('check', array(
+                    'name' => $matches['name'],
+                    'sel' => $sel,
+                    'title' => $matches['title']
+                ));
             },
             $string);        
     }

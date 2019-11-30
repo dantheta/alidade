@@ -114,8 +114,8 @@ section
         
         $this->assertSame(
             $output,
-            "stuff\n<div class=\"radio\"><label><input id=\"choice-foo\" name=\"blark\"  class=\"choice\" type=\"radio\" value=\"foo\"> Foo</label></div>
-<div class=\"radio\"><label><input id=\"choice-bar\" name=\"blark\"  class=\"choice\" type=\"radio\" value=\"bar\"> Bar</label></div>\nmore stuff"
+            "stuff\n<div class=\"radio\">\n    <label><input id=\"choice-foo\" name=\"blark\"  class=\"choice\" type=\"radio\" value=\"foo\"> Foo</label>\n</div>
+<div class=\"radio\">\n    <label><input id=\"choice-bar\" name=\"blark\"  class=\"choice\" type=\"radio\" value=\"bar\"> Bar</label>\n</div>\nmore stuff"
         );
     }
     
@@ -125,8 +125,8 @@ section
         
         $this->assertSame(
             $output,
-            "stuff\n<div class=\"radio\"><label><input id=\"choice-foo\" name=\"blark\" checked class=\"choice\" type=\"radio\" value=\"foo\"> Foo</label></div>
-<div class=\"radio\"><label><input id=\"choice-bar\" name=\"blark\"  class=\"choice\" type=\"radio\" value=\"bar\"> Bar</label></div>\nmore stuff"
+            "stuff\n<div class=\"radio\">\n    <label><input id=\"choice-foo\" name=\"blark\" checked class=\"choice\" type=\"radio\" value=\"foo\"> Foo</label>\n</div>
+<div class=\"radio\">\n    <label><input id=\"choice-bar\" name=\"blark\"  class=\"choice\" type=\"radio\" value=\"bar\"> Bar</label>\n</div>\nmore stuff"
         );
     }
     
@@ -136,8 +136,8 @@ section
         $this->assertSame(
             $output,
             "stuff
-<div class=\"checkbox\"><input id=\"check-opt1\"  name=\"opt1\" type=\"checkbox\" value=\"My stuff\"> My stuff</div>
-<div class=\"checkbox\"><input id=\"check-opt2\"  name=\"opt2\" type=\"checkbox\" value=\"Other stuff\"> Other stuff</div>
+<div class=\"checkbox\">\n    <input id=\"check-opt1\"  name=\"opt1\" type=\"checkbox\" value=\"My stuff\"> My stuff\n</div>
+<div class=\"checkbox\">\n    <input id=\"check-opt2\"  name=\"opt2\" type=\"checkbox\" value=\"Other stuff\"> Other stuff\n</div>
 more stuff"
         );
     }
@@ -149,8 +149,8 @@ more stuff"
         $this->assertSame(
             $output,
             "stuff
-<div class=\"checkbox\"><input id=\"check-opt1\" checked name=\"opt1\" type=\"checkbox\" value=\"My stuff\"> My stuff</div>
-<div class=\"checkbox\"><input id=\"check-opt2\"  name=\"opt2\" type=\"checkbox\" value=\"Other stuff\"> Other stuff</div>
+<div class=\"checkbox\">\n    <input id=\"check-opt1\" checked name=\"opt1\" type=\"checkbox\" value=\"My stuff\"> My stuff\n</div>
+<div class=\"checkbox\">\n    <input id=\"check-opt2\"  name=\"opt2\" type=\"checkbox\" value=\"Other stuff\"> Other stuff\n</div>
 more stuff"
         );
     }
