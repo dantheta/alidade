@@ -229,21 +229,6 @@ $(document).ready(function(){
         );
     });
 
-    $('#slide-sidebar a').click(function(e){
-      e.preventDefault();
-      var data = $('form').serialize();
-      var clickedUrl = $(this).attr('href').split('/');
-      var pieces = {
-        'nextSlide' : clickedUrl[3],
-        'hash'      : clickedUrl[4],
-      }
-
-      var destination = '/project/slide/' + pieces.nextSlide + '/' + pieces.hash ;
-      $.post('/project/slide/' + pieces.nextSlide , data, function(response){
-        window.location.href = destination;
-      });
-    });
-
     $('#editProfile').click(function(e){
       e.preventDefault();
       $('#editProfileForm alert').remove();
