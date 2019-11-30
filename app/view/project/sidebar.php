@@ -25,7 +25,6 @@ $piece = ($inTour ? 'tour' : 'slide');
                    href="/project/<?php echo $piece; ?>/<?php echo $step; ?>.<?php echo $i; ?><?php echo (!is_null($hash) ? '/?p=' . $hash : ''); ?>&edit"
   				>
   					<?php echo $slideMenu[$step . '.' . $i]; ?>
-                    :: <?php echo $projectIndex[$step . '.' . $i]; ?>
   				</a>
   			</li>
   			<?php } ?>
