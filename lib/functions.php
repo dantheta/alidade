@@ -339,7 +339,12 @@
                 
                 $data = json_decode($slidecontent->answer, true);
 
-                $previous = $tmpl->renderBlock('previous_answer', array('answer' => $data['name'], 'step' => $step, 'slide' => $slide, 'title' => $slidecontent->title));
+                $previous = $tmpl->renderBlock('previous_answer', array(
+                    'answer' => $data['name'],
+                    'step' => $step,
+                    'slide' => $slide,
+                    'title' => $slidecontent->title
+                ));
                 return $previous;
             },
             $string
