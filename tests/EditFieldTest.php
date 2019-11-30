@@ -22,6 +22,17 @@ class EditFieldTest extends TestCase {
         $this->assertSame($output, "stuff\n<textarea id=\"answer\" name=\"answer\" class=\"form-control\" rows=\"8\">foo</textarea>\nmore stuff");
     }
 
+    public function testAnswerFieldXSS() {
+        $original = array('answer' => 'foo<script>endfoo');
+        $output = injectAnswerField('[--answer--]', 'answer', $original);
+
+        $this->assertSame(
+            $output,
+            '<textarea id="answer" name="answer" class="form-control" rows="8">foo&lt;script&gt;endfoo</textarea>'
+            );
+
+    }
+
     public function testMultipleAnswer() {
         $origin = array();
         $output = injectMultipleAnswerField("stuff\n[--multiple-answer-0--]\nsection\n[--multiple-answer-1--]\nmore stuff", $origin);
