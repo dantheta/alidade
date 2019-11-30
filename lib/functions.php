@@ -376,7 +376,7 @@
 
     function injectChoiceButtons($string) {
         return preg_replace_callback(
-            '/\[--choicebutton\|(?<name>\w+)\|(?<title>[\s\w]+)--]/', 
+            '/\[--choicebutton\|(?<name>[\w\d_]+)\|(?<title>[\s\w]+)--]/',
             function ($matches) {
                 return "<a href=\"#\" class=\"btn btn-alidade btn-lg picker\" data-target=\"#{$matches['name']}\">{$matches['title']}</a>&nbsp;";
             },
@@ -386,7 +386,7 @@
 
     function injectChoicePanels($string, $depth=0) {
         $s = preg_replace_callback(
-            '/\[--choicepanel\|(?<name>[\w\d]+)--](.*?)\[--endchoicepanel(\|\1)?--]/s',
+            '/\[--choicepanel\|(?<name>[\w\d_]+)--](.*?)\[--endchoicepanel(\|\1)?--]/s',
             function ($matches) {
                 return "<div class=\"row hide picks\" id=\"{$matches['name']}\">{$matches[2]}</div>";
             },
