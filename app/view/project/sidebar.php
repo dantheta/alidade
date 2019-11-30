@@ -37,7 +37,7 @@ $piece = ($inTour ? 'tour' : 'slide');
 
 <div class="step">
 <header>
-  <h3><a class="slide <?php echo checkSlidePosition($step_number, $slide_number, $step+1, 0); ?>" href="/project/<?php echo $piece; ?>/<?php echo $step + 1?>.0<?php echo (!is_null($hash) ? '/?p=' . $hash : ''); ?>">CONGRATULATIONS</a></h3>
+  <h3><a class="slide <?php echo checkSlidePosition($step_number, $slide_number, $step+1, 0, null); ?>" href="/project/<?php echo $piece; ?>/<?php echo $step + 1?>.0<?php echo (!is_null($hash) ? '/?p=' . $hash : ''); ?>">CONGRATULATIONS</a></h3>
 </header>
 </div>
 
