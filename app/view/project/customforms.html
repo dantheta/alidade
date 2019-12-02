@@ -1,0 +1,65 @@
+
+{% macro alpaca_array_field(name, data) %}
+<div id="{{name}}"></div>
+<script type="text/javascript">
+    $('#{{ name }}').alpaca({
+    {% if data is null %}
+        data: [],
+    {% else %}
+        data: {{ data|json_encode(JSON_FORCE_OBJECT)|raw }},
+    {% endif %}
+        options: {
+            name: "{{name}}",
+            id: "{{name}}"
+        }
+    });
+</script>
+{% endmacro %}
+
+{% block alpaca_field %}
+{{ _self.alpaca_array_field(name, data) }}
+{% endblock %}
+
+{% block customform_2_2 %}
+<div class="custom-form">
+    {% for category in categories %}
+    {% set fieldname = category|sanitizename %}
+    <div class="fieldcontainer" id="{{category}}">
+        <legend>{{ category|title }}</legend>
+        {{ _self.alpaca_array_field(fieldname ~ '___purposes', answer[fieldname ~ '___purposes'] ) }}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block customform_2_2_recap %}
+<div class="custom-form">
+    {% for category in categories %}
+    {% set fieldname = category|sanitizename %}
+    <div class="recap-fieldcontainer" id="{{category}}">
+        <h3>{{ category|title }}</h3>
+        <ul class="box box-answer previous-answer recap-answer" data-field="{{fieldname}}">
+            {% for value in answer[fieldname ~ '___purposes'] %}
+            <li>{{ value }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block customform_2_3 %}
+
+{% endblock %}
+
+{% block customform_2_3_recap %}
+
+{% endblock %}
+
+{% block customform_2_4 %}
+
+{% endblock %}
+
+{% block customform_2_4_recap %}
+
+{% endblock %}

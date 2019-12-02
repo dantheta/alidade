@@ -9,33 +9,24 @@ $lawful_bases = array(
     'legitimate_interests' => 'Legitimate Interests'
     );
 
-function alpaca_field($name, $data) {
-    if (!@$data) {
-        $d = "[]";
-    } else {
-        $d = json_encode(@$data);
-    }
+function loadCustomFormTemplate() {
+    return TwigManager::getInstance()->load('project/customforms.html');
+}
 
-    $tmpl = TwigManager::getInstance()->createTemplate(<<<EOM
-<div id="{{name}}"></div>
-<script type="text/javascript">
-$('#{{ name }}').alpaca({
-    data: {{ d|raw }},
-    options: {
-        name: "{{name}}",
-        id: "{{name}}"
-    }
-});
-</script>
-EOM
-);
-    return $tmpl->render(array('name' => $name, 'd' => $d));
+function alpaca_field($name, $data= null) {
+    //if (!@$data) {
+    //    $data = "[]";
+    //}
 
+    $tmpl = loadCustomFormTemplate();
+
+    return $tmpl->renderBlock('alpaca_field', array('name' => $name, 'data' => $data));
 }
 
 function get_sanitized_name($value) {
     return preg_replace('/[^\w\d]+/', '_', strtolower($value));
 }
+
 
 function customform($slide, $original, $project, $recap=false) {  // original json data
 
@@ -62,51 +53,16 @@ function customform($slide, $original, $project, $recap=false) {  // original js
 
 function customform_2_2($answer, $previousanswer, $recap) {
     if ($recap) {
-        return customform_2_2_recap($answer, $previousanswer);
+        $template = 'customform_2_2_recap';
+    } else {
+        $template = 'customform_2_2';
     }
-    $s = '<div class="custom-form">';
+    $tmpl = loadCustomFormTemplate();
 
-    foreach($previousanswer['data_collected'] as $category) {
-        $fieldname = get_sanitized_name($category);
-        $title = ucfirst($category);
-        $s .=<<<EOM
-<div class="fieldcontainer" id="$category">
-<legend>$title</legend>
-EOM;
-        $s .= alpaca_field("{$fieldname}___purposes", @$answer["{$fieldname}___purposes"]);
-
-        $s .=<<<EOM
-</div>
-EOM;
-    }
-    $s .= "</div>";
-    return $s;
-
-}
-
-function customform_2_2_recap($answer, $previousanswer) {
-
-    $s = '<div class="custom-form">';
-    foreach($previousanswer['data_collected'] as $category) {
-        $fieldname = get_sanitized_name($category);
-        $title = ucfirst($category);
-        $s .=<<<EOM
-<div class="recap-fieldcontainer" id="$category">
-<h3>$title</h3>
-<ul class="box box-answer previous-answer recap-answer" data-field="{$fieldname}">
-EOM;
-        foreach($answer["{$fieldname}___purposes"] as $value) {
-            $s .= "<li>$value</li>\n";
-        }
-
-        $s .=<<<EOM
-<ul>
-</div>
-EOM;
-    }
-    $s .= "</div>";
-    return $s;
-
+    return $tmpl->renderBlock($template, array(
+        'categories' => $previousanswer['data_collected'],
+        'answer' => $answer
+    ));
 }
 
 
