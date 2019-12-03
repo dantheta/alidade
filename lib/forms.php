@@ -70,78 +70,33 @@ function customform_2_3($answer, $previousanswer, $recap) {
     global $lawful_bases;
 
     if ($recap) {
-        return customform_2_3_recap($answer, $previousanswer);
+        $template = "customform_2_3_recap";
+    } else {
+        $template = "customform_2_3";
     }
 
-    $twig = TwigManager::getInstance();
-    $s = $twig->render('forms/customform_2.3.html', array(
+    $twig = loadCustomFormTemplate();
+    $s = $twig->renderBlock($template, array(
         'lawful_bases' => $lawful_bases,
         'answer' => $answer,
         'categories' => $previousanswer['data_collected']
     ));
     return $s;
-
-}
-
-function customform_2_3_recap($answer, $previousanswer) {
-    global $lawful_bases;
-
-    $twig = TwigManager::getInstance();
-
-    return $twig->render('forms/customform_2.3_recap.html', array(
-        'lawful_bases' => $lawful_bases,
-        'answer' => $answer,
-        'categories' => $previousanswer['data_collected']
-    ));
 
 }
 
 function customform_2_4($answer, $previousanswer, $recap) {
     if ($recap) {
-        return customform_2_4_recap($answer, $previousanswer);
+        $template = "customform_2_4_recap";
+    } else {
+        $template = "customform_2_4";
     }
-    $s = '<div class="custom-form">';
 
-    foreach($previousanswer['data_collected'] as $category) {
-        $fieldname = get_sanitized_name($category);
-        $title = ucfirst($category);
-        $s .=<<<EOM
-<div class="fieldcontainer" id="$category">
-<legend>$title</legend>
-EOM;
-        $s .= alpaca_field("{$fieldname}___shared", @$answer["{$fieldname}___shared"]);
-
-        $s .=<<<EOM
-</div>
-EOM;
-    }
-    $s .= "</div>";
-    return $s;
-
+    $tmpl = loadCustomFormTemplate();
+    return $tmpl->renderBlock($template, array(
+        'categories' => $previousanswer['data_collected'],
+        'answer' => $answer
+    ));
 }
 
-function customform_2_4_recap($answer, $previousanswer) {
-
-    $s = '<div class="custom-form">';
-    foreach($previousanswer['data_collected'] as $category) {
-        $fieldname = get_sanitized_name($category);
-        $title = ucfirst($category);
-        $s .=<<<EOM
-<div class="recap-fieldcontainer" id="$category">
-<h3>$title</h3>
-<ul class="box box-answer previous-answer recap-answer" data-field="{$fieldname}">
-EOM;
-        foreach($answer["{$fieldname}___shared"] as $value) {
-            $s .= "<li>$value</li>\n";
-        }
-
-        $s .=<<<EOM
-<ul>
-</div>
-EOM;
-    }
-    $s .= "</div>";
-    return $s;
-
-}
 
