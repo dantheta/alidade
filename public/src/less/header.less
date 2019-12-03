@@ -1,4 +1,4 @@
-body > div.container-fluid > header {
+body > div.container-fluid > header > .row {
 	height: 88px;
 	background: @header;
 	color: @white;
@@ -16,5 +16,11 @@ body > div.container-fluid > header {
 		}
 	}
 }
-#app-header a h1 { color: white; text-decoration: none; line-height: 80px; margin: 0px; font-size: 42px; }
+
+#app-header-row1 {
+	background-color: @white;
+
+}
+
+#app-header a h1 { color: @text; text-decoration: none; line-height: 80px; margin: 0px; font-size: 42px; }
 #app-header a:hover {		text-decoration: none; 	}

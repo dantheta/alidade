@@ -41,7 +41,7 @@
                 <div class="col-md-7 col-sm-8 col-xs-12">
                 <?php print $step_model->description;
                 if(!is_null($nextSlide) && !empty($nextSlide)) { ?>
-                    <a href="/project/slide/<?php echo $nextSlide . '/?p=' . $projecthash ; ?> " class="btn btn-alidade btn-lg">NEXT: <?php echo $slideMenu[$nextSlide]; ?></a>
+                    <a href="/project/slide/<?php echo $nextSlide . '/?p=' . $projecthash ; ?> " class="btn btn-alidade btn-lg btn-next">NEXT: <?php echo $slideMenu[$nextSlide]; ?></a>
                 <?php } ?>
                 </div>
                 <div class="col-md-5 col-sm-4 col-xs-12">
@@ -133,11 +133,11 @@
                       <?php
                         if($slide->slide_type == 4) {
                       ?>
-                      <a href="/printer/output/<?php echo $_SESSION['project'] . '/' . substr($currentSlide, 0, 1); ?>" target="_blank" class="btn btn-alidade btn-lg">Download PDF</a>
+                      <a href="/printer/output/<?php echo $_SESSION['project'] . '/' . substr($currentSlide, 0, 1); ?>" target="_blank" class="btn btn-alidade btn-lg btn-next">Download PDF</a>
                       <?php
                         }
                         if(!is_null($nextSlide) && !empty($nextSlide)) { ?>
-                            <button type="submit" class="btn btn-alidade btn-lg">Save and continue: <?php echo $slideMenu[$nextSlide]; ?></button>
+                            <button type="submit" class="btn btn-alidade btn-lg btn-next">Save and continue: <?php echo $slideMenu[$nextSlide]; ?></button>
                             <?php
                         }
                       ?>

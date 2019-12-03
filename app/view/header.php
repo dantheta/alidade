@@ -81,29 +81,34 @@
 
 
 <div class="container-fluid">
-	<header class="row" id="app-header">
-		<div class="col-md-8 col-sm-6 col-xs-4">
-      <a href="/">
-        <img src="/assets/images/Alidade_logo_logo_circle.svg" class="alidade-header-logo" alt="Alidade Logo">
-        <h1>Alidade</h1>
-      </a>
-    </div>
-		<div class="col-md-4 col-sm-6 col-xs-8">
-			<?php if(isset($_SESSION[APPNAME][SESSIONKEY]) && !empty($_SESSION[APPNAME][SESSIONKEY]) && !isset($_SESSION[APPNAME]['DISP'])) { ?>
-			<div class="pull-right user-panel">
-				<span class="user-name">Hello, <strong><?php echo $_SESSION[APPNAME]['USR']; ?></strong>.</span>
-				<ul class="user-actions">
+	<header id="app-header">
+        <div id="app-header-row1" class="row">
+            <div class="col-md-12">
+              <a href="/">
+                <h1>PESIA <small>Privacy, Ethical & Social Impact Assessment</small></h1>
+              </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-sm-6 col-xs-4">
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-8">
+                <?php if(isset($_SESSION[APPNAME][SESSIONKEY]) && !empty($_SESSION[APPNAME][SESSIONKEY]) && !isset($_SESSION[APPNAME]['DISP'])) { ?>
+                <div class="pull-right user-panel">
+                    <span class="user-name">Hello, <strong><?php echo $_SESSION[APPNAME]['USR']; ?></strong>.</span>
+                    <ul class="user-actions">
 
-					<?php if(isset($userRole) && $userRole == 'root') { ?>
-					<li><a href="/manage/index" title="Manage Contents" class="mininav btn btn-alidade"><i class="fa fa-wrench fa-fw"></i><span class="hidden-xs">Manage</span></a></li>
-					<?php } ?>
-          <li><a href="/user/projects" title="All your Projects" class="mininav btn btn-alidade" id="projects-page-1"><i class="fa fa-tasks fa-fw"></i><span class="hidden-xs">My Projects</span></a></li>
-				  <li><a href="/user/logout" title="Logout" class="mininav btn btn-blank">Logout</a></li>
-				</ul>
-			</div>
-			<?php } else { ?>
-			<a href="#" data-toggle="modal" data-target="#user-forms" class="btn btn-alidade btn-lg pull-right">Register or Login to save progress</a>
-		<?php } ?>
-		</div>
+                        <?php if(isset($userRole) && $userRole == 'root') { ?>
+                        <li><a href="/manage/index" title="Manage Contents" class="mininav btn btn-alidade"><i class="fa fa-wrench fa-fw"></i><span class="hidden-xs">Manage</span></a></li>
+                        <?php } ?>
+              <li><a href="/user/projects" title="All your Projects" class="mininav btn btn-alidade" id="projects-page-1"><i class="fa fa-tasks fa-fw"></i><span class="hidden-xs">My Projects</span></a></li>
+                      <li><a href="/user/logout" title="Logout" class="mininav btn btn-blank">Logout</a></li>
+                    </ul>
+                </div>
+                <?php } else { ?>
+                <a href="#" data-toggle="modal" data-target="#user-forms" class="btn btn-alidade btn-lg pull-right">Register or Login to save progress</a>
+            <?php } ?>
+            </div>
+        </div>
 	</header>
 </div>

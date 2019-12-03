@@ -15,11 +15,12 @@
 			a {
 				color: @white;
 				padding-left: 50px;
+				padding-top: 16px;
 				display: block;
-				background: @sidebar-header url('/assets/images/pointer.png') no-repeat 30px center;
+				background: @sidebar-header url('/assets/images/pointer.png') no-repeat left 30px bottom 10px;
 				&:hover {
 					background-color: @sidebar-hover; 
-					&:after {
+					/*&:after {
 						content: '';
 						position: absolute;
 						right: -34px;
@@ -28,11 +29,11 @@
 						height: 0;
 						border: 17px solid;
 						border-color: transparent transparent transparent @sidebar-hover;							
-					}
+					}*/
 				}
 				&.working {
-					background: @sidebar-active url('/assets/images/pointer.png') no-repeat 30px center;
-					&:after {
+					background: @sidebar-active url('/assets/images/pointer.png') no-repeat left 30px bottom 10px;
+					/*&:after {
 						content: '';
 						position: absolute;
 						right: -34px;
@@ -41,7 +42,7 @@
 						height: 0;
 						border: 17px solid;
 						border-color: transparent transparent transparent @sidebar-active;							
-					}
+					}*/
 				}
 			}
 		}
@@ -58,9 +59,9 @@
 					font-weight: 700;
 					background: url('/assets/images/uncheck.png') no-repeat 30px center;
 					display: block; 
-					padding: 6px 15px 6px 50px; 
+					padding: 6px 15px 6px 50px;
 					&.done {
-						background: url('/assets/images/check.png') no-repeat 30px center;
+						background: @sidebar-done url('/assets/images/check.png') no-repeat 30px center;
 					}
 					&.working {
 						background: @sidebar-active url('/assets/images/uncheck.png') no-repeat 30px center;
