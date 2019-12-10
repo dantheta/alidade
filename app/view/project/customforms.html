@@ -133,13 +133,13 @@
 {% endblock %}
 
 {% block customform_2_4 %}
-<div class="custom-form">';
+<div class="custom-form">
 
     {% for category in categories %}
     {% set fieldname = category|sanitizename %}
     <div class="fieldcontainer" id="{{ category }}">
         <legend>{{ category|title }}</legend>
-        {{ _self.alpaca_array_field(fieldname ~ "___shared", answer[fieldname ~ "___shared"]) }}}
+        {{ _self.alpaca_array_field(fieldname ~ "___shared", answer[fieldname ~ "___shared"]) }}
     </div>
     {% endfor %}
 </div>
