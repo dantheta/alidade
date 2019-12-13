@@ -86,11 +86,11 @@ section
     }
 
     public function testNamedChoicePanels() {
-        $output = injectChoicePanels("stuff\n[--choicepanel|foo--]Some Stuff[--endchoicepanel|foo--]\nmore stuff");
+        $output = injectChoicePanels("stuff\n[--choicepanel|foo_1--]\nSome Stuff\n[--endchoicepanel|foo_1--]\nmore stuff");
 
         $this->assertSame(
             $output,
-            "stuff\n<div class=\"row hide picks\" id=\"foo\">Some Stuff</div>\nmore stuff"
+            "stuff\n<div class=\"row hide picks\" id=\"foo_1\">\nSome Stuff\n</div>\nmore stuff"
         );
     }
 
@@ -110,7 +110,14 @@ section
             "stuff\n<div class=\"row hide picks\" id=\"foo\">Some Stuff <div class=\"row hide picks\" id=\"bar\">  </div>  </div>\nmore stuff"
         );
     }
+    public function testNamedChoicePanelsSequential() {
+        $output = injectChoicePanels("stuff\n[--choicepanel|foo--]Some Stuff[--endchoicepanel|foo--][--choicepanel|bar--]  [--endchoicepanel|bar--]\nmore stuff");
 
+        $this->assertSame(
+            $output,
+            "stuff\n<div class=\"row hide picks\" id=\"foo\">Some Stuff</div><div class=\"row hide picks\" id=\"bar\">  </div>\nmore stuff"
+        );
+    }
     public function testChoicePanelsMultiline() {
         $output = injectChoicePanels("stuff\n[--choicepanel|foo1--]\nSome Stuff\n[--endchoicepanel--]\nmore stuff");
         
