@@ -1,10 +1,11 @@
 <div class="container-fluid" id="homepage-header">
     <div class="row">
         <div class="col-md-6">
-            <p class="SiteTitle">Alidade</p>
+            <p class="SiteTitle">PESIA</p>
+            <p>Privacy, Social and Ethical Impact Assessment</p>
         </div>
         <div class="col-md-3 col-md-offset-3">
-            <a href="/project/slide/1.0" class="btn btn-alidade btn-lg btn-block">Start Alidade</a>
+            <a href="/project/slide/1.0" class="btn btn-alidade btn-lg btn-block">Start PESIA</a>
         </div>
     </div>
 </div>
@@ -19,13 +20,14 @@
                     <div class="col-md-7">
                         <div class="slide-content">
                         <h1>
-                            Choosing technology is hard.
-                            <span>Alidade can help.</span>
+                            PESIA
                         </h1>
-                        <h2 class="h3">Use Alidade to create a plan for finding technology tools that suit your social change project.</h2>
+                        <h2 class="h3">
+                            Use the PESIA questionnaire to help create technologies that follow best practice in data protection and ethical compliance.
+                        </h2>
                         <h3 class="h4">
-                            Built on in-depth research in Kenya and South Africa.<br />
-                            Designed for activists and social change organisations everywhere.
+                            Built on in-depth research by legal scholars and privacy advocates.
+                            Designed for developers of IoT products and other digital technologies.
                         </h3>
                         </div>
 
@@ -155,8 +157,9 @@
                         <div class="slide-content">
                             <div class="row">
                                 <div class="col-md-10">
-                                    <a href="/project/slide/1.0" class="btn btn-alidade btn-lg btn-block CTA">Start Alidade</a>
-                                    <p class="CTAdesc">Complete this interactive guide and get a planning document to share with colleagues, technical developers or donors.
+                                    <a href="/project/slide/1.0" class="btn btn-alidade btn-lg btn-block CTA">Start PESIA</a>
+                                    <p class="CTAdesc">
+                                        Complete this interactive questionnaire to get feedback on potential issues and obtain a printable document to start building compliance and plan your steps towards ethical tech.
                                     </p>
                                 </div>
                             </div>
@@ -171,13 +174,15 @@
                 <div class="row" id="slide-2">
                     <div class="col-md-7">
                         <div class="slide-content">
-                            <p class="SectionTitle">There are lots of tech options to choose from.</p>
+                            <p class="SectionTitle">  Privacy and ethics can seem daunting.</p>
                             <ul class="SectionList">
                                 <li>
                                     Which options are best for your project?
+
                                 </li>
                                 <li>
                                     How do you know if you’re asking the right questions?
+
                                 </li>
                             </ul>
                         </div>
@@ -192,11 +197,11 @@
                     <div class="col-md-7">
                         <div class="contents">
                             <div class="slide-content">
-                            <p class="SectionTitle">Alidade helps you plot a path to the right choice.</p>
+                            <p class="SectionTitle">PESIA helps you bring privacy and ethics into your project.</p>
 
                             <ul class="SectionList">
                                 <li>Interactive questions to help structure your thinking</li>
-                                <li>Real-life examples and useful resources</li>
+                                <li>Contextual explanations and useful feedback</li>
                             </ul>
                         
                             <div class="text-steps">
@@ -206,7 +211,8 @@
                                         <div class="arrow"><?php echo file_get_contents(ROOT . DS . "/public/assets/svg/arrow1.svg"); ?></div>
                                     </div>
                                     <div class="number">1</div>
-                                    <div class="text">Understand your needs</div>
+                                    <div class="text">Map your data practices and compliance
+                                    </div>
                                 </div>
                                 <div class="text-step text-step-2">
                                     <div class="icon">
@@ -214,12 +220,12 @@
                                         <div class="arrow"><?php echo file_get_contents(ROOT . DS . "/public/assets/svg/arrow2.svg"); ?></div>
                                     </div>
                                     <div class="number">2</div>
-                                    <div class="text">Understand the tech</div>
+                                    <div class="text">Establish risks and mitigations</div>
                                 </div>
                                 <div class="text-step text-step-3">
                                     <div class="icon"><?php echo file_get_contents(ROOT . DS . "/public/assets/svg/step3.svg"); ?></div>
                                     <div class="number">3</div>
-                                    <div class="text">Plan a trial of the tool with your users</div>
+                                    <div class="text">Plan how to improve your product</div>
                                 </div>
                             </div>
                             </div>
@@ -235,10 +241,10 @@
                     <div class="col-md-7">
                         <div class="contents">
                             <div class="slide-content">
-                                <p class="SectionTitle">Get a detailed technology strategy plan for your project</p>
+                                <p class="SectionTitle">Get an initial impact assessment for your project</p>
                                 <ul class="SectionList">
                                     <li>Export as a personalised PDF</li>
-                                    <li>Ready to share with collegues, technology partners and donors</li>
+                                    <li>Ready to share with collegues, funders or regulators</li>
                                 </ul>
                                 <img src="/assets/images/hp/ProjectPaper.png" class="ProjectPaper" alt="">
                             </div>
@@ -251,67 +257,22 @@
         
             <div class="container-fluid box-1">
                 <div class="row">
+                    <!--
                     <div class="col-md-6  col-sm-12 col-xs-12">
                         <h2>
                             <a href="/page/six-rules-for-choosing-technology">Read our six-rule summary for choosing tech</a>
                         </h2>
                         <p>Based on our research, six tips and six questions to lead you to a better choice.</p>
-                    </div>
+                    </div> -->
                     <div class="col-md-6 col-sm-12 col-xs-12">
                         <h2>
-                            <a href="/page/research">Read about the research Alidade was built on</a>
+                            <a href="/page/research">Read about the research PESIA was built on</a>
                         </h2>
                         <p>Result of a 2-year research project with activists in Kenya and South Africa.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="container-fluid carousel">
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1 col-xs-12">
-                        <div class="quotes clearfix">
-                            <div id="quote-1" class="quote hidden">
-                                I used it to choose video and audio recording tools for citizen journalists in various parts of South Africa... The tool
-                                focused me on the importance of trying tools out, and I found the focus on understanding users really
-                                helpful. It worked really well for people like me, who have some familiarity with the tech, but not with
-                                thinking through the tech choices.
-                            </div>
-                            <div id="quote-2" class="quote show">
-                                We used Alidade to help us decide how to develop an information scorecard for child protection planning. I'd definitely recommend
-                                it to other organisations - I'm not sure we would have been able to choose the right tool without it.
-                                It means putting in some hard work, but it is well worth it if you want to make a smart decision.
-                            </div>
-                            <div id="quote-3" class="quote hidden">
-                                I see the tool as a good test for seeing how serious a grantee is about working on a problem using tech. It helps those without
-                                tech knowledge to simplify their path through the forest of tech options out there, and brings those
-                                with tech expertise back to what it should really be all about: content.
-                            </div>
-                            <hr class="pointer" />
-                            <div class="point"></div>
-                            <div class="quoter text-center" id="quoter-1" data-target="#quote-1">
-                                <img class="center-block imgr" src="/assets/images/hp/Paul_photo.png" alt="Paul McNally">
-                                <span class="quoter-name">Paul McNally</span>
-                                <span class="quoter-role">Citizen Justice Network,
-                                    <br />University of Witwatersrand (South Africa)</span>
-                            </div>
-                            <div class="quoter text-center active" id="quoter-2" data-target="#quote-2">
-                                <img class="center-block imgr" src="/assets/images/hp/Kate_photo.png" alt="Kate McAlpine">
-                                <span class="quoter-name">Kate McAlpine</span>
-                                <span class="quoter-role">Lead Strategist,
-                                    <br />Community for Children’s Rights (Tanzania)</span>
-                            </div>
-                            <div class="quoter text-center" id="quoter-3" data-target="#quote-3">
-                                <img class="center-block imgr" src="/assets/images/hp/Sanne_photo.png" alt="Sanne van den Berg">
-                                <span class="quoter-name">Sanne van den Berg</span>
-                                <span class="quoter-role">Country Engagement Developer (Tanzania and Uganda),
-                                    <br />Making All Voices Count</span>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
 
             <div class="container-fluid who-made-this">
                 <div class="row">
