@@ -597,8 +597,20 @@
                     break;
                 }
             }
+            if (@$crit['is'] == "not-empty") {
+                if (trim($value) == "") {
+                    $result = false;
+                    break;
+                }
+            }
             if (@$crit['value']) {
                 if ($crit['value'] != $value) {
+                    $result = false;
+                    break;
+                }
+            }
+            if (@$crit['not-value']) {
+                if ($crit['value'] == $value) {
                     $result = false;
                     break;
                 }

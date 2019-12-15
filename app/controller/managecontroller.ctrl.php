@@ -274,5 +274,19 @@
             
             $this->set('yaml', yaml_emit($out));
         }
+
+        public function show_placeholders() {
+            $SlideList = new SlideList;
+            $Step = new Step;
+
+            $output = [];
+            foreach($SlideList->findAll('position') as $d) {
+                $step = $Step->findOne($d->step);
+                $output[$step->position . '.' . $d->position] = getPlaceholders($d->description);
+            }
+            echo "<pre>";
+            print_r($output);
+            echo "</pre>";
+        }
     }
     

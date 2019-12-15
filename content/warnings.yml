@@ -1,3 +1,64 @@
+- slide: "1.1"
+  criteria:
+    - name: answer
+      is: empty
+  error: "Please provide a name for your project"
+
+- slide: "2.2"
+  criteria:
+    - name: necessary_achieve
+      not-value: yes
+    - name: multianswer-1
+      is: empty
+  warning: |
+    The law says that you should not collect personal data that is not necessary for your purposes.
+    Try to provide some explanation or consider not collecting the data in question.
+
+- slide: "2.1"
+  criteria:
+    - any:
+        - racial
+        - political_opinions
+        - union_membership
+        - genetic_data
+        - biometric
+      is: not-empty
+  warning: |
+    If you process these types of data there are some additional limitations and you need to take special measures.
+    For example, if you use consent, this must be absolutely explicit. You should check with your national data protection authority,
+    as the regulations vary for each country.
+
+- slide: "2.1"
+  criteria:
+    - any:
+        - location
+        - biographical
+        - other
+      is: not-empty
+  warning: |
+    Although these types of data will not require any additional measures in the law, they are potentially risky.
+    You should consider the ethical and security implications and whether it is absolutely necessary to collect and process these data.
+
+- slide: "2.4"
+  criteria:
+    - name: consent_transfer
+      value: "no"
+    - name: adequacy_decision
+      value: "no"
+    - name: dont_know
+      is: not-empty
+    - name: "none"
+      is: not-empty
+  warning: |
+    Your responses indicate that you may be in breach of the requirements in GDPR for the transfer of personal data outside the EU.
+    Please check again and seek specialist advice if still unable to justify your data transfers.
+
+- slide: "2.4"
+  criteria:
+    - name: countries
+      is: empty
+  error: Please list the countries outside of the EEA where you send personal data.
+
 - slide: "3.1"
   criteria:
     - name: choice
@@ -13,3 +74,34 @@
     - name: multianswer-1
       is: empty
   warning: "This response indicates a high privacy risk.  You should put measures in place to mitigate the risk and explain these in the text box provided."
+
+- slide: "3.3"
+  criteria:
+    - name: subject_scoring
+      value: "yes"
+    - name: multianswer-0
+      is: empty
+  warning: "This response indicates the potential for a high privacy risk. You should explain why in this case there is no high risk, or put measures in place to mitigate the risk and explain these in the text box provided."
+
+- slide: "3.3"
+  criteria:
+    - name: automated_decision
+      value: "yes"
+    - name: multianswer-1
+      is: empty
+  warning: "This response indicates the potential for a high privacy risk. You should explain why in this case there is no high risk, or put measures in place to mitigate the risk and explain these in the text box provided."
+
+- slide: "3.3"
+  criteria:
+    - name: significant_effect
+      value: "yes"
+    - name: multianswer-2
+      is: empty
+  warning: "This response indicates the potential for a high privacy risk. You should explain why in this case there is no high risk, or put measures in place to mitigate the risk and explain these in the text box provided."
+
+- slide: "3.3"
+  criteria:
+    - name: human_intervention
+      value: "no"
+  warning: "Users in some contexts may have a right to object to fully automated decisions made about them without human intervention. Consider providing some explanation here as to why this is required."
+
