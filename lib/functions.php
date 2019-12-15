@@ -582,38 +582,57 @@
     }
 
     function evaluateWarning($warning, $answer) {
+        // for each slide, a set of acceptance criteria are defined.  If the criteria are not met, false is returned and the warning is displayed.
+
         $result = true;
         foreach($warning['criteria'] as $crit) {
-            if (substr($crit['name'], 0, 11) == "multianswer") {
+            if (@$crit['any'] || @$crit['all']) {
+                if (@$crit['any']) {
+                    $fields = $crit['any'];
+                }
+                if (@$crit['all']) {
+                    $fields = $crit['all'];
+                }
+                $values = array();
+                foreach($fields as $fld) {
+                    $values[] = $answer[$fld];
+                }
+
+            } elseif (substr($crit['name'], 0, 11) == "multianswer") {
                 $multiparts = explode('-', $crit['name']);
                 $multipart = array_pop($multiparts);
-                $value = $answer['multianswer'][$multipart];
+                $values = array($answer['multianswer'][$multipart]);
             } else {
-                $value = $answer[$crit['name']];
+                $values = array($answer[$crit['name']]);
             }
-            if (@$crit['is'] == "empty") {
-                if (trim($value) != "") {
-                    $result = false;
-                    break;
+            foreach($values as $value) {
+                if (@$crit['is'] == "empty") {
+                    if (trim($value) != "") {
+                        $result = false;
+                        break;
+                    }
+                }
+                if (@$crit['is'] == "not-empty") {
+                    if (trim($value) == "") {
+                        $result = false;
+                        break;
+                    }
+                }
+                if (@$crit['value']) {
+                    if ($crit['value'] != $value) {
+                        $result = false;
+                        break;
+                    }
+                }
+                if (@$crit['not-value']) {
+                    if ($crit['value'] == $value) {
+                        $result = false;
+                        break;
+                    }
                 }
             }
-            if (@$crit['is'] == "not-empty") {
-                if (trim($value) == "") {
-                    $result = false;
-                    break;
-                }
-            }
-            if (@$crit['value']) {
-                if ($crit['value'] != $value) {
-                    $result = false;
-                    break;
-                }
-            }
-            if (@$crit['not-value']) {
-                if ($crit['value'] == $value) {
-                    $result = false;
-                    break;
-                }
+            if (!$result) {
+                break;
             }
         }
         return $result;

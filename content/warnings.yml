@@ -6,6 +6,8 @@ messages:
   may_not_comply: &may_not_comply "This response indicates that you may not be able to comply with the rights of data subjects. This is a very important aspect of data protection. You should review your practices."
   identified_risks: &identified_risks "If you have identified risks you should put measures in place."
 
+# for each slide, a set of acceptance criteria are defined.  If the criteria are not met, the warning is displayed.
+
 slides:
   - slide: "1.1"
     criteria:
@@ -25,13 +27,13 @@ slides:
 
   - slide: "2.1"
     criteria:
-      - any:
+      - all:
           - racial
           - political_opinions
           - union_membership
           - genetic_data
           - biometric
-        is: not-empty
+        is: empty
     warning: |
       If you process these types of data there are some additional limitations and you need to take special measures.
       For example, if you use consent, this must be absolutely explicit. You should check with your national data protection authority,
@@ -39,11 +41,11 @@ slides:
 
   - slide: "2.1"
     criteria:
-      - any:
+      - all:
           - location
           - biographical
           - other
-        is: not-empty
+        is: empty
     warning: |
       Although these types of data will not require any additional measures in the law, they are potentially risky.
       You should consider the ethical and security implications and whether it is absolutely necessary to collect and process these data.
