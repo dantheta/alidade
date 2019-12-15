@@ -1,107 +1,450 @@
-- slide: "1.1"
-  criteria:
-    - name: answer
-      is: empty
-  error: "Please provide a name for your project"
+messages:
+  high_privacy_risk: &high_privacy_risk "This response indicates the potential for a high privacy risk. You should explain why in this case there is no high risk, or put measures in place to mitigate the risk and explain these in the text box provided."
+  high_risk_explain: &high_risk_explain "This response indicates a high privacy risk.  You should put measures in place to mitigate the risk and explain these in the text box provided."
+  security: &security "This response idnicates a potential security risk.  Please review your practices"
+  not_following: &not_following "This response indicates that you are not following best practice and may count against you if you suffer a data breach."
+  may_not_comply: &may_not_comply "This response indicates that you may not be able to comply with the rights of data subjects. This is a very important aspect of data protection. You should review your practices."
+  identified_risks: &identified_risks "If you have identified risks you should put measures in place."
 
-- slide: "2.2"
-  criteria:
-    - name: necessary_achieve
-      not-value: yes
-    - name: multianswer-1
-      is: empty
-  warning: |
-    The law says that you should not collect personal data that is not necessary for your purposes.
-    Try to provide some explanation or consider not collecting the data in question.
+slides:
+  - slide: "1.1"
+    criteria:
+      - name: answer
+        is: empty
+    error: "Please provide a name for your project"
 
-- slide: "2.1"
-  criteria:
-    - any:
-        - racial
-        - political_opinions
-        - union_membership
-        - genetic_data
-        - biometric
-      is: not-empty
-  warning: |
-    If you process these types of data there are some additional limitations and you need to take special measures.
-    For example, if you use consent, this must be absolutely explicit. You should check with your national data protection authority,
-    as the regulations vary for each country.
+  - slide: "2.2"
+    criteria:
+      - name: necessary_achieve
+        not-value: yes
+      - name: multianswer-1
+        is: empty
+    warning: |
+      The law says that you should not collect personal data that is not necessary for your purposes.
+      Try to provide some explanation or consider not collecting the data in question.
 
-- slide: "2.1"
-  criteria:
-    - any:
-        - location
-        - biographical
-        - other
-      is: not-empty
-  warning: |
-    Although these types of data will not require any additional measures in the law, they are potentially risky.
-    You should consider the ethical and security implications and whether it is absolutely necessary to collect and process these data.
+  - slide: "2.1"
+    criteria:
+      - any:
+          - racial
+          - political_opinions
+          - union_membership
+          - genetic_data
+          - biometric
+        is: not-empty
+    warning: |
+      If you process these types of data there are some additional limitations and you need to take special measures.
+      For example, if you use consent, this must be absolutely explicit. You should check with your national data protection authority,
+      as the regulations vary for each country.
 
-- slide: "2.4"
-  criteria:
-    - name: consent_transfer
-      value: "no"
-    - name: adequacy_decision
-      value: "no"
-    - name: dont_know
-      is: not-empty
-    - name: "none"
-      is: not-empty
-  warning: |
-    Your responses indicate that you may be in breach of the requirements in GDPR for the transfer of personal data outside the EU.
-    Please check again and seek specialist advice if still unable to justify your data transfers.
+  - slide: "2.1"
+    criteria:
+      - any:
+          - location
+          - biographical
+          - other
+        is: not-empty
+    warning: |
+      Although these types of data will not require any additional measures in the law, they are potentially risky.
+      You should consider the ethical and security implications and whether it is absolutely necessary to collect and process these data.
 
-- slide: "2.4"
-  criteria:
-    - name: countries
-      is: empty
-  error: Please list the countries outside of the EEA where you send personal data.
+  - slide: "2.4"
+    criteria:
+      - name: consent_transfer
+        value: "no"
+      - name: adequacy_decision
+        value: "no"
+      - name: dont_know
+        is: not-empty
+      - name: "none"
+        is: not-empty
+    warning: |
+      Your responses indicate that you may be in breach of the requirements in GDPR for the transfer of personal data outside the EU.
+      Please check again and seek specialist advice if still unable to justify your data transfers.
 
-- slide: "3.1"
-  criteria:
-    - name: choice
-      value: "yes"
-    - name: multianswer-0
-      is: empty
-  warning: "This response indicates a high privacy risk.  You should put measures in place to mitigate the risk and explain these in the text box provided."
+  - slide: "2.4"
+    criteria:
+      - name: countries
+        is: empty
+    error: Please list the countries outside of the EEA where you send personal data.
 
-- slide: "3.1"
-  criteria:
-    - name: choice2
-      value: "yes"
-    - name: multianswer-1
-      is: empty
-  warning: "This response indicates a high privacy risk.  You should put measures in place to mitigate the risk and explain these in the text box provided."
+  - slide: "3.1"
+    criteria:
+      - name: choice
+        value: "yes"
+      - name: multianswer-0
+        is: empty
+    warning: *high_risk_explain
 
-- slide: "3.3"
-  criteria:
-    - name: subject_scoring
-      value: "yes"
-    - name: multianswer-0
-      is: empty
-  warning: "This response indicates the potential for a high privacy risk. You should explain why in this case there is no high risk, or put measures in place to mitigate the risk and explain these in the text box provided."
+  - slide: "3.1"
+    criteria:
+      - name: choice2
+        value: "yes"
+      - name: multianswer-1
+        is: empty
+    warning: *high_risk_explain
 
-- slide: "3.3"
-  criteria:
-    - name: automated_decision
-      value: "yes"
-    - name: multianswer-1
-      is: empty
-  warning: "This response indicates the potential for a high privacy risk. You should explain why in this case there is no high risk, or put measures in place to mitigate the risk and explain these in the text box provided."
+  - slide: "3.3"
+    criteria:
+      - name: subject_scoring
+        value: "yes"
+      - name: multianswer-0
+        is: empty
+    warning: *high_privacy_risk
 
-- slide: "3.3"
-  criteria:
-    - name: significant_effect
-      value: "yes"
-    - name: multianswer-2
-      is: empty
-  warning: "This response indicates the potential for a high privacy risk. You should explain why in this case there is no high risk, or put measures in place to mitigate the risk and explain these in the text box provided."
+  - slide: "3.3"
+    criteria:
+      - name: automated_decision
+        value: "yes"
+      - name: multianswer-1
+        is: empty
+    warning: *high_privacy_risk
 
-- slide: "3.3"
-  criteria:
-    - name: human_intervention
-      value: "no"
-  warning: "Users in some contexts may have a right to object to fully automated decisions made about them without human intervention. Consider providing some explanation here as to why this is required."
+  - slide: "3.3"
+    criteria:
+      - name: significant_effect
+        value: "yes"
+      - name: multianswer-2
+        is: empty
+    warning: *high_privacy_risk
+
+  - slide: "3.3"
+    criteria:
+      - name: human_intervention
+        value: "no"
+    warning: "Users in some contexts may have a right to object to fully automated decisions made about them without human intervention. Consider providing some explanation here as to why this is required."
+
+  - slide: "3.4"
+    criteria:
+      - name: combined_data
+        value: "yes"
+      - name: multianswer-0
+        is: empty
+    warning: *high_privacy_risk
+
+  - slide: "3.4"
+    criteria:
+      - name: large_scale
+        value: "yes"
+      - name: multianswer-1
+        is: empty
+    warning: *high_privacy_risk
+
+  - slide: "3.4"
+    criteria:
+      - name: systematic_monitoring
+        value: "yes"
+      - name: multianswer-2
+        is: empty
+    warning: *high_privacy_risk
+
+  - slide: "3.5"
+    criteria:
+      - name: public_access
+        value: "yes"
+      - name: multianswer-0
+        is: empty
+    warning: *high_privacy_risk
+
+  - slide: "3.5"
+    criteria:
+      - name: aware_monitoring
+        value: "no"
+    warning: *high_privacy_risk
+
+  - slide: "3.5"
+    criteria:
+      - name: avoid_monitoring
+        value: "no"
+    warning: *high_privacy_risk
+
+  - slide: "3.5"
+    criteria:
+      - name: location_tracking
+        value: "yes"
+      - name: multianswer-4
+        is: empty
+    warning: *high_privacy_risk
+
+  - slide: "3.6"
+    criteria:
+      - name: enhanced_risk
+        value: "yes"
+      - name: multianswer-0
+        is: empty
+    warning: *high_privacy_risk
+
+  - slide: "3.6"
+    criteria:
+      - name: vulnerable_people
+        value: "yes"
+      - name: multianswer-1
+        is: empty
+    warning: *high_privacy_risk
+
+  - slide: "4.1"
+    criteria:
+      - name: data_backups
+        value: "yes"
+      - name: multianswer-2
+        is: empty
+    warning: *security
+
+  - slide: "4.1"
+    criteria:
+      - name: irreversible_anonymisation
+        value: "yes"
+      - name: multianswer-3
+        is: empty
+    warning: *security
+
+  - slide: "4.1"
+    criteria:
+      - name: "impediment_rights"
+        value: "yes"
+      - name: multianswer-5
+        is: empty
+    warning: "You should be able to respect users’ rights. Consider providing an explanation and potential mitigations."
+
+    - slide: "4.2"
+      criteria:
+        - name: information_accurate
+          value: "no"
+        - name: multianswer-0
+          is: empty
+      warning: *not_following
+
+  - slide: "4.2"
+    criteria:
+      - name: verify_security
+        value: "no"
+      - name: multianswer-1
+        is: empty
+    warning: *not_following
+
+  - slide: "4.2"
+    criteria:
+      - name: breach_plan
+        value: "no"
+      - name: multianswer-2
+        is: empty
+    warning: *not_following
+
+  - slide: "4.2"
+    criteria:
+      - name: records_policy
+        value: "no"
+      - name: multianswer-3
+        is: empty
+    warning: *not_following
+
+  - slide: "4.2"
+    criteria:
+      - name: physical_access
+        value: "no"
+      - name: multianswer-4
+        is: empty
+    warning: *not_following
+
+
+  - slide: "4.3"
+    criteria:
+      - name: dpo_appointed
+        value: "no"
+    info: "The law does not require an official DPO, but some relevant staff should be trained on the basics of data protection."
+
+  - slide: "4.3"
+    criteria:
+      - name: access_register
+        value: "no"
+    info: *not_following
+
+
+  - slide: "4.4"
+    criteria:
+      - name: staff_access
+        value: "no"
+      - name: multianswer-0
+        is: empty
+    info: *not_following
+
+  - slide: "4.4"
+    criteria:
+      - name: staff_functions
+        value: "no"
+      - name: multianswer-2
+        is: empty
+    info: *not_following
+
+  - slide: "4.4"
+    criteria:
+      - name: individual_accounts
+        value: "no"
+      - name: multianswer-3
+        is: empty
+    info: *not_following
+
+
+  - slide: "4.5"
+    criteria:
+      - name: processing_contracts
+        value: "no"
+    warning: "It is a legal requirement to have some form of GDPR compliant contract with processors."
+
+  - slide: "4.5"
+    criteria:
+      - name: processor_instructions
+        value: "no"
+    info: "You should define in detail what your subcontractors can and cannot do as you may be legally responsible."
+
+
+  - slide: "5.1"
+    criteria:
+      - name: collection_notice
+        value: "no"
+    warning: "You must provide a privacy information notice at the point of collection. "
+
+  - slide: "5.1"
+    criteria:
+      - name: evaluation_criteria
+        value: "no"
+      - name: multianswer-1
+        is: empty
+    warning: "You should provide at least the general logic of the processing and the consequences for individuals."
+
+
+  - slide: "5.2"
+    criteria:
+      - name: data_access
+        value: "no"
+      - name: multianswer-0
+        is: empty
+    warning: *may_not_comply
+
+  - slide: "5.2"
+    criteria:
+      - name: rectify_mistakes
+        value: "no"
+      - name: multianswer-1
+        is: empty
+    warning: *may_not_comply
+
+  - slide: "5.2"
+    criteria:
+      - name: restrict_processing
+        value: "no"
+      - name: multianswer-2
+        is: empty
+    warning: *may_not_comply
+
+  - slide: "5.2"
+    criteria:
+      - name: right_erasure
+        value: "no"
+      - name: multianswer-3
+        is: empty
+    warning: *may_not_comply
+
+  - slide: "5.2"
+    criteria:
+      - name: technology_erasure
+        value: "no"
+      - name: multianswer-4
+        is: empty
+    warning: *may_not_comply
+
+  - slide: "5.2"
+    criteria:
+      - name: process_confirmation
+        value: "no"
+      - name: multianswer-5
+        is: empty
+    warning: *may_not_comply
+
+  - slide: "5.2"
+    criteria:
+      - name: refuse_automated
+        value: "no"
+      - name: multianswer-6
+        is: empty
+    warning: *may_not_comply
+
+
+  - slide: "5.3"
+    criteria:
+      - name: exercise_rights
+        value: "no"
+      - name: multianswer-0
+        is: empty
+    warning: *may_not_comply
+
+  - slide: "5.3"
+    criteria:
+      - name: reply_request
+        value: "no"
+      - name: multianswer-2
+        is: empty
+    warning: *may_not_comply
+
+
+  - slide: "5.4"
+    criteria:
+      - name: portability_hindrance
+        value: 'no'
+      - name: multianswer-0
+        is: empty
+    warning: *may_not_comply
+
+
+  - slide: "5.4"
+    criteria:
+      - name: portability_machine
+        value: 'no'
+      - name: multianswer-1
+        is: empty
+    warning: *may_not_comply
+
+  - slide: "5.4"
+    criteria:
+      - name: portability_transmit
+        value: 'no'
+      - name: multianswer-2
+        is: empty
+    warning: *may_not_comply
+
+
+  - slide: "5.5"
+    criteria:
+      - name: information_subject
+        value: "no"
+      - name: multianswer-0
+        is: empty
+    warning: *may_not_comply
+
+  - slide: "5.5"
+    criteria:
+      - name: consult_subjects
+        value: "no"
+      - name: multianswer-1
+        is: empty
+    warning: "You should consider doing this to follow best practice and reduce the risk of potential complaints."
+
+  - slide: "6.1"
+    criteria:
+      - name: risk_measures
+        value: "no"
+      - name: multianswer-5
+        is: empty
+    warning: *identified_risks
+
+  - slide: "6.1"
+    criteria:
+      - name: risk_consultdpa
+        value: "no"
+      - name: multianswer-6
+        is: empty
+    warning: *identified_risks
+
+
+
 

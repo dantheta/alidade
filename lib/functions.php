@@ -568,7 +568,7 @@
 
     function loadWarnings() {
         $data = yaml_parse_file(ROOT . DS . 'content' . DS . 'warnings.yml');
-        return $data;
+        return $data['slides'];
     }
 
     function findWarnings($warningdata, $slide) {
