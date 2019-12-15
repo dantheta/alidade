@@ -200,14 +200,16 @@ more stuff"
 stuff
 <div id="items"></div>
 <script type="text/javascript">
-$('#items').alpaca({
-    data: ["item1","item2","item3"],
-    options: {
-        name: "items",
-        id: "items"
-    }
-});
+    $('#items').alpaca({
+            data: ["item1","item2","item3"],
+            options: {
+            name: "items",
+            id: "items"
+        }
+    });
 </script>
+
+
 stuff
 EOM;
 

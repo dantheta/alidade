@@ -3,18 +3,30 @@
     {{ step.description|raw }}
 </div>
 {% for slide in slides  %}
-{% if slide.slide_type != 4 %}
+{%   if slide.slide_type != 4 %}
 <h3>{{ slide.title }}</h3>
 <div>
     {{ slide.description|raw }}
 </div>
-{# show remaining warnings #}
-{% for warn in slide.warnings %}
-{% if warn.done != 1 %}
+{#     show remaining warnings #}
+{%     for warn in slide.warnings %}
+{%       if warn.done != 1 %}
+{%         if 'warning' in warn: %}
 <div class="alert alert-warning"><h4><span class="glyphicon glyphicon-warning-sign"></span>Warning</h4>
 <p>{{ warn.warning }}</p>
 </div>
-{% endif %}
-{% endfor %}
-{% endif %}
+{%         endif %}
+{%         if 'info' in warn: %}
+<div class="alert alert-info"><h4><span class="glyphicon glyphicon-information-sign"></span>Information</h4>
+    <p>{{ warn.info }}</p>
+</div>
+{%         endif %}
+{%         if 'error' in warn: %}
+<div class="alert alert-error"><h4><span class="glyphicon glyphicon-warning-sign"></span>Error</h4>
+    <p>{{ warn.error }}</p>
+</div>
+{%         endif %}
+{%       endif %}
+{%     endfor %}
+{%   endif %}
 {% endfor %}

@@ -206,13 +206,13 @@ slides:
         is: empty
     warning: "You should be able to respect users’ rights. Consider providing an explanation and potential mitigations."
 
-    - slide: "4.2"
-      criteria:
-        - name: information_accurate
-          value: "no"
-        - name: multianswer-0
-          is: empty
-      warning: *not_following
+  - slide: "4.2"
+    criteria:
+      - name: information_accurate
+        value: "no"
+      - name: multianswer-0
+        is: empty
+    warning: *not_following
 
   - slide: "4.2"
     criteria:
