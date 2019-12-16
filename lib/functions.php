@@ -606,32 +606,36 @@
                 $values = array($answer[$crit['name']]);
             }
             foreach($values as $value) {
+                if (@$crit['any']) {
+                    $result = true;
+                }
                 if (@$crit['is'] == "empty") {
                     if (trim($value) != "") {
                         $result = false;
-                        break;
                     }
                 }
                 if (@$crit['is'] == "not-empty") {
                     if (trim($value) == "") {
                         $result = false;
-                        break;
                     }
                 }
                 if (@$crit['value']) {
                     if ($crit['value'] != $value) {
                         $result = false;
-                        break;
                     }
                 }
                 if (@$crit['not-value']) {
                     if ($crit['value'] == $value) {
                         $result = false;
+                    }
+                }
+                if (@$crit['any']) {
+                    if ($result) {
                         break;
                     }
                 }
             }
-            if (!$result) {
+            if (!@$crit['any'] && !$result) {
                 break;
             }
         }

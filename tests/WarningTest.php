@@ -67,6 +67,26 @@ class WarningTest extends TestCase {
                         'is' => 'not-empty'
                     )
                 )
+            ),
+            array(
+                'slide' => '1.6',
+                'warning' => 'Some warning Text',
+                'criteria' => array(
+                    array(
+                        'any' => array('field1','field2','field3'),
+                        'is' => 'empty'
+                    )
+                )
+            ),
+            array(
+                'slide' => '1.7',
+                'warning' => 'Some warning Text',
+                'criteria' => array(
+                    array(
+                        'any' => array('field1','field2','field3'),
+                        'is' => 'not-empty'
+                    )
+                )
             )
         );
     }
@@ -169,6 +189,35 @@ class WarningTest extends TestCase {
         $warnings = findWarnings($this->warnings, "1.5");
 
         $result = evaluateWarning($warnings[0], array('field1' => '', 'field2' => 'set', 'field3' => 'set'));
+        $this->assertFalse($result);
+    }
+
+    function testEvaluateAnyEmpty() {
+        // test fails if any of the fields listed in 'any' are empty
+        $warnings = findWarnings($this->warnings, "1.6");
+
+        $result = evaluateWarning($warnings[0], array('field1' => "set", 'field2' => 'set', 'field3' => ''));
+        $this->assertTrue($result);
+    }
+    function testEvaluateAnyEmptyFail() {
+        // test fails if any of the fields listed in 'any' are empty
+        $warnings = findWarnings($this->warnings, "1.6");
+
+        $result = evaluateWarning($warnings[0], array('field1' => 'set', 'field2' => 'set', 'field3' => 'set'));
+        $this->assertFalse($result);
+    }
+    function testEvaluateAnyNotEmpty() {
+        // test fails if any of the fields listed in 'any' are empty
+        $warnings = findWarnings($this->warnings, "1.7");
+
+        $result = evaluateWarning($warnings[0], array('field1' => "set", 'field2' => '', 'field3' => ''));
+        $this->assertTrue($result);
+    }
+    function testEvaluateAnyNotEmptyFail() {
+        // test fails if any of the fields listed in 'any' are empty
+        $warnings = findWarnings($this->warnings, "1.7");
+
+        $result = evaluateWarning($warnings[0], array('field1' => '', 'field2' => '', 'field3' => ''));
         $this->assertFalse($result);
     }
 

@@ -27,13 +27,13 @@ slides:
 
   - slide: "2.1"
     criteria:
-      - all:
+      - any:
           - racial
           - political_opinions
           - union_membership
           - genetic_data
           - biometric
-        is: empty
+        is: non-empty
     warning: |
       If you process these types of data there are some additional limitations and you need to take special measures.
       For example, if you use consent, this must be absolutely explicit. You should check with your national data protection authority,
@@ -41,11 +41,11 @@ slides:
 
   - slide: "2.1"
     criteria:
-      - all:
+      - any:
           - location
           - biographical
           - other
-        is: empty
+        is: non-empty
     warning: |
       Although these types of data will not require any additional measures in the law, they are potentially risky.
       You should consider the ethical and security implications and whether it is absolutely necessary to collect and process these data.
