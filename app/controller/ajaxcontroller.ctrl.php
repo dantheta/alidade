@@ -237,6 +237,7 @@
                                       'description' => $description,
                                       'step' => $step,
                                       'position' => $position,
+                                      'track' => $_POST['track'],
                                       'slide_type' => $_POST['slide_type']),
                                 $slide->idslide_list );
                         if ($step != $slide->step) {
@@ -250,6 +251,7 @@
                                       'description' => $description, 
                                       'step' => $step, 
                                       'position' => $position,
+                                      'track' => $_POST['track'],
                                       'slide_type' => $_POST['slide_type'],
                                       )
                                 );

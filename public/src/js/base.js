@@ -359,7 +359,8 @@ $(document).ready(function(){
             'step'          : $('#step').val(),
             'id'            : theForm.children('#id').val(),
             'position'      : theForm.children().children('#position').val(),
-            'slide_type'    : $('#slide_type').val()
+            'slide_type'    : $('#slide_type').val(),
+            'track'         : $('#track').val()
         }
 
         $.post(

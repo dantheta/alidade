@@ -174,6 +174,7 @@ if(( isset($_GET['config-check']) && $_GET['config-check'] == 1) || isset($_POST
                   `description` text NOT NULL,
                   `step` int(11) NOT NULL,
                   `slide_type` int(11) NOT NULL,
+                  `track` int(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`idslide_list`),
                   KEY `idxSlidelistStep` (`step`),
                   KEY `idxSlidelistWeight` (`position`,`step`),

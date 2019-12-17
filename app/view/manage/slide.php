@@ -21,12 +21,20 @@
                     <?php } ?>
                     </select>
                 </div>
+
                 <div class="form-group">
                     Slide type: <select id="slide_type" name="slide_type">
                         <option value="1" <?php echo ($slide->slide_type == 1) ? "selected" : "" ?>>Informative</option>
                         <option value="2" <?php echo ($slide->slide_type == 2) ? "selected" : "" ?>>Interactive</option>
                         <option value="3" <?php echo ($slide->slide_type == 3) ? "selected" : "" ?>>Branching</option>
                         <option value="4" <?php echo ($slide->slide_type == 4) ? "selected" : "" ?>>Recap</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    Track: <select id="track" name="track">
+                        <?php foreach(Slidelist::TRACKS as $trackid => $trackname) { ?>
+                            <option value="<?php echo $trackid ?>" <?php echo ($trackid == $slidelist->track ? "selected" : "") ?> ><?php echo $trackname ?></option>
+                        <?php } ?>
                     </select>
                 </div>
                 <div class="form-group">
