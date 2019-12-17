@@ -250,7 +250,7 @@
                                       'description' => $description, 
                                       'step' => $step, 
                                       'position' => $position,
-                                      'slide_type' => 2,
+                                      'slide_type' => $_POST['slide_type'],
                                       )
                                 );
                         
