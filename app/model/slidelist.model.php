@@ -4,20 +4,6 @@
         
         protected $table = 'slide_list';
 
-        const TRACKS = array(
-            0 => 'all',
-            1 => 'solo developer/new product',
-            3 => 'organisation/new product',
-            5 => 'solo developer/existing product',
-            31 => 'organisation/existing product'
-        );
-
-        /*
-         * 1 0101 = 21
-         * 1 0111 = 23
-         * 1 1101 = 29
-         * 1 1111 = 31
-         */
         
         public function getList(){
             

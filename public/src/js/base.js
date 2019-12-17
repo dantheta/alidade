@@ -360,8 +360,9 @@ $(document).ready(function(){
             'id'            : theForm.children('#id').val(),
             'position'      : theForm.children().children('#position').val(),
             'slide_type'    : $('#slide_type').val(),
-            'track'         : $('#track').val()
-        }
+            'track_developer' : $('input[name=track_developer]:checked').val(),
+            'track_product'   : $('input[name=track_product]:checked').val()
+        };
 
         $.post(
                 '/ajax/save_slide',

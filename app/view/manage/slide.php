@@ -30,16 +30,29 @@
                         <option value="4" <?php echo ($slide->slide_type == 4) ? "selected" : "" ?>>Recap</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    Track: <select id="track" name="track">
-                        <?php foreach(Slidelist::TRACKS as $trackid => $trackname) { ?>
-                            <option value="<?php echo $trackid ?>" <?php echo ($trackid == $slidelist->track ? "selected" : "") ?> ><?php echo $trackname ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
+
                 <div class="form-group">
                     <div class="textarea form-control" name="description" id="description"><?php echo $slide->description; ?></div>
                     <?php /* <textarea rows="25" name="description" id="description" class="form-control" data-provide="markdown" data-iconlibrary="fa"><?php echo $slide->description; ?></textarea> */ ?>
+                </div>
+                <div class="row">
+                    <h3>Track</h3>
+                    <div class="col-md-4">
+                        <h4>Developer</h4>
+                        <ul>
+                            <li><input type="radio" name="track_developer" value=""  <?php echo (empty($slide->track_developer) ? 'checked': '') ?> />Any</li>
+                            <li><input type="radio" name="track_developer" value="1" <?php echo ($slide->track_developer == 1 ? 'checked': '') ?>/>Solo</li>
+                            <li><input type="radio" name="track_developer" value="2" <?php echo ($slide->track_developer == 2 ? 'checked': '') ?>/>Organisation</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Product</h4>
+                        <ul>
+                            <li><input type="radio" name="track_product" value="" <?php echo (empty($slide->track_product) ? 'checked': '') ?> />Any</li>
+                            <li><input type="radio" name="track_product" value="1" <?php echo ($slide->track_product == 1 ? 'checked': '') ?> />New</li>
+                            <li><input type="radio" name="track_product" value="2" <?php echo ($slide->track_product == 2 ? 'checked': '') ?> />Existing</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="form-group">
                     <button type="submit" id="save-form" data-form="#slide-form" class="btn btn-primary">save</button>

@@ -237,7 +237,8 @@
                                       'description' => $description,
                                       'step' => $step,
                                       'position' => $position,
-                                      'track' => $_POST['track'],
+                                      'track_developer' => empty($_POST['track_developer']) ? null : $_POST['track_developer'],
+                                      'track_product' => empty($_POST['track_product']) ? null : $_POST['track_product'],
                                       'slide_type' => $_POST['slide_type']),
                                 $slide->idslide_list );
                         if ($step != $slide->step) {
@@ -251,7 +252,8 @@
                                       'description' => $description, 
                                       'step' => $step, 
                                       'position' => $position,
-                                      'track' => $_POST['track'],
+                                      'track_developer' => empty($_POST['track_developer']) ? null : $_POST['track_developer'],
+                                      'track_product' => empty($_POST['track_product']) ? null : $_POST['track_product'],
                                       'slide_type' => $_POST['slide_type'],
                                       )
                                 );
