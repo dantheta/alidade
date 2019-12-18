@@ -201,7 +201,6 @@
                 }
                 $this->set('projectIndex', $projectIndex);
 
-                print_r($this->getTrack());
             }
         }
 
