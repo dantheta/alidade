@@ -57,6 +57,7 @@
                 $this->set('userRole', $user->role);
                 $this->set('multiSlides', $this->multiSlides);
                 $this->set('inProcess', true);
+                $this->set('track', $this->getTrack());
 
 
                 if(!isset($_SESSION['plan']) || $cur === '1.1'){
@@ -180,7 +181,8 @@
                     } else {
                         $r = $Slide->create($slidedata);
                     }
-                    
+
+                    $this->processSlide($_POST['current_slide'], $slidedata, $_POST);
                 }
 
                 if ($slide->slide_type == 4) {
@@ -194,7 +196,41 @@
                 }
                 $this->set('projectIndex', $projectIndex);
 
+                print_r($this->getTrack());
             }
+        }
+
+        private function processSlide($slideindex, $slide, $post) {
+            /* custom processing based on slide answers */
+            if ($slideindex == "1.1") {
+                $track = array();
+                switch ($post['product']) {
+                    case 'new':
+                        $track['product'] = 1;
+                        break;
+                    case 'existing':
+                        $track['product'] = 2;
+                        break;
+                };
+                switch ($post['developer']) {
+                    case 'solo':
+                        $track['developer'] = 1;
+                        break;
+                    case 'organisation':
+                        $track['developer'] = 2;
+                        break;
+                };
+                $_SESSION['track'] = $track;
+
+            }
+        }
+
+        public function getTrack() {
+            /* Returns track (questionnaire route) information from session */
+            if (!$_SESSION['track']) {
+                return null;
+            }
+            return $_SESSION['track'];
         }
 
         private function getRecap($project, $step_no, $step, $slidelist) {
