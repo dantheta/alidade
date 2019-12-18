@@ -4,25 +4,38 @@
         
         protected $table = 'slide_list';
 
+        const DEVELOPER_SOLO = 1;
+        const DEVELOPER_ORG = 2;
+        const PRODUCT_NEW = 1;
+        const PRODUCT_EXISTING = 2;
         
-        public function getList(){
-            
+        public function getList($track=null){
+
+            $tracksql = $this->getTrackSQL($track);
+            if ($tracksql) {
+                $tracksql = 'WHERE ' . $tracksql;
+            }
+
             $sql = "SELECT `{$this->table}`.*, 
                     CONCAT_WS('.', `steps`.`position`, `slide_list`.`position`) AS `indexer`,
                     steps.position as step,
                     steps.title as step_title
                 FROM `{$this->table}`
                 INNER JOIN steps on idsteps = step
+                {$tracksql}
                 ORDER BY `steps`.`position` ASC, `slide_list`.`position` ASC";
             $stmt = $this->database->prepare($sql);
-            
-            $stmt->execute();
+
+            if (is_null($track)) {
+                $track = array();
+            }
+            $stmt->execute($track);
             
             return $stmt->fetchAll(PDO::FETCH_OBJ);
         }
         
-        public function listed(){
-            $slidelist = self::getList();
+        public function listed($track=null){
+            $slidelist = self::getList($track);
             $slideIndex = array();
             foreach($slidelist as $s){
                 $slideIndex[$s->step][] = $s->position;
@@ -31,7 +44,25 @@
             return $slideIndex;
             
         }
-        
+
+        private function getTrackSQL($track) {
+            if (is_null($track)) {
+                return "";
+            }
+
+            $clauses = array();
+            $args = array();
+
+            if (@$track['developer']) {
+                $clauses[] = "(track_developer is null or track_developer = :developer)";
+            }
+            if (@$track['product']) {
+                $clauses[] = "(track_product is null or track_product = :product)";
+            }
+            $where = implode(" AND ", $clauses);
+            return $where; // use $track as args
+        }
+
         public function getSlide($step, $position){
         
             $sql = 'SELECT * FROM `' . $this->table . '` AS `s`

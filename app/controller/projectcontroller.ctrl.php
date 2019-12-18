@@ -74,8 +74,15 @@
                 $Slide = new Slide;
                 $Slidelist = new Slidelist;
 
+                if ($_POST) {
+                    $this->processSlide($_POST['current_slide'], $_POST);
+                }
+
                 $step = $Step->getByPosition($step_no);
-                $slidelist = $Slidelist->getList();
+                $slidelist = $Slidelist->getList($this->getTrack());
+
+                $this->set('step_number', $step_no);
+                $this->set('slide_number', $slide_no);
 
                 $slideIndex = array();
                 $step_titles = array();
@@ -87,8 +94,7 @@
                     $menu[$s->indexer] = $s->title;
                 }
 
-                $this->set('step_number', $step_no);
-                $this->set('slide_number', $slide_no);
+
                 $this->set('slidelist', $slidelist);
                 $this->set('slideindex', $slideIndex);
                 $this->set('step_titles', $step_titles);
@@ -182,7 +188,6 @@
                         $r = $Slide->create($slidedata);
                     }
 
-                    $this->processSlide($_POST['current_slide'], $slidedata, $_POST);
                 }
 
                 if ($slide->slide_type == 4) {
@@ -200,24 +205,24 @@
             }
         }
 
-        private function processSlide($slideindex, $slide, $post) {
+        private function processSlide($slideindex, $post) {
             /* custom processing based on slide answers */
             if ($slideindex == "1.1") {
                 $track = array();
                 switch ($post['product']) {
                     case 'new':
-                        $track['product'] = 1;
+                        $track['product'] = Slidelist::PRODUCT_NEW;
                         break;
                     case 'existing':
-                        $track['product'] = 2;
+                        $track['product'] = Slidelist::PRODUCT_EXISTING;
                         break;
                 };
                 switch ($post['developer']) {
                     case 'solo':
-                        $track['developer'] = 1;
+                        $track['developer'] = Slidelist::DEVELOPER_SOLO;
                         break;
                     case 'organisation':
-                        $track['developer'] = 2;
+                        $track['developer'] = Slidelist::DEVELOPER_ORG;
                         break;
                 };
                 $_SESSION['track'] = $track;

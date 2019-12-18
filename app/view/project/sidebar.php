@@ -17,7 +17,7 @@ $piece = ($inTour ? 'tour' : 'slide');
           </a></h3>
   		</header>
   		<ul>
-  			<?php for($i = 1; $i <= count($entries); $i++){ ?>
+  			<?php foreach($entries as $i){ ?>
   			<li>
   				<a
   				   title="<?php echo $slideMenu[$step . '.' . $i]; ?>"
