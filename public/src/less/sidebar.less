@@ -14,35 +14,15 @@
 			clear: none; 
 			a {
 				color: @white;
-				padding-left: 50px;
+				padding-left: 24px;
 				padding-top: 16px;
 				display: block;
-				background: @sidebar-header url('/assets/images/pointer.png') no-repeat left 30px bottom 10px;
+				background: @sidebar-header url('/assets/images/pointer.png') no-repeat left 6px bottom 10px;
 				&:hover {
 					background-color: @sidebar-hover; 
-					/*&:after {
-						content: '';
-						position: absolute;
-						right: -34px;
-						top: 0;
-						width: 0;
-						height: 0;
-						border: 17px solid;
-						border-color: transparent transparent transparent @sidebar-hover;							
-					}*/
 				}
 				&.working {
-					background: @sidebar-active url('/assets/images/pointer.png') no-repeat left 30px bottom 10px;
-					/*&:after {
-						content: '';
-						position: absolute;
-						right: -34px;
-						top: 0;
-						width: 0;
-						height: 0;
-						border: 17px solid;
-						border-color: transparent transparent transparent @sidebar-active;							
-					}*/
+					background: @sidebar-active url('/assets/images/pointer.png') no-repeat left 6px bottom 10px;
 				}
 			}
 		}
@@ -57,58 +37,21 @@
 					color: @white;
 					font-size: 13px;
 					font-weight: 700;
-					background: url('/assets/images/uncheck.png') no-repeat 30px center;
+					background: url('/assets/images/uncheck.png') no-repeat 6px center;
 					display: block; 
-					padding: 6px 15px 6px 50px;
+					padding: 6px 15px 6px 24px;
 					&.done {
-						background: @sidebar-done url('/assets/images/check.png') no-repeat 30px center;
+						background: @sidebar-done url('/assets/images/check.png') no-repeat 6px center;
 					}
 					&.working {
-						background: @sidebar-active url('/assets/images/uncheck.png') no-repeat 30px center;
-						&:after {
-							content: '';
-							position: absolute;
-							right: -30px;
-							top: 0;
-							width: 0;
-							height: 0;
-							border: 15px solid;
-							border-color: transparent transparent transparent @sidebar-active;							
-						}
-						&.taller:after {
-							content: '';
-							position: absolute;
-							right: -48px;
-							top: 0;
-							width: 0;
-							height: 0;
-							border: 24px solid;
-							border-color: transparent transparent transparent @sidebar-active;	
-						}
+						background: @sidebar-active url('/assets/images/uncheck.png') no-repeat 6px center;
+
 					}
 					&:hover {
 						background-color: @sidebar-hover; 
-						&:after {
-							content: '';
-							position: absolute;
-							right: -30px;
-							top: 0;
-							width: 0;
-							height: 0;
-							border: 15px solid;
-							border-color: transparent transparent transparent @sidebar-hover;							
-						}
+
 					}
-					&.taller:hover:after {
-						content: '';
-							position: absolute;
-							right: -48px;
-							top: 0;
-							width: 0;
-							height: 0;
-							border: 24px solid;
-							border-color: transparent transparent transparent @sidebar-hover;							
-					}
+
 				}				
 			}
 		}
